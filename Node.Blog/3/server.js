@@ -14,7 +14,8 @@ const server = http.createServer((req, res) => {
         console.log(`Hello, world!`);
     });
     greet();
-    
+    greet();
+        
     
    // set header content-type
 
