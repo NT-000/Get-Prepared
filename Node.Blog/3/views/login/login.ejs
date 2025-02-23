@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+<body>
+<%- include('../partials/nav.ejs') %>
+<h1>Login</h1>
+
+<div class="outerContainer">
+    
+    <form action="/login/login" method="POST">
+        <input type="text" id="username" placeholder="Username..." required name="username">
+        <input type="password" id="password" placeholder="Password..." required name="password">
+        <button>Login</button><button><a href="login/login/register">Register new user</a></button>
+    </form>
+</div>
+<%- include('../partials/footer.ejs') %>
+</body>
+</html>
