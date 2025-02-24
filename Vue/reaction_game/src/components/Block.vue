@@ -33,8 +33,9 @@ methods:{
       stopTimer(){
       console.log('timer:', this.timer)
     clearInterval(this.timer)
-        console.log('timer stopped:', this.timer)
-
+        console.log('timer stopped:', this.reactionTime)
+        this.$emit('result', this.reactionTime)
+        console.log('end stopTimer:', this.reactionTime)
   },
 },
 }
