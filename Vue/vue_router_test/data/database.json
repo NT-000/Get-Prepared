@@ -1,0 +1,8 @@
+{
+  "jobs": [
+    {"title": "Cashier", "id": 1, "info": "Boss of the register."},
+    {"title": "Assassin", "id": 2, "info": "A whole lot of work!"},
+    {"title": "Juggler", "id": 3, "info": "Juggling in the world."}
+  ]
+  
+}

@@ -1,0 +1,55 @@
+{
+  "posts":[
+  {
+    "id": 1,
+    "title": "welcome to my world",
+    "body": "Hi, my name is Tjetil.",
+    "tags": ["Vlogging", "Politics", "Coding"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "welcome to my second world",
+    "body": "Hi, my name 2.",
+    "tags": ["Web-Developing", "News", "Coding"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "welcome to my third world",
+    "body": "Hi, my name 3.",
+    "tags": ["CSS", "JS", "Coding"]
+  },
+    {
+      "id": 4,
+      "title": "Exploring the Universe",
+      "body": "Space holds endless mysteries, and every discovery brings new questions.",
+      "tags": ["Science", "Astronomy", "Exploration"]
+    },
+    {
+      "id": 5,
+      "title": "The Beauty of Nature",
+      "body": "Forests, oceans, and mountains remind us of Earth's incredible diversity.",
+      "tags": ["Nature", "Environment", "Travel"]
+    },
+    {
+      "id": 6,
+      "title": "Learning Never Ends",
+      "body": "Every challenge is a chance to grow and expand our understanding of life.",
+      "tags": ["Education", "Self-Improvement", "Motivation"]
+    },
+    {
+      "id": 7,
+      "title": "Technology and the Future",
+      "body": "Advancements in AI and robotics are reshaping the way we live and work.",
+      "tags": ["Tech", "AI", "Innovation"]
+    },
+    {
+      "id": 8,
+      "title": "A Journey Through Time",
+      "body": "History teaches us valuable lessons that shape our present and future.",
+      "tags": ["History", "Culture", "Knowledge"]
+    }
+
+]
+}
