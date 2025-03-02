@@ -1,17 +1,14 @@
 <script setup>
 import getPosts from "@/composables/getPosts.js";
 import {computed, onMounted, ref} from "vue";
+import SinglePost from "@/components/SinglePost.vue";
 
-const props = defineProps({
-  search: String,
-  isSearch: Boolean,
-})
-
+const search = ref('')
 const {posts, error, load} = getPosts()
 const filteredSearch = computed(() =>
   posts.value.filter((post) =>
-    post.title.toLowerCase().includes(props.search.toLowerCase()) ||
-    post.tags.some(tag => tag.toLowerCase().includes(props.search.toLowerCase()))
+    post.title.toLowerCase().includes(search.value.toLowerCase()) ||
+    post.tags.some(tag => tag.toLowerCase().includes(search.value.toLowerCase()))
   )
 );
 
@@ -21,17 +18,37 @@ onMounted(() =>{
 </script>
 
 <template>
+  <input type="text" placeholder="Search for a post..." v-model="search" />
+  <div v-if="filteredSearch.length">
 
-  <div v-if="filteredSearch">
-    <div v-if="isSearch" class="results">
-      <div v-for="search in filteredSearch" :key="search.id">
-        <div class="post" >{{search.title}} - <span v-for="tag in search.tags">#{{tag}}</span>
+      <div v-for="post in filteredSearch" :key="search">
+        <div class="post" >
+          <SinglePost :post="post"></SinglePost>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
 <style scoped>
+input {
+  height: 30px;
+
+}
+button {
+  height: 30px;
+  margin: 0 10px;
+  width: 100px;
+  border-radius: 5px;
+}
+button:hover {
+  cursor: pointer;
+  box-shadow: rgb(0, 0, 0, 0.3) 1px 1px 1px;
+  background-color: deepskyblue;
+}
+input:focus {
+  outline: none;
+  border: 1px solid white;
+  border-radius: 10px;
+}
 
 </style>

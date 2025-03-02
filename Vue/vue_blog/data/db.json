@@ -1,55 +1,176 @@
 {
-  "posts":[
-  {
-    "id": 1,
-    "title": "welcome to my world",
-    "body": "Hi, my name is Tjetil.",
-    "tags": ["Vlogging", "Politics", "Coding"
-    ]
-  },
-  {
-    "id": 2,
-    "title": "welcome to my second world",
-    "body": "Hi, my name 2.",
-    "tags": ["Web-Developing", "News", "Coding"
-    ]
-  },
-  {
-    "id": 3,
-    "title": "welcome to my third world",
-    "body": "Hi, my name 3.",
-    "tags": ["CSS", "JS", "Coding"]
-  },
+  "posts": [
     {
-      "id": 4,
+      "id": "1",
+      "title": "welcome to my world",
+      "body": "Hi, my name is Tjetil.",
+      "tags": [
+        "Vlogging",
+        "Politics",
+        "Coding"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "welcome to my second world",
+      "body": "Hi, my name 2.",
+      "tags": [
+        "Web-Developing",
+        "News",
+        "Coding"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "welcome to my third world",
+      "body": "Hi, my name 3.",
+      "tags": [
+        "CSS",
+        "JS",
+        "Coding"
+      ]
+    },
+    {
+      "id": "4",
       "title": "Exploring the Universe",
       "body": "Space holds endless mysteries, and every discovery brings new questions.",
-      "tags": ["Science", "Astronomy", "Exploration"]
+      "tags": [
+        "Science",
+        "Astronomy",
+        "Exploration"
+      ]
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "The Beauty of Nature",
       "body": "Forests, oceans, and mountains remind us of Earth's incredible diversity.",
-      "tags": ["Nature", "Environment", "Travel"]
+      "tags": [
+        "Nature",
+        "Environment",
+        "Travel"
+      ]
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "Learning Never Ends",
       "body": "Every challenge is a chance to grow and expand our understanding of life.",
-      "tags": ["Education", "Self-Improvement", "Motivation"]
+      "tags": [
+        "Education",
+        "Self-Improvement",
+        "Motivation"
+      ]
     },
     {
-      "id": 7,
+      "id": "7",
       "title": "Technology and the Future",
       "body": "Advancements in AI and robotics are reshaping the way we live and work.",
-      "tags": ["Tech", "AI", "Innovation"]
+      "tags": [
+        "Tech",
+        "AI",
+        "Innovation"
+      ]
     },
     {
-      "id": 8,
+      "id": "8",
       "title": "A Journey Through Time",
       "body": "History teaches us valuable lessons that shape our present and future.",
-      "tags": ["History", "Culture", "Knowledge"]
+      "tags": [
+        "History",
+        "Culture",
+        "Knowledge"
+      ]
+    },
+    {
+      "id": "37f8",
+      "title": "yterh",
+      "body": "herrtehye",
+      "tags": []
+    },
+    {
+      "id": "e1ba",
+      "title": "sdfsdef",
+      "body": "gt4wetg",
+      "tags": []
+    },
+    {
+      "id": "de5c",
+      "title": "New Post",
+      "body": "This is my very first post!",
+      "tags": [
+        "Blog"
+      ]
+    },
+    {
+      "id": "74fc",
+      "title": "neu poste",
+      "body": "asdasdasd",
+      "tags": []
+    },
+    {
+      "id": "aab7",
+      "title": "sadsad",
+      "body": "asdadwa",
+      "tags": [
+        "html"
+      ]
+    },
+    {
+      "id": "0643",
+      "title": "New",
+      "body": "dfbkwjsenfgwnerlewtfewqgfqwregrweqf",
+      "tags": [
+        "html"
+      ]
+    },
+    {
+      "id": "afaa",
+      "title": "dswfwefqwe",
+      "body": "qgrewgreqrg",
+      "tags": [
+        "cool"
+      ]
+    },
+    {
+      "id": "2cfa",
+      "title": "asfdasd",
+      "body": "asdasdas",
+      "tags": [
+        "hei"
+      ]
+    },
+    {
+      "id": "9d39",
+      "title": "swgerahg",
+      "body": "rhtwwrh",
+      "tags": [
+        "gerrg"
+      ]
+    },
+    {
+      "id": "e103",
+      "title": "sfsdf",
+      "body": "sdffdsf",
+      "tags": []
+    },
+    {
+      "id": "66b1",
+      "title": "dfsfd",
+      "body": "fdsfds",
+      "tags": []
+    },
+    {
+      "id": "9ca0",
+      "title": "dasdsa",
+      "body": "asdsada",
+      "tags": []
+    },
+    {
+      "id": "54e4",
+      "title": "wqdqwdwq",
+      "body": "wqdqwdqw",
+      "tags": [
+        "dwq"
+      ]
     }
-
-]
+  ]
 }

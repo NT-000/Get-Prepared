@@ -1,14 +1,16 @@
 <script setup>
 
-import {computed, onMounted, ref, watch, watchEffect} from "vue";
-import PostList from "@/components/PostList.vue"
+import {computed, onMounted, ref} from "vue";
 import getPosts from "@/composables/getPosts.js";
 import Search from "@/components/Search.vue";
+import TagCloud from "@/components/TagCloud.vue";
 
-const isSearch = ref(false);
+const search = ref('')
 const isShowing = ref(true);
 const {posts, error, load} = getPosts()
-const search = ref('')
+
+const shouldShowPosts = computed(() => isShowing.value && !search.value);
+
 onMounted(() => {
  load()
 })
@@ -16,44 +18,34 @@ onMounted(() => {
 </script>
 
 <template>
-  <main>
-    <h1>Homepage</h1>
-    <input type="text" placeholder="Search for a post..." v-model="search" />
-    <button @click="isSearch = !isSearch">Search</button>
+  <div class="home">
     <div v-if="error">
       {{error}}
     </div>
-<Search :search="search" :isSearch="isSearch" />
-    <div v-if="posts.length">
-      <div v-if="isShowing" class="results">
-  <PostList :posts="posts" />
+<Search v_model="search" />
+    <div v-if="posts.length" class="layout">
+      <div class="tags">
+        <TagCloud :posts="posts"></TagCloud>
       </div>
     </div>
     <div v-else>
       No posts found.
     </div>
-  </main>
+  </div>
 </template>
 
-<style scoped>
-.post{
-  width: 100%;
-  height: 100%;
-  display: inline-block;
-  flex-direction: row;
-  justify-content: center;
-  background: darkgray;
-  border: 1px solid darkgray;
-  border-radius: 15px;
-  margin: 10px;
-  padding: 10px;
+<style>
+.home{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 0;
 }
-.tags{
-  font-size: large;
-  display: inline-block;
-  margin: 10px;
-  padding: 10px;
 
+
+.layout{
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
 }
 .post p{
   font-size: medium;

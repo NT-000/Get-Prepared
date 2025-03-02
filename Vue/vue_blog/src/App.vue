@@ -1,4 +1,5 @@
 <script setup>
+import NavBar from "@/components/NavBar.vue";
 import { RouterLink, RouterView } from 'vue-router'
 
 </script>
@@ -6,10 +7,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="/bitcoin.svg" width="125" height="125" />
-
-    <div class="wrapper">
-
-    </div>
+    <NavBar></NavBar>
   </header>
 
   <RouterView />

@@ -1,13 +1,16 @@
 <script setup>
 import getPost from "@/composables/getPost.js";
 import {onMounted} from "vue";
+import {useRoute} from "vue-router";
 
+const route = useRoute();
+console.log('route:',route);
 
 const props = defineProps({
-id: Number
+id: String
 
 })
-const {post, error, load} = getPost(props.id);
+const {post, error, load} = getPost(route.params.id);
 
 onMounted(() => {
   load()
