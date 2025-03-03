@@ -1,10 +1,13 @@
 <script setup>
 import getPost from "@/composables/getPost.js";
-import {onMounted} from "vue";
-import {useRoute} from "vue-router";
+import {onMounted, ref} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {projectFirestore} from "@/firebase/config.js";
+import { doc, deleteDoc } from "firebase/firestore";
 
 const route = useRoute();
 console.log('route:',route);
+const router = useRouter();
 
 const props = defineProps({
 id: String
@@ -15,6 +18,10 @@ const {post, error, load} = getPost(route.params.id);
 onMounted(() => {
   load()
 })
+const handleClick = async () => {
+  await deleteDoc(doc(projectFirestore, 'posts', route.params.id));
+  router.push('/');
+}
 </script>
 
 <template>
@@ -23,9 +30,11 @@ onMounted(() => {
   <div v-if="post" class="post">
     <h1>{{post.title}}</h1>
     <p>{{post.body}}</p>
+    <p>{{post.createdAt}}</p>
     <div v-for="tag in post.tags" class="tags">
       #{{tag}}
     </div>
+    <button @click="handleClick">Delete</button>
   </div>
 
 </template>

@@ -4,6 +4,7 @@ import Create from '../views/Create.vue'
 import Details from "@/views/Details.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import Tag from "@/views/Tag.vue";
+import About from "@/views/About.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,11 @@ const router = createRouter({
       name: 'Tag',
       component: Tag,
       props: true,
+    },
+    {
+      path:'/about',
+      name: 'About',
+      component: About
     },
     {
       path: '/:catchAll(.*)',

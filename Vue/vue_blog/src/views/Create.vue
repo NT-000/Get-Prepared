@@ -2,6 +2,8 @@
 
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
+import {projectFirestore} from "@/firebase/config.js";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 const router = useRouter();
 console.log(router);
@@ -24,25 +26,26 @@ const handleKeyDownEvent = () => {
 }
 const createPost = async () => {
   try{
-    let response = await fetch('http://localhost:3001/posts/' , {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newPost.value)
+    const res = await addDoc(collection(projectFirestore, 'posts'),{
+      ...newPost.value,
+      createdAt: Timestamp.now(),
     });
+
     newPost.value.title = "";
     newPost.value.body = "";
     tags.value = [];
+    newPost.value.tags = [];
     router.push({name: 'Home'});
 
-  if(!response.ok){
+  if(!res.ok){
     console.log('failed creating post');
   }
-  const data = await response.json();
-    console.log('post created', data);
+    console.log('post created');
   }
 
   catch(error){
-    console.error("Error:", error);
+    error.value = error.message;
+    console.error("Error:", error.value);
   }
 }
 onMounted(()=>{

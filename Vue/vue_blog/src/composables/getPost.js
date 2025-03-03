@@ -1,4 +1,6 @@
 import {ref} from "vue";
+import { doc, getDoc } from "firebase/firestore";
+import {projectFirestore} from "@/firebase/config.js";
 
 const getPost = (id) => {
 
@@ -6,11 +8,15 @@ const getPost = (id) => {
   const error = ref(null)
   const load = async () => {
     try {
-      let data = await fetch('http://localhost:3001/posts/' + id)
-      if (!data.ok) {
-        throw Error('Post does not exist...')
+    const docRef = doc(projectFirestore, "posts", id )
+      console.log('response post',docRef)
+      const response = await getDoc(docRef);
+    const data = response.data()
+      post.value = {
+      ...data,
+        id: response.id,
+        createdAt: new Date(data.createdAt.seconds * 1000).toLocaleString()
       }
-      post.value = await data.json()
     } catch (err) {
       error.value = err.message;
       console.log(error.value)
@@ -20,3 +26,4 @@ const getPost = (id) => {
 }
 
 export default getPost
+

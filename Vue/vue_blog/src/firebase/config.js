@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, serverTimestamp } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBpTGVpI04mgG0nBKeqQlPSsKdhXLhZPc8",
@@ -15,4 +15,6 @@ const app = initializeApp(firebaseConfig);
 
 const projectFirestore = getFirestore(app)
 
-export { projectFirestore }
+const timestamp = serverTimestamp();
+
+export { projectFirestore, timestamp };

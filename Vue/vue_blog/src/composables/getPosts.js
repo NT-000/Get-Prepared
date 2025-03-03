@@ -16,7 +16,7 @@ const getPosts = () => {
         title: data.title,
         body: data.body,
         tags: data.tags || [],
-        time: new Date(data.time.seconds * 1000).toLocaleString()
+        createdAt: new Date(data.createdAt.seconds * 1000).toLocaleString()
       }
 
     })

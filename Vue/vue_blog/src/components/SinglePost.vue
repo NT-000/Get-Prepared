@@ -14,7 +14,7 @@ const snippet = props.post.body.substring(0,25)
   <div class="post">
     <h3>{{snippet}} ....</h3>
   </div>
-    <div>{{props.post.time}}</div>
+    <div>{{props.post.createdAt}}</div>
   </router-link>
   <div v-for="tag in props.post.tags" :key="tag" class="tags">
     <router-link :to="{name: 'Tag', params: {id: tag}}"><span>#{{tag}}</span></router-link>
