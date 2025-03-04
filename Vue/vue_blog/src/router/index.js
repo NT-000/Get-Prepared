@@ -5,6 +5,9 @@ import Details from "@/views/Details.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import Tag from "@/views/Tag.vue";
 import About from "@/views/About.vue";
+import RealTime from "@/views/RealTime.vue";
+import Chatroom from "@/views/Chatroom.vue";
+import Start from "@/views/Start.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +39,23 @@ const router = createRouter({
       name: 'About',
       component: About
     },
+    {
+      path:'/realtime',
+      name: 'RealTime',
+      component: RealTime
+    },
+
+    {
+      path:'/start',
+      name: 'Start',
+      component: Start
+    },
+    {
+      path:'/chatroom',
+      name: 'Chatroom',
+      component: Chatroom
+    },
+
     {
       path: '/:catchAll(.*)',
       name: 'NotFoundView',

@@ -11,6 +11,7 @@ const {posts, error, load} = getPosts()
 
 const shouldShowPosts = computed(() => isShowing.value && !search.value);
 
+
 onMounted(() => {
  load()
 })

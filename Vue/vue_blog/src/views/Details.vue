@@ -18,7 +18,7 @@ const {post, error, load} = getPost(route.params.id);
 onMounted(() => {
   load()
 })
-const handleClick = async () => {
+const deletePost = async () => {
   await deleteDoc(doc(projectFirestore, 'posts', route.params.id));
   router.push('/');
 }
@@ -34,7 +34,7 @@ const handleClick = async () => {
     <div v-for="tag in post.tags" class="tags">
       #{{tag}}
     </div>
-    <button @click="handleClick">Delete</button>
+    <button @click="deletePost">Delete</button>
   </div>
 
 </template>

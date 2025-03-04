@@ -102,12 +102,11 @@ label::before {
   display: block;
   width: 100%;
   height: 100%;
-  background: deepskyblue;
+
   position: absolute;
   z-index: -1;
   padding-right: 40px;
-  left: -30px;
-  transform: rotateZ(-1.5deg);
+
 }
 button {
   display: block;
