@@ -65,6 +65,7 @@
     <div class="submit"><input type="submit" value="Submit"></div>
     <div class="errorMessage">
       <p>{{errorMessage}}</p>
+      <p>{{error}}</p>
     </div>
   </form>
 
@@ -82,15 +83,18 @@
 <script setup>
 
 
- import {ref} from "vue";
- import {addDoc, collection} from "firebase/firestore";
- import {projectFirestore} from "@/firebase/config.js";
+ import {ref,defineEmits} from "vue";
+ import useSignup from "@/composables/useSignup";
 
  const isHobbies = ref(false)
  const terms=ref(false)
  const isSkill= ref(false)
  const tempskill= ref('')
  const errorMessage= ref('')
+
+ const emit = defineEmits(['signupSuccess'])
+
+ const {error, signup}= useSignup();
 
  const newUser=ref({
    email: '',
@@ -102,7 +106,6 @@
    skills: [],
  })
 
-
    function openHobbies(){
       isHobbies.value = !isHobbies.value;
     }
@@ -110,7 +113,7 @@
       isSkill.value = !isSkill.value;
     }
    function addSkill(event){
-      console.log("AddSkill", event);
+
       if(!newUser.value.skills.includes(tempskill.value.trim()) && !tempskill.value.startsWith(',') ) {
         if (event.key === ',' || event.key === 'Enter' && tempskill.value.trim() !== '' && tempskill.value !== ',') {
           newUser.value.skills.push(tempskill.value.trim());
@@ -125,12 +128,11 @@ const registerUser = async () => {
 
   if (newUser.value.password.length > 5) {
     try{
-    const res = await addDoc(collection(projectFirestore, 'users'), {
-      ...newUser.value,
-    })
-      console.log("new user",res)
+    await signup(newUser.value.email, newUser.value.gender, newUser.value.hobbies, newUser.value.name, newUser.value.occupation, newUser.value.password, newUser.value.skills);
+    emit('signupSuccess');
     }catch(error){
       console.log(error);
+
     }
   }
   else{

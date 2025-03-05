@@ -18,7 +18,9 @@ onMounted(() =>{
 </script>
 
 <template>
+  <div>
   <input type="text" placeholder="Search for a post..." v-model="search" />
+  </div>
   <div v-if="filteredSearch.length">
 
       <div v-for="post in filteredSearch" :key="post.id">

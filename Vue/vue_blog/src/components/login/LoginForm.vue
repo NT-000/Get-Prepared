@@ -1,16 +1,24 @@
 <script setup>
 
-import {onMounted, ref} from "vue";
-import getUsers from "@/composables/getUsers.js";
+import {ref, defineEmits} from "vue";
+import useLogin from "@/composables/useLogin.js";
 
 const email = ref('')
 const password = ref('')
-const {users, load} = getUsers()
-onMounted(() => {
-  load()
-})
-const loginUser = async () => {
+// const {users, load} = getUsers()
+const {error, login} = useLogin();
+const emit = defineEmits(["loginSuccess"]);
 
+const loginUser = async () => {
+  try {
+   await login(email.value, password.value)
+    if(!error.value){
+      emit('loginSuccess')
+    }
+  }
+  catch (error) {
+    console.log(error);
+  }
 }
 
 </script>
@@ -23,6 +31,9 @@ const loginUser = async () => {
     <label>Password
       <input type="text" v-model="password"></label>
     <br>
+    <div class="error">
+      {{error}}
+    </div>
     <button @click="loginUser">Login</button>
   </form>
 </template>

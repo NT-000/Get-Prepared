@@ -1,16 +1,36 @@
 <script setup>
 
 import {RouterLink} from "vue-router";
+import getCurrentUser from "@/composables/getCurrentUser.js";
+import useLogout from "@/composables/useLogout.js";
+
+const {currentUser} = getCurrentUser();
+
+const {logout, error} = useLogout();
+const logoutEvent = async () => {
+  await logout();
+  if(!error.value){
+    console.log("logged out");
+  }
+}
+
+
 </script>
 
 <template>
   <div class="wrapper">
     <h1>The Blog</h1>
     <nav>
+      <RouterLink to="/start">Login</RouterLink>
+      <div v-if="currentUser">
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/realtime">Real Time</RouterLink>
+      <RouterLink to="/realtime">test</RouterLink>
       <RouterLink to="/create">New post</RouterLink>
       <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/chatroom">Chatroom</RouterLink>
+        <button @click="logoutEvent">Logout</button>
+
+      </div>
     </nav>
   </div>
 </template>

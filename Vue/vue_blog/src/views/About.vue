@@ -1,25 +1,38 @@
 <script setup>
-import GetPosts from "@/composables/getPosts.js";
-import {onMounted} from "vue";
-import SinglePost from "@/components/SinglePost.vue";
-import {collection, onSnapshot, orderBy} from "firebase/firestore";
-import {projectFirestore} from "@/firebase/config.js";
-const {posts, error, load} = GetPosts();
 
+import getCurrentUser from "@/composables/getCurrentUser.js";
+import {ref} from "vue";
 
-onMounted(()=>{
-  load();
-})
+const {currentUser} = getCurrentUser();
+const isHobbiesOpen = ref(false)
+const isSkillsOpen = ref(false)
 </script>
 
 <template>
-  <h1>About me</h1>
-  <h3>Info</h3>
-  <div v-for="post in posts">
-    <SinglePost :post="post"/>
+  <div class="container">
+    <nav v-if="currentUser">
+      <p>Display {{currentUser.name}}</p>
+      <p>Display logged in user email: {{currentUser.email}}</p>
+      <h1 @click="isHobbiesOpen = !isHobbiesOpen">Hobbies <img src="/menu.svg"></h1>
+      <div class="hobbies" v-if="isHobbiesOpen">
+        <div v-for="hobby in currentUser.hobbies" :key="hobby.id">
+          <div>{{hobby}}</div>
+        </div>
+      </div>
+      <h1 @click="isSkillsOpen = !isSkillsOpen">Skills<img src="/menu.svg"></h1>
+      <div class="skills"  v-if="isSkillsOpen">
+        <div v-for="skill in currentUser.skills" :key="skill.id">
+          <p>{{skill}}</p>
+        </div>
+      </div>
+
+    </nav>
   </div>
+
 </template>
 
 <style scoped>
-
+.skills {
+  display: inline-block;
+}
 </style>

@@ -1,28 +1,28 @@
 <script setup>
-import getUsers from "@/composables/getUsers.js";
 import SignupForm from "@/components/login/SignupForm.vue";
-import {onMounted, ref} from "vue";
+import { ref} from "vue";
 import LoginForm from "@/components/login/LoginForm.vue";
+import {useRouter} from "vue-router";
 
 const showLogin = ref(true);
-const {users, load} = getUsers();
-onMounted( () => {
-  load()
-})
 
+const router = useRouter()
+const goToChat = () =>{
+  router.push("/about");
+}
 
 </script>
 
 <template>
 <div class="login">
   <div v-if="showLogin" :key="showLogin">
-    <LoginForm />
+    <LoginForm @loginSuccess="goToChat"/>
   </div>
   <div v-else :key="!showLogin">
-    <SignupForm />
+    <SignupForm @signupSuccess="goToChat"/>
   </div>
   <button @click="showLogin = !showLogin">
-    <span v-if="showLogin">Register new user</span>
+    <span v-if="showLogin">Don't have an account? Register here</span>
     <span v-else>Back to Login</span>
   </button>
 </div>

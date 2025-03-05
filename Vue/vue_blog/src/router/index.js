@@ -8,7 +8,18 @@ import About from "@/views/About.vue";
 import RealTime from "@/views/RealTime.vue";
 import Chatroom from "@/views/Chatroom.vue";
 import Start from "@/views/Start.vue";
+import {projectAuth} from "@/firebase/config.js";
 
+const authGuard = (to,from,next) =>{
+  let user = projectAuth.currentUser;
+  console.log('current user auth guard',user);
+  if(!user){
+    next({path:'/start'});
+  }else{
+    next()
+  }
+
+}
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -37,7 +48,8 @@ const router = createRouter({
     {
       path:'/about',
       name: 'About',
-      component: About
+      component: About,
+      beforeEnter: authGuard,
     },
     {
       path:'/realtime',
@@ -53,7 +65,8 @@ const router = createRouter({
     {
       path:'/chatroom',
       name: 'Chatroom',
-      component: Chatroom
+      component: Chatroom,
+      beforeEnter: authGuard
     },
 
     {
