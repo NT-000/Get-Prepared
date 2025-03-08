@@ -4,6 +4,7 @@ import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {projectFirestore} from "@/firebase/config.js";
 import { doc, deleteDoc } from "firebase/firestore";
+import getCurrentUser from "@/composables/getCurrentUser.js";
 
 const route = useRoute();
 console.log('route:',route);
@@ -19,8 +20,9 @@ onMounted(() => {
   load()
 })
 const deletePost = async () => {
-  await deleteDoc(doc(projectFirestore, 'posts', route.params.id));
-  router.push('/');
+    await deleteDoc(doc(projectFirestore, 'posts', route.params.id));
+    router.push('/');
+
 }
 </script>
 
@@ -34,7 +36,9 @@ const deletePost = async () => {
     <div v-for="tag in post.tags" class="tags">
       #{{tag}}
     </div>
+    <div v-if="post.name === getCurrentUser()">
     <button @click="deletePost">Delete</button>
+    </div>
   </div>
 
 </template>

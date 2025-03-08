@@ -5,7 +5,6 @@ import useLogin from "@/composables/useLogin.js";
 
 const email = ref('')
 const password = ref('')
-// const {users, load} = getUsers()
 const {error, login} = useLogin();
 const emit = defineEmits(["loginSuccess"]);
 

@@ -4,6 +4,9 @@ import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
 import {projectFirestore} from "@/firebase/config.js";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
+import getCurrentUser from "@/composables/getCurrentUser.js";
+
+const {currentUser} = getCurrentUser();
 
 const router = useRouter();
 console.log(router);
@@ -15,9 +18,10 @@ const newPost = ref({
   title: '',
   body: '',
   tags: tags.value,
+  name: currentUser.value.name,
 })
 
-const handleKeyDownEvent = () => {
+const tagKeyDownEvent = () => {
   console.log(tag.value)
   if (!newPost.value.tags.includes(tag.value)) {
     newPost.value.tags.push(tag.value)
@@ -62,7 +66,7 @@ onMounted(()=>{
       <label>Content</label>
       <textarea required v-model="newPost.body"></textarea>
       <label>Tags (enter to add a tag)</label>
-      <input v-model.trim="tag" type="text" @keydown.enter.prevent="handleKeyDownEvent" />
+      <input v-model.trim="tag" type="text" @keydown.enter.prevent="tagKeyDownEvent" />
       <button type="submit" @click="">Create Post</button>
     </form>
     <div v-for="tag in tags" :key="tag" class="tag">

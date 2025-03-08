@@ -2,6 +2,7 @@
 
 import getCurrentUser from "@/composables/getCurrentUser.js";
 import {ref} from "vue";
+import SearchForFriends from "@/components/SearchForFriends.vue";
 
 const {currentUser} = getCurrentUser();
 const isHobbiesOpen = ref(false)
@@ -11,6 +12,7 @@ const isSkillsOpen = ref(false)
 <template>
   <div class="container">
     <nav v-if="currentUser">
+      <SearchForFriends/>
       <p>Display {{currentUser.name}}</p>
       <p>Display logged in user email: {{currentUser.email}}</p>
       <h1 @click="isHobbiesOpen = !isHobbiesOpen">Hobbies <img src="/menu.svg"></h1>

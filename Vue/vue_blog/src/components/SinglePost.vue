@@ -11,6 +11,7 @@ const snippet = props.post.body.substring(0,25)
   <div class="blog-post">
   <router-link :to="{name: 'Details', params: {id: props.post.id}}">
     <h1>{{props.post.title}}</h1>
+    <p>{{props.post.name}}</p>
   <div class="post">
     <h3>{{snippet}} ....</h3>
   </div>
