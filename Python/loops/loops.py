@@ -1,3 +1,5 @@
+import time
+
 
 print("1-10")
 for i in range(1,11): #range = iterations
@@ -16,13 +18,15 @@ print("\n")
 
 for letter in name:
     print(letter, end="-")
-print("END")
-
+print("\n")
+print("Countdown to new year")
 is_ready = False
 while not is_ready:
-    for i in range(11, -1, -1):
+    for i in range(10, -1, -1):
+        time.sleep(1)
         if i == 0:
             print("It's a new year!")
+
             is_ready = True
         else:
             print(i)

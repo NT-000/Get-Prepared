@@ -1,3 +1,18 @@
+# List [] = mutable, flexible
+# Tuple () = immutable, fast
+# Set {} 0 mutable, make changes, unordered, no duplicates
+
+# Set example, can be used for searching
+
+users = {"joe","barry","jill","bill", "jessie", "lara"}
+
+username = input("Enter username to search").lower()
+
+if username in users:
+    print(f"User '{username}' found")
+else:
+    print(f"User by the name '{username}' not found")
+
 num_list = [1,2,3,4,5,6]
 name_list = ["John", "Willy", "Chanel", "Cinnamon"]
 mixed_list = [1, "Hello", 6, True]
