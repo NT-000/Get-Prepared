@@ -1,3 +1,4 @@
+import requests
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QHBoxLayout, QVBoxLayout, QWidget, QPushButton
 from PyQt5.QtGui import QPixmap, QColor
@@ -35,6 +36,7 @@ class MainWindow(QMainWindow):
         self.image_label.setScaledContents(True)
         self.image_label.setMinimumSize(400, 300)
         self.image_label.setAlignment(Qt.AlignCenter)
+        self.image_label.mousePressEvent = self.find_pixel_color
         main_layout.addWidget(self.image_label)
 
         #convert HEX to RGB, sample box
@@ -71,13 +73,47 @@ class MainWindow(QMainWindow):
             scaled_pixmap = self.pixmap.scaled(self.image_label.width(), self.image_label.height(),Qt.KeepAspectRatio)
             self.image_label.setPixmap(scaled_pixmap)
             self.current_picture = self.pixmap.toImage()
-    def convert_hex_to_rgb(self):
-        pass
-    def find_pixel_color(self):
-        pass
-    def display_color_found(self):
-        pass
 
+    def convert_hex_to_rgb(self, hex_code):
+
+        hex_value = hex_code.lstrip('#')
+        response = requests.get(f"http://127.0.0.1:8000/convert/hex-to-rgb?hex={hex_value}", timeout=5)
+
+        rgb_data = response.json()
+        r = rgb_data.get("r", 0)
+        g = rgb_data.get("g", 0)
+        b = rgb_data.get("b", 0)
+        self.rgb_label.setText(f"RGB: ({r}, {g}, {b})")
+
+
+    def find_pixel_color(self, event):
+        if self.current_picture:
+            label_width = self.image_label.width()
+            label_height = self.image_label.height()
+
+            pixmap_width = self.image_label.pixmap().width()
+            pixmap_height = self.image_label.pixmap().height()
+
+            x_offset = (label_width - pixmap_width) // 2
+            y_offset = (label_height - pixmap_height) // 2
+
+            x = event.pos().x() - x_offset
+            y = event.pos().y() - y_offset
+
+            if 0 <= x < pixmap_width and 0 <= y < pixmap_height:
+                original_x = int(x * self.pixmap.width() / pixmap_width)
+                original_y = int(y * self.pixmap.height() / pixmap_height)
+
+            color = QColor(self.current_picture.pixel(original_x, original_y))
+            self.display_color_found(color)
+
+    def display_color_found(self, color):
+        self.color_sample.setStyleSheet(f"background-color: {color.name()}; border: 1px solid black;")
+
+        hex_code = color.name().upper()
+        self.hex_label.setText(f"HEX: {hex_code}")
+
+        self.convert_hex_to_rgb(hex_code)
 
 
 def main():
