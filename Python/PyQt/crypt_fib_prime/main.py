@@ -1,7 +1,5 @@
 import fastapi
 from collections import Counter
-import string
-
 import requests
 
 app = fastapi.FastAPI()
@@ -75,7 +73,10 @@ def crack_vigenere_cipher(ciphered_text: str):
         # find
         key = find_key(cleaned_text, key_length)
 
-        res = requests.get("/decipher")
+        res = requests.get(
+            f"http://127.0.0.1:8000/decipher?ciphered_text={ciphered_text}&key={key.lower()}",
+            timeout=5
+        )
         decrypted = res.json()["deciphered_text"]
 
         return {
