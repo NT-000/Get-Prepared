@@ -1,14 +1,9 @@
 import sys
-from logging import exception
-from warnings import catch_warnings
-
 import requests
 from urllib.parse import quote
 from PyQt5.QtWidgets import QApplication, QLineEdit, QMainWindow, QPushButton, QLabel,QMessageBox
 from PyQt5.QtCore import QCoreApplication, Qt
 from PyQt5.QtGui import QIntValidator
-
-
 
 class MainWindow(QMainWindow):
     def __init__(self):
