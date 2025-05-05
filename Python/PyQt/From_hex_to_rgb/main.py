@@ -1,7 +1,7 @@
 import fastapi
 app = fastapi.FastAPI()
 @app.get("/convert/hex-to-rgb")
-async def convert_hex_to_rgb(hex: str):
+def convert_hex_to_rgb(hex: str):
 
     r = int(hex[0:2], 16)
     g = int(hex[2:4], 16)
