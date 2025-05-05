@@ -15,7 +15,7 @@ Dette prosjektet består av to deler:
 
 ---
 
-## 🔧 Forutsetninger
+## 🔧Forutsetninger
 
 - **Python-versjon**: 3.7 eller nyere 🐍  
 - **Avhengigheter**:
@@ -26,7 +26,7 @@ Dette prosjektet består av to deler:
 
 ---
 
-## 💾 Installasjon
+## 🚀Installasjon
 
 1. **Klon repository’et**:
    ```bash
@@ -41,7 +41,7 @@ Dette prosjektet består av to deler:
 
 ---
 
-## 🚀 Starte backend-API-et
+## 🚀Starte backend-API-et
 
 Kjør FastAPI-serveren for HEX-til-RGB-konvertering:
 
@@ -51,7 +51,7 @@ uvicorn main:app --reload
 
 - **Base-URL**: `http://127.0.0.1:8000` 🌐
 
-### 🛣️ Endepunkter
+### 🔌Endepunkter
 
 | Metode  | Endepunkt                                    | Beskrivelse                                                                       |
 |:--------|:---------------------------------------------|:-----------------------------------------------------------------------------------|
@@ -70,7 +70,7 @@ uvicorn main:app --reload
 
 ---
 
-## 🖱️ Starte applikasjonen
+## 🖱️Starte applikasjonen
 
 Kjør PyQt5-applikasjonen som kommuniserer med API-et:
 
@@ -80,7 +80,7 @@ python find_color.py
 
 ---
 
-## 🖼️ Brukergrensesnitt
+## 🖼️Brukergrensesnitt
 
 - **📸 Ta skjermbilde** (`snapshot_button`):  
   Tar et bilde av hele skjermen.

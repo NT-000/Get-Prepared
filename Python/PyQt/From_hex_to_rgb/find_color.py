@@ -77,7 +77,7 @@ class MainWindow(QMainWindow):
     def convert_hex_to_rgb(self, hex_code):
 
         hex_value = hex_code.lstrip('#')
-        response = requests.get(f"http://127.0.0.1:8000/convert/hex-to-rgb?hex={hex_value}", timeout=5)
+        response = requests.get(f"http://127.0.0.1:8000/convert/hex-to-rgb?hex={hex_value}")
 
         rgb_data = response.json()
         r = rgb_data.get("r", 0)

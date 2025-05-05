@@ -1,11 +1,7 @@
 import sys
-from logging import exception
-from warnings import catch_warnings
-
 import requests
 from urllib.parse import quote
 from PyQt5.QtWidgets import QApplication, QLineEdit, QMainWindow, QPushButton, QLabel,QMessageBox
-from PyQt5.QtCore import QCoreApplication, Qt
 from PyQt5.QtGui import QIntValidator
 
 
@@ -132,7 +128,7 @@ class MainWindow(QMainWindow):
             self.show_error("Vennligst skriv inn et tall")
             return
 
-        fibonacci_response = requests.get(f"http://127.0.0.1:8000/fibonacci/find_closest/{num}", timeout=10)
+        fibonacci_response = requests.get(f"http://127.0.0.1:8000/fibonacci/find_closest/{num}")
         fibonacci_number = fibonacci_response.json()["closest_fibonacci_number"]
         is_fibonacci = fibonacci_response.json()["is_fibonacci"]
 
@@ -160,10 +156,7 @@ class MainWindow(QMainWindow):
             return
 
 
-        cipher_response = requests.get(
-           f"http://127.0.0.1:8000/cipher?text={quote(text)}&key={quote(key)}",
-             timeout=5
-            )
+        cipher_response = requests.get(f"http://127.0.0.1:8000/cipher?text={quote(text)}&key={quote(key)}",)
 
         ciphered_text = cipher_response.json()["ciphered_text"]
         self.result_label.setText(f"Kryptert tekst: {ciphered_text}")
@@ -190,10 +183,7 @@ class MainWindow(QMainWindow):
             return
 
 
-        decipher_response = requests.get(
-            f"http://127.0.0.1:8000/decipher?ciphered_text={quote(text)}&key={quote(key)}",
-            timeout=5
-        )
+        decipher_response = requests.get(f"http://127.0.0.1:8000/decipher?ciphered_text={quote(text)}&key={quote(key)}")
         decipher_response.raise_for_status()
         deciphered_text = decipher_response.json()["deciphered_text"]
         self.result_label.setText(f"Dekryptert tekst: {deciphered_text}")
@@ -206,10 +196,7 @@ class MainWindow(QMainWindow):
             self.show_error("Vennligst skriv inn kryptert tekst")
             return
 
-        crack_response = requests.get(
-                f"http://127.0.0.1:8000/crack?ciphered_text={quote(text)}",
-                timeout=50
-            )
+        crack_response = requests.get(f"http://127.0.0.1:8000/crack?ciphered_text={quote(text)}")
 
         result = crack_response.json()
 
