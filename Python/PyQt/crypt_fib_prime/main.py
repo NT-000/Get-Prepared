@@ -86,7 +86,7 @@ def crack_vigenere_cipher(ciphered_text: str):
         }
 
 @app.get("/primes/closest/{number}")
-async def get_closest_prime(number: int):
+def get_closest_prime(number: int):
     #generates numbers close to input number, have set an interval og 100, but can
     upper_limit = number + 100
     primes = []
@@ -113,7 +113,7 @@ async def get_closest_prime(number: int):
     }
 
 @app.get("/fibonacci/find_closest/{num}")
-async def find_closest_fibonacci(num: int):
+def find_closest_fibonacci(num: int):
     # generate Fibonacci numbers up to a reasonable limit
     fibonacci_numbers = [0, 1]
     while fibonacci_numbers[-1] < max(num * 2, 1000):  # Generate enough numbers

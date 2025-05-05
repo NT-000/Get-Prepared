@@ -4,8 +4,6 @@ from urllib.parse import quote
 from PyQt5.QtWidgets import QApplication, QLineEdit, QMainWindow, QPushButton, QLabel,QMessageBox
 from PyQt5.QtGui import QIntValidator
 
-
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
