@@ -131,7 +131,7 @@ Hvis du vil prøve har jeg lagt ved sample.txt som består av tekster på ulike 
 GET /primes/closest/50
 Svar: { "closest_prime": 47 }
 ```
-Bruker "Erathosthenes Sil" som er en metode for å finne primtall. \
+Bruker "Eratosthenes Sil" som er en metode for å finne primtall. \
 1.Starter med en liste der alle i utgangspunktet antas å være primtall. \
 2.Den begynner med 2 og markerer multipler av 2 (4,6,8 osv), altså tall som ikke er primtall. +
 3.Så går den til neste tall som ikke er markert 3 og markerer alle multipler (6,9,12 osv) helt til alle primtall innenfor området er funnet.
@@ -142,5 +142,5 @@ GET /fibonacci/find_closest/21
 Svar: { "is_fibonacci": true, "closest_fibonacci_number": 21 }
 ```
 ---
-Den lagrer de to foregående tallene helt til den når et tall høyere enn input, for så å finne nærmeste fibonacci-tall til input. 
+*Den lagrer de to foregående tallene helt til den når et tall høyere enn input, for så å finne nærmeste fibonacci-tall til input.*
 
