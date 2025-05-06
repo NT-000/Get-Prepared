@@ -1,6 +1,6 @@
 # 🛡️ Vigenère-kryptering og tallanalyse
 
-Et skrivebordsprogram som lar deg kryptere og dekryptere tekst med Vigenère-chiffer, knekke ukjente nøkler ved hjelp av frekvensanalyse, og finne nærmeste primtall og Fibonacci-tall.
+*Et skrivebordsprogram som lar deg kryptere og dekryptere tekst med Vigenère-chiffer, knekke ukjente nøkler ved hjelp av frekvensanalyse, og finne nærmeste primtall og Fibonacci-tall.*
 
 ---
 
@@ -112,7 +112,8 @@ V-K = V flyttes 10 plasser tilbake -> L \
 S-E = S flyttes 4 plasser tilbake -> O \
 
 
-**![img.png](img.png)Kode-Knekking:**
+**![icons8-breaking-51](https://github.com/user-attachments/assets/43df182d-fcd4-41bc-8009-045afa2de698)
+Kode-Knekking:**
 ```
 GET /crack?ciphered_text={kryptert_tekst}
 Svar: { "suggested_key": "Foreslått_nøkkel", "deciphered_text": "Originaltekst" }
