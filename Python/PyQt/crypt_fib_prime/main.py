@@ -25,8 +25,8 @@ def vigenere_encrypt(text: str, key: str):
             key_letter = key[key_index_position % key_length]
             shift = ord(key_letter) - ord('a')
             shift_base = ord('A') if char.isupper() else ord('a')
-            encrypted_position = (ord(char) - shift_base + shift) % 26 # converts the char to pos(0-25), adds shift, converts back again
-            encrypted_char = chr(encrypted_position + shift_base)
+            encrypted_position = (ord(char) - shift_base + shift) % 26 # converts the char to a pos(0-25) , subtracts shift_base(65) adds shift
+            encrypted_char = chr(encrypted_position + shift_base) # converts pos + shift_base(65) to unicode value = char
             result.append(encrypted_char)
             key_index_position += 1
         else:
@@ -62,9 +62,9 @@ def crack_vigenere_cipher(ciphered_text: str):
         # clean text for analyzing - keeps letters
         cleaned_text = ''.join([c for c in ciphered_text.upper() if c.isalpha()])
 
-        if len(cleaned_text) < 20:
+        if len(cleaned_text) < 60:
             return {
-                "error": " Trenger minst 20 bokstaver."
+                "error": " Trenger minst 60 bokstaver."
             }
 
         # find probable key_length
@@ -73,32 +73,29 @@ def crack_vigenere_cipher(ciphered_text: str):
         # find
         key = find_key(cleaned_text, key_length)
 
-        res = requests.get(
-            f"http://127.0.0.1:8000/decipher?ciphered_text={ciphered_text}&key={key.lower()}",
-            timeout=5
-        )
+        res = requests.get(f"http://127.0.0.1:8000/decipher?ciphered_text={ciphered_text}&key={key.lower()}",)
         decrypted = res.json()["deciphered_text"]
 
         return {
-            "suggested_key": key.lower(),  # Tilpass til formatet brukt i frontend
+            "suggested_key": key.lower(),
             "key_length": key_length,
             "deciphered_text": decrypted
         }
 
 @app.get("/primes/closest/{number}")
 def get_closest_prime(number: int):
-    #generates numbers close to input number, have set an interval og 100, but can
+    # generates numbers close to input number, have set a limit that's 100 numbers over input
     upper_limit = number + 100
     primes = []
     numbers = [True] * (upper_limit + 1)
     for i in range(2, upper_limit + 1):
-        if numbers[i]:
+        if numbers[i]: # if number is still marked as true(primenumber)
             primes.append(i)
-            for j in range(i * i, upper_limit + 1, i):
+            for j in range(i * i, upper_limit + 1, i): # marker alle multipler som ikke-primtall
                 numbers[j] = False
 
     # find closest primenumber
-    min_distance = float('inf') #to be sure that min_distance is lesser than input
+    min_distance = float('inf') #to be sure that initial value is not smaller than input.
     closest_prime = None
 
     for p in primes:
@@ -116,7 +113,7 @@ def get_closest_prime(number: int):
 def find_closest_fibonacci(num: int):
     # generate Fibonacci numbers up to a reasonable limit
     fibonacci_numbers = [0, 1]
-    while fibonacci_numbers[-1] < max(num * 2, 1000):  # Generate enough numbers
+    while fibonacci_numbers[-1] < max(num * 2, 1000):  # generate enough numbers
         fibonacci_numbers.append(fibonacci_numbers[-1] + fibonacci_numbers[-2])
 
     if num in fibonacci_numbers:
@@ -127,7 +124,7 @@ def find_closest_fibonacci(num: int):
 
     def calculate_distance(x):
         return abs(x - num)
-    # closest fib number, calculates distance to fib num abs always returns a positive number
+    # closest fib number, calculates distance to fib num abs always returns a positive number, uses min() to find shortest distance from input.
     closest_fib = min(fibonacci_numbers, key=calculate_distance)
 
     return {
@@ -137,8 +134,8 @@ def find_closest_fibonacci(num: int):
 
 
 def index_of_coincidence(text):
-    #calculates coincidence of a text
-    counts = Counter(text)
+    #calculates index of coincidence of a text. High IoC indicates regular text, low IoC indicates random
+    counts = Counter(text) # Counter - sort of dictionary, counts each letter with Counter.
     total = len(text)
 
     if total <= 1:
@@ -157,25 +154,25 @@ def find_key_length(ciphertext, max_length=20):
     #finds the likely key length for a Vigenère-encrypted text
     #using Index of Coincidence (IoC).
 
-    results = [] # stores a tuple(test_length, average_length)
+    results = [] # stores a tuple(key_test_length, average_ioc)
 
     # key lengths from 1 to max_length (or half of text-length)
     max_potential_length = min(max_length, len(ciphertext) // 2)
 
-    for test_length in range(1, max_potential_length + 1):
-        # for each potential key length, create test_length number of groups
+    for key_test_length in range(1, max_potential_length + 1):
+        # for each potential key length, create key_test_length number of groups
         groups = []
 
-        # create groups by taking every test_length-th character
+        # create groups by taking every key_test_length-th character
 
-        for start_pos in range(test_length):
+        for start_pos in range(key_test_length): # each character will be encrypted with the same char in the key, example if the key consist of 5 characters, each fifth char in the ciphertext will be encrypted with the same letter. If the key has a length of 5 it gets 5 different groups.
 
             # create a group with characters that share the same position in the key cycle
             group = ""
             pos = start_pos
-            while pos < len(ciphertext): # each character will be encrypted with the same char in the key, example if the key consist of 5 characters, each fifth char in the ciphertext will be encrypted with the same letter. If the key has a length of 5 it gets 5 different groups.
+            while pos < len(ciphertext):
                 group += ciphertext[pos]
-                pos += test_length
+                pos += key_test_length
 
             groups.append(group)
 
@@ -184,10 +181,10 @@ def find_key_length(ciphertext, max_length=20):
         for group in groups:
             total_ioc += index_of_coincidence(group)
 
-        average_ioc = total_ioc / test_length
+        average_ioc = total_ioc / key_test_length
 
         # store result for this key length
-        results.append((test_length, average_ioc))
+        results.append((key_test_length, average_ioc))
 
     # sort results based on how close the IoC value is to 0.067.
     # the closer to 0.067, the more likely it is the correct key length
@@ -249,8 +246,8 @@ def find_key(ciphertext, key_length):
         # the most probable shift, by analyzing frequency of letters in sequence and returns the most probable shift
         best_shift = find_shift(sequence)
 
-        # ASCII-value of a(65), base, + shift-value, converts back to letter
-        key_letter = chr(best_shift + ord('A'))
+
+        key_letter = chr(best_shift + ord('A')) # ASCII-value of A(65), base, + shift-value, converts back to letter
         key += key_letter
 
     return key
