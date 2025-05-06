@@ -71,6 +71,10 @@ Applikasjonen gir deg mulighet til å:
 
 ## 🧩Eksempler
 
+Konverteringstabell for det engelske alfabetet
+![image](https://github.com/user-attachments/assets/57a1b8da-0d57-42c1-8c60-49c53a19b2b2)
+
+
 **🔐Kryptering:**
 ```
 GET /cipher?text=HELLO&key=KEY
