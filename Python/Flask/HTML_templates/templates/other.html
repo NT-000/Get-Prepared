@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}
+	Other Page
+{% endblock %}
+{% block content %}
+    <p>This is the other page</p>
+    <p>{{ text|upper }}</p>
+    <p>{{ text|lower }}</p>
+    <p>{{ text|title }}</p>
+    <p>{{ text|replace('t', 'T') }}</p>
+    <p>{{ text|reverse_string }}</p>
+    <p>{{ text|repeat }}</p>
+    <p>{{ text|repeat(3) }}</p>
+    <p>{{ text|swap_case }}</p>
+    <p>{{ text|alternate_case }}</p>
+{% endblock %}
