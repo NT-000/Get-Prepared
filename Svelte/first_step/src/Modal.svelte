@@ -1,9 +1,6 @@
 <script>
-    export let message;
     export let showModal;
-    export let regMsg;
     export let isPremium;
-    export let loggedInMember;
 
 
 </script>
@@ -11,13 +8,9 @@
 {#if showModal}
 <div class="backdrop" on:click|self>
  <div class="modal" class:isPremium = {isPremium}>
-     {#if isPremium}
-         <h3>Hello {loggedInMember.name}!</h3>
-         <p>{message}</p>
-         {:else}
-         <h3>Hello {loggedInMember.name}!</h3>
-     <p>{regMsg}</p>
-         {/if}
+<slot>
+
+</slot>
  </div>
 </div>
     {/if}

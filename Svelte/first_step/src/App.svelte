@@ -1,10 +1,11 @@
 <script>
 import Modal from './Modal.svelte'
+import AddPersonForm from './AddPersonForm.svelte'
 let showModal = false;
 let people = [
-    {name:'Joe', beltColor:'White', isPremium:true, age:32, id:1},
-    {name:'Anna', beltColor:'Black',isPremium:false, age:22, id:2},
-    {name:'Siegfried', beltColor:'Yellow', isPremium:true, age:37, id:3},
+    {name:'Joe', beltColor:'White', skills:['Fightning'], isPremium:true, age:32, id:1},
+    {name:'Anna', beltColor:'Black', skills:['Sneaking','Running'], isPremium:false, age:22, id:2},
+    {name:'Siegfried', beltColor:'Yellow', skills:['Running'], isPremium:true, age:37, id:3},
 ]
 
 const randomMember = () =>{
@@ -19,22 +20,21 @@ const handleDelete = (id) =>{
 const toggleClick = () =>{
     showModal = !showModal
 }
-let num = 3
+const addPerson = (event) =>{
+    const person = event.detail
+    people = [...people, person]
+    showModal = false
+}
 </script>
 <button on:click|once={toggleClick}>
     <span>
-    Open modalSS
+    Open modal
 </span>
 </button>
-<Modal message="25% off for premium members" regMsg="ATTENTION! New offers for new members!!!" isPremium={loggedInMember.isPremium} {showModal} on:click={toggleClick} {loggedInMember}/>
+<Modal on:click={toggleClick} {showModal}>
+<AddPersonForm on:addPerson={addPerson}></AddPersonForm>
+</Modal>
 <main>
-    {#if num > 11}
-        <p>Number greater than 11</p>
-        {:else if num > 6}
-        <p>Number is greater than 6</p>
-    {:else}
-        <p>Not greater than 6</p>
-        {/if}
 
 <div>
     {#each people as person (person.id)}
@@ -46,7 +46,15 @@ let num = 3
             <strong>MASTER MA</strong>
             {:else}
             <strong>{person.beltColor} belt, good enough</strong>
-        {/if}<br> Belt: {person.beltColor} - {person.age}
+        {/if}
+        <br>Belt: {person.beltColor}
+        <br>Age:{person.age}
+        <br>Premium Member:{person.isPremium}
+        <br>Skills:<br>
+        {#each person.skills as skill (skill.id)}
+            {skill},
+            {/each}
+        <br>
             <button on:click={() => handleDelete(person.id)}>Delete</button>
     </ul>
     {:else}
