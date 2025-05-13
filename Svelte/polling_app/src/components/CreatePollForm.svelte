@@ -1,7 +1,7 @@
 <script>
     import Button from '../shared/Button.svelte'
-    import { createEventDispatcher } from 'svelte';
-    const dispatch = createEventDispatcher();
+    import PollStore from '../stores/PollStore.js'
+    export let activeItem;
 
     let fields =  {question: '', answer_a: '', answer_b: ''}
     let errors = {question: '', answer_a: '', answer_b: ''}
@@ -33,11 +33,13 @@
         }
         if(valid) {
            let poll = {...fields, votesA:0, votesB:0, id:Math.random()}
-            dispatch('add', poll)
+            PollStore.update(currentPolls => {
+                return [...currentPolls, poll]
+            })
+            activeItem = 'Current Polls'
             fields = {question: '', answer_a: '', answer_b: ''}
             errors = {question: '', answer_a: '', answer_b: ''}
         }
-
     }
 </script>
 
@@ -61,7 +63,6 @@
         <div class="error">{errors.answer_b}</div>
     </div>
     <Button type="secondary" flat={true}>Add Poll</Button>
-
 </form>
 </main>
 

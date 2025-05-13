@@ -1,18 +1,32 @@
 <script>
-
+import PollStore from '../stores/PollStore.js';
 import Card from "../shared/Card.svelte";
-import {createEventDispatcher} from "svelte";
+import Button from "../shared/Button.svelte";
 
-const dispatch = createEventDispatcher();
 export let poll;
 $: totalVotes = poll.votesA + poll.votesB;
 
-$: votesABarWidth = Math.floor((poll.votesA / totalVotes) * 100);
-$: votesBBarWidth = Math.floor((poll.votesB / totalVotes) * 100);
+$: votesABarWidth = Math.floor((poll.votesA / totalVotes) * 100) || 0;
+$: votesBBarWidth = Math.floor((poll.votesB / totalVotes) * 100) || 0;
+
 
 const handleVote = (option, id) => () => {
-    dispatch('vote', {option, id});
+
+    PollStore.update(currentPolls =>  {
+        let pollCopy = [...currentPolls]
+        let upvotedPoll = pollCopy.find((poll) => poll.id == id)
+
+        option === 'a' ? upvotedPoll.votesA++ : upvotedPoll.votesB++
+
+        return pollCopy;
+    })
 }
+const handleDelete = (id) => {
+    PollStore.update(currentPolls =>  {
+        return currentPolls.filter(poll => poll.id != id)
+    })
+}
+
 
 </script>
 
@@ -28,6 +42,9 @@ const handleVote = (option, id) => () => {
             <div class="answer" on:click={handleVote('b', poll.id)}>
                 <div class="percent percent-b" style="width: {votesBBarWidth}%"></div>
                 <span>{poll.answer_b}</span>
+            </div>
+            <div class="delete">
+                <Button type="secondary" on:click={() => handleDelete(poll.id)}>Delete Poll</Button>
             </div>
         </div>
     </Card>
@@ -48,6 +65,7 @@ p{
     cursor: pointer;
     margin: 10px auto;
     position: relative;
+    color:black;
 }
 .answer:hover{
     opacity: 0.8;
@@ -61,6 +79,8 @@ span{
     height: 100%;
     position: absolute;
     box-sizing: border-box;
+    transition: width 0.5s ease;
+    border-radius: 8px;
 }
 .percent-a{
 border-left: 4px solid red;
@@ -71,5 +91,10 @@ left: 0;
     border-left: 4px solid green;
     left: 0;
     background: rgba(69, 217, 196, 0.2);
+}
+.delete{
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
 }
 </style>

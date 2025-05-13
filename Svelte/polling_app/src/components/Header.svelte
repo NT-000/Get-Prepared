@@ -1,9 +1,9 @@
 <script>
-
+import {fade} from "svelte/transition";
 </script>
 
 <header>
-<h1>
+<h1 in:fade>
     <img src="/header.png" alt="logo-header">
 </h1>
 </header>
@@ -17,6 +17,8 @@
         background-color: #f7f7f7;
         padding: 20px;
         top: 0;
+        border-bottom: 5px solid black;
+        border-radius: 10px;
     }
     h1{
     margin: 0;

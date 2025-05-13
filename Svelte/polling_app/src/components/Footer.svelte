@@ -1,5 +1,9 @@
+<script>
+    import {fade, fly} from "svelte/transition";
+</script>
+
 <footer>
-    <div class="copyright">
+    <div class="copyright" in:fade>
         © 2025 CockRoach Media
     </div>
 </footer>

@@ -11,10 +11,10 @@
     <div class="tabs">
         <ul>
         {#each items as item}
-            <li on:click={() => dispatch('tabChange', item)}>
+            <li on:click={() => activeItem = item}>
                <div class:active={item === activeItem}>{item}</div>
             </li>
-                {/each}
+        {/each}
         </ul>
     </div>
 </main>
