@@ -55,7 +55,6 @@
             <h3>Score: {score}</h3>
             <br>
 
-
         <h2>{question.question}</h2>
 
         <ul style="list-style-type: none">
