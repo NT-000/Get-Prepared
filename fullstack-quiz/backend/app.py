@@ -28,7 +28,8 @@ def get_questions():
 
 @app.route("/api/scores", methods=["GET"])
 def get_scores():
-    pass
+    docs = list(scores_coll.find({}, {"_id": False}))
+    return jsonify(docs), 200
 
 @app.route("/api/scores", methods=["POST"])
 def post_scores():
