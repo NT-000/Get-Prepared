@@ -1,26 +1,21 @@
 <script>
     import NormalQuestion from "./NormalQuestion.svelte";
-    import Button from "../shared/Button.svelte";
+    import SliderQuestion from "./SliderQuestion.svelte";
 
     export let question;
     export let handleAnswer;
     export let handleSliderAnswer;
-    export let sliderValue = 50;
+    export let sliderValue;
     export let minInterval;
     export let maxInterval;
-    export let option;
 </script>
 
 {#if question.type === 'normal'}
 <NormalQuestion {question} {handleAnswer}/>
 
     {:else if question.type === 'slider'}
-    <form>
-        <input type="range" min="{question.min}" max="{question.max}" bind:value={sliderValue}/>
+    <SliderQuestion {question} {handleSliderAnswer} {sliderValue}/>
 
-        <p>Valgt verdi: {sliderValue}</p>
-        <Button type="primary" on:sliderAnswer={handleSliderAnswer} />
-    </form>
        {:else if question.type === 'multiple'}
        <ul style="list-style-type: none">
            {#each question.options as option (option.id)}

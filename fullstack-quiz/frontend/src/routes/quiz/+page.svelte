@@ -59,8 +59,10 @@
   const handleSliderAnswer = (sliderValue, question) => {
       if(question.correctAnswer === sliderValue) {
           score += question.points;
+          console.log(`Riktig: ${sliderValue} + ${question.points} poeng!`);
       } else {
           score -= question.points;
+          console.log(`Feil: ${sliderValue} - ${question.points} poeng!`);
       }
       questionStore.update( (questions) => {
           return questions.filter(q => q.question !== question.question)

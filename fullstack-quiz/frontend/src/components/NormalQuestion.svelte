@@ -3,7 +3,7 @@
     export let handleAnswer;
 </script>
 
-
+<h2>{question.question}</h2>
 <ul style="list-style-type: none">
             {#each question.options as option}
                <li on:click={() => handleAnswer(option, question)}>{option.text}</li>
