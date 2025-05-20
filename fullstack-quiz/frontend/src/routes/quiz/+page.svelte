@@ -2,13 +2,16 @@
   import { questionStore } from '../../stores/QuestionStore.js';
   import Card from "../../shared/Card.svelte";
   import {onMount} from "svelte";
-  import Question from "../../components/Question.svelte";
   export let data;
   questionStore.set(data.questions);
 
+  import NormalQuestion from "../../components/NormalQuestion.svelte";
+  import SliderQuestion from "../../components/SliderQuestion.svelte";
+
+  let question;
+  let sliderValue;
 
   let score = 0
-  let question = ""
   let number_array = []
   let error_message = ""
   let gameOver = false
@@ -67,33 +70,47 @@
       questionStore.update( (questions) => {
           return questions.filter(q => q.question !== question.question)
       });
+      pickQuestion();
   }
 
     onMount(async () => {
      await fill_array();
      await pickQuestion();
   })
+
+  const newGame = () => {
+      score = 0;
+      questionStore.set(data.questions);
+      pickQuestion();
+  }
 </script>
 
 <h1>Velkommen til Quiz</h1>
 <div>
     <Card>
         <h3>Score: {score}</h3>
-        {#if !gameOver && question}
         <form class="form">
+        {#if !gameOver && question}
 
             <br>
 
+        {#if question.type === 'normal'}
+<NormalQuestion {question} {handleAnswer}/>
 
-        <Question question={question} {handleAnswer} {handleSliderAnswer}/>
-
-        </form>
-
+    {:else if question.type === 'slider'}
+    <SliderQuestion {question} {handleSliderAnswer} {sliderValue}/>
+            {:else}
+            <p>Ukjent spilltype</p>
             {/if}
+
+{/if}
+
         {#if gameOver}
             <p>{error_message}</p>
-            {/if}
+            <button on:click={newGame}>Start nytt spill</button>
+        {/if}
 
+        </form>
     </Card>
 </div>
 
