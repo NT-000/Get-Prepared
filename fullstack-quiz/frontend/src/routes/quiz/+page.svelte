@@ -2,55 +2,47 @@
   import { questionStore } from '../../stores/QuestionStore.js';
   import Card from "../../shared/Card.svelte";
   import {onMount} from "svelte";
+  import {currentUser, fetchCurrentUser} from "../../stores/userStore.js";
   export let data;
-  questionStore.set(data.questions);
 
   import NormalQuestion from "../../components/NormalQuestion.svelte";
   import SliderQuestion from "../../components/SliderQuestion.svelte";
+  import TimelineQ from "../../components/TimelineQ.svelte";
 
   let question;
-  let sliderValue;
+  let sliderValue = 0;
 
   let score = 0
-  let number_array = []
   let error_message = ""
   let gameOver = false
+  let gameStart = false
+  let copy_questions = [...data.questions]
 
-  console.log("num array: ", number_array);
+
+  console.log($currentUser)
 
   const pickQuestion = () => {
-    if(data.questions.length === 0) {
+    if(copy_questions.length <= 27) {
         gameOver = true;
-        error_message = "Game over! Din score: " + score
+        error_message = "Game over! your score: " + score
       return;
     }
-    if(number_array.length === 0) {
-      error_message = "No more questions left!"
-    }
-      const index = random();
-    question = data.questions[index];
-    data.questions.splice(index, 1);
-    console.log("num array: ", number_array);
-}
-  const random = () => {
-      return Math.floor(Math.random() * data.questions.length)
-  }
 
-    let fill_array = () => {
-    for (let i = 0; i < data.questions.length; i++) {
-        number_array.push(i)
-    }
-  }
+    const index = Math.floor(Math.random() * copy_questions.length)
+    question = copy_questions[index];
+    copy_questions.splice(index, 1);
+}
+
 
   $: console.log("score: ", score);
 
   const handleAnswer = (option, question) => {
-    if (option.isCorrect) {
-      console.log(`Riktig: ${option.text} + ${question.points} poeng!`);
+    if (option.isCorrect || option === question.correctAnswer) {
+        option.isCorrect ? console.log(`correct answer: ${option.text} + ${question.points} points!`) : console.log(`correct answer: ${question.correctAnswer} + ${question.points} points!`);
       score += question.points;
 
     } else {
-      console.log(`Feil: ${option.text} - ${question.points} poeng!`);
+      option ? console.log(`wrong answer: ${option.text} - ${question.points} points!`) : console.log(`wrong answer: ${question.option} - ${question.points} points!`);
       score -= question.points;
     }
     questionStore.update( (questions) => {
@@ -59,58 +51,45 @@
     pickQuestion();
   };
 
-  const handleSliderAnswer = (sliderValue, question) => {
-      if(question.correctAnswer === sliderValue) {
-          score += question.points;
-          console.log(`Riktig: ${sliderValue} + ${question.points} poeng!`);
-      } else {
-          score -= question.points;
-          console.log(`Feil: ${sliderValue} - ${question.points} poeng!`);
-      }
-      questionStore.update( (questions) => {
-          return questions.filter(q => q.question !== question.question)
-      });
-      pickQuestion();
-  }
-
     onMount(async () => {
-     await fill_array();
+
+     await fetchCurrentUser();
      await pickQuestion();
   })
 
   const newGame = () => {
       score = 0;
-      questionStore.set(data.questions);
+      gameOver = false
+      error_message = ''
+      copy_questions = [...data.questions]
       pickQuestion();
   }
 </script>
 
-<h1>Velkommen til Quiz</h1>
+{#if $currentUser}
+    <h1>Velkommen til Quiz, {$currentUser.username}</h1>
+{/if}
 <div>
     <Card>
         <h3>Score: {score}</h3>
-        <form class="form">
-        {#if !gameOver && question}
-
-            <br>
-
-        {#if question.type === 'normal'}
-<NormalQuestion {question} {handleAnswer}/>
-
-    {:else if question.type === 'slider'}
-    <SliderQuestion {question} {handleSliderAnswer} {sliderValue}/>
-            {:else}
-            <p>Ukjent spilltype</p>
+        <p>Spørsmål igjen {copy_questions.length}</p>
+        <div class="form">
+            {#if !gameOver && question}
+                <br>
+                {#if question.type === 'normal'}
+                    <NormalQuestion {question} {handleAnswer}/>
+                {:else if question.type === 'slider'}
+                    <SliderQuestion {question} {handleAnswer} {sliderValue}/>
+                {:else if question.type === 'timeline'}
+                    <TimelineQ {question}/>
+                {/if}
             {/if}
 
-{/if}
-
-        {#if gameOver}
-            <p>{error_message}</p>
-            <button on:click={newGame}>Start nytt spill</button>
-        {/if}
-
-        </form>
+            {#if gameOver}
+                <p>{error_message}</p>
+                <button on:click={newGame}>Start nytt spill</button>
+            {/if}
+        </div>
     </Card>
 </div>
 

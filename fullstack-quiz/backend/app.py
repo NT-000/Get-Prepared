@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 app.secret_key = SECRET_KEY
 
-CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -30,13 +30,11 @@ def login():
 
     user_data = users_coll.find_one({"username": username})
 
-    user = User(str(user_data["_id"]), user_data["username"], user_data["password"])
-    login_user(user)
-
     if not user_data or user_data["password"] != password:
         return jsonify({"success": False, "message": "Invalid credentials"}), 401
 
     user = User(str(user_data["_id"]), user_data["username"], user_data["password"])
+    print("logged in user:", user)
     login_user(user)
     return jsonify({"success": True, "message": "Login successful"}), 200
 
@@ -44,7 +42,7 @@ def login():
 @app.route("/api/logged_in_user", methods=["GET"])
 @login_required
 def logged_in_user():
-    return jsonify({"user": {"id": current_user.id, "username": current_user.username}}), 401
+    return jsonify({"id": current_user.id, "username": current_user.username}), 200
 
 #Logout
 @app.route("/api/logout", methods=["POST"])
