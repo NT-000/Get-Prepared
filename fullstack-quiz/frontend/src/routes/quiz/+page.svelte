@@ -2,12 +2,13 @@
   import { questionStore } from '../../stores/QuestionStore.js';
   import Card from "../../shared/Card.svelte";
   import {onMount} from "svelte";
-  import {currentUser, fetchCurrentUser} from "../../stores/userStore.js";
+  import {currentUser, guest} from "../../stores/userStore.js";
   export let data;
 
   import NormalQuestion from "../../components/NormalQuestion.svelte";
   import SliderQuestion from "../../components/SliderQuestion.svelte";
   import TimelineQ from "../../components/TimelineQ.svelte";
+  import {goto} from "$app/navigation";
 
   let question;
   let sliderValue = 0;
@@ -18,8 +19,25 @@
   let gameStart = false
   let copy_questions = [...data.questions]
 
+  const logOut = async () => {
+          try {
+            const res = await fetch(`/api/logout`, {
+            method: 'POST',
+            credentials: 'include',
+            });
+            if (res.ok) {
+                currentUser.set(null);
+                guest.set(null);
+                await goto("/login")
+            } else {
+                console.error('Logout feilet');}
+          } catch (err) {
+              console.error('Something went wrong logging out', err)
+          }
+  }
 
-  console.log($currentUser)
+  console.log("guest:",$guest)
+  console.log("currrentUser",$currentUser)
 
   const pickQuestion = () => {
     if(copy_questions.length <= 27) {
@@ -27,12 +45,10 @@
         error_message = "Game over! your score: " + score
       return;
     }
-
     const index = Math.floor(Math.random() * copy_questions.length)
     question = copy_questions[index];
     copy_questions.splice(index, 1);
 }
-
 
   $: console.log("score: ", score);
 
@@ -52,8 +68,6 @@
   };
 
     onMount(async () => {
-
-     await fetchCurrentUser();
      await pickQuestion();
   })
 
@@ -66,8 +80,11 @@
   }
 </script>
 
+<div><button on:click={logOut}>Logg ut</button></div>
 {#if $currentUser}
     <h1>Velkommen til Quiz, {$currentUser.username}</h1>
+{:else if $guest}
+    <h1>Velkommen til Quiz, {$guest.username}</h1>
 {/if}
 <div>
     <Card>
