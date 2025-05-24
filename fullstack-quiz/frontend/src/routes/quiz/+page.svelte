@@ -4,7 +4,7 @@
   import {onMount} from "svelte";
   import {currentUser, guest} from "../../stores/userStore.js";
   export let data;
-
+  import {score} from "../../stores/scoreStore.js"
   import NormalQuestion from "../../components/NormalQuestion.svelte";
   import SliderQuestion from "../../components/SliderQuestion.svelte";
   import TimelineQ from "../../components/TimelineQ.svelte";
@@ -13,7 +13,7 @@
   let question;
   let sliderValue = 0;
 
-  let score = 0
+
   let error_message = ""
   let gameOver = false
   let gameStart = false
@@ -42,7 +42,7 @@
   const pickQuestion = () => {
     if(copy_questions.length <= 27) {
         gameOver = true;
-        error_message = "Game over! your score: " + score
+        error_message = "Game over! your scoreStore: " + $score
       return;
     }
     const index = Math.floor(Math.random() * copy_questions.length)
@@ -50,16 +50,16 @@
     copy_questions.splice(index, 1);
 }
 
-  $: console.log("score: ", score);
+  $: console.log("scoreStore: ", $score);
 
   const handleAnswer = (option, question) => {
     if (option.isCorrect || option === question.correctAnswer) {
         option.isCorrect ? console.log(`correct answer: ${option.text} + ${question.points} points!`) : console.log(`correct answer: ${question.correctAnswer} + ${question.points} points!`);
-      score += question.points;
+      $score += question.points;
 
     } else {
       option ? console.log(`wrong answer: ${option.text} - ${question.points} points!`) : console.log(`wrong answer: ${question.option} - ${question.points} points!`);
-      score -= question.points;
+      $score -= question.points;
     }
     questionStore.update( (questions) => {
       return questions.filter(q => q.question !== question.question)
@@ -72,7 +72,7 @@
   })
 
   const newGame = () => {
-      score = 0;
+      $score = 0;
       gameOver = false
       error_message = ''
       copy_questions = [...data.questions]
@@ -88,7 +88,7 @@
 {/if}
 <div>
     <Card>
-        <h3>Score: {score}</h3>
+        <h3>$Score: {$score}</h3>
         <p>Spørsmål igjen {copy_questions.length}</p>
         <div class="form">
             {#if !gameOver && question}
@@ -98,7 +98,7 @@
                 {:else if question.type === 'slider'}
                     <SliderQuestion {question} {handleAnswer} {sliderValue}/>
                 {:else if question.type === 'timeline'}
-                    <TimelineQ {question}/>
+                    <TimelineQ {question} {pickQuestion}/>
                 {/if}
             {/if}
 
