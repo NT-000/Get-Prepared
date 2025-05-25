@@ -17,6 +17,12 @@
         width: 100%;
         height: 100%;
     }
+    li:hover{
+        cursor: pointer;
+        background-color: #eee;
+        width: 100%;
+        height: 100%;
+    }
     li{
         margin: 10px;
         font-family: comic sans ms,serif;
