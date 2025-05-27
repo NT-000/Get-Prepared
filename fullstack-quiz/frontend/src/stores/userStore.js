@@ -10,7 +10,7 @@ export async function fetchGuestUser(){
     });
    const data = await res.json();
    if (data.success){
-       guest.set({id: data.id, username: data.username});
+       guest.set({id: data.id, username: data.username, name: data.name});
    }else{
        guest.set(null)
    }
@@ -24,7 +24,7 @@ export async function fetchCurrentUser() {
     });
        const data = await res.json();
    if (data.success){
-       currentUser.set({ id: data.id, username: data.username });
+       currentUser.set({ id: data.id, username: data.username , name: data.name});
    } else {
        currentUser.set(null);
    }

@@ -1,24 +1,25 @@
 <script>
   import { questionStore } from '../../stores/QuestionStore.js';
   import Card from "../../shared/Card.svelte";
-  import {onMount} from "svelte";
   import {currentUser, guest} from "../../stores/userStore.js";
   export let data;
-  import {score} from "../../stores/scoreStore.js"
+  import {score, gameTypes, currentGame, questionsAsked} from "../../stores/gameStore.js"
   import NormalQuestion from "../../components/NormalQuestion.svelte";
   import SliderQuestion from "../../components/SliderQuestion.svelte";
   import TimelineQ from "../../components/TimelineQ.svelte";
   import {goto} from "$app/navigation";
+  import SliderInterval from "../../components/SliderInterval.svelte";
+  import SelectOption from "../../components/SelectOption.svelte";
 
   let question;
   let sliderValue = 0;
-
 
   let error_message = ""
   let gameOver = false
   let gameStart = false
   let copy_questions = [...data.questions]
 
+  $:console.log("antall spørsmål", $questionsAsked)
   const logOut = async () => {
           try {
             const res = await fetch(`/api/logout`, {
@@ -37,19 +38,7 @@
   }
 
   console.log("guest:",$guest)
-  console.log("currrentUser",$currentUser)
-
-  const pickQuestion = () => {
-    if(copy_questions.length <= 27) {
-        gameOver = true;
-        error_message = "Game over! your scoreStore: " + $score
-      return;
-    }
-    const index = Math.floor(Math.random() * copy_questions.length)
-    question = copy_questions[index];
-    copy_questions.splice(index, 1);
-}
-
+  console.log("currentUser",$currentUser)
   $: console.log("scoreStore: ", $score);
 
   const handleAnswer = (option, question) => {
@@ -57,9 +46,9 @@
         option.isCorrect ? console.log(`correct answer: ${option.text} + ${question.points} points!`) : console.log(`correct answer: ${question.correctAnswer} + ${question.points} points!`);
       $score += question.points;
 
-    } else {
+    } else{
       option ? console.log(`wrong answer: ${option.text} - ${question.points} points!`) : console.log(`wrong answer: ${question.option} - ${question.points} points!`);
-      $score -= question.points;
+      $score - question.points >= 0 ? $score -= question.points : 0;
     }
     questionStore.update( (questions) => {
       return questions.filter(q => q.question !== question.question)
@@ -67,29 +56,68 @@
     pickQuestion();
   };
 
-    onMount(async () => {
-     await pickQuestion();
-  })
+    const pickQuestion = async () => {
+
+    if($questionsAsked > $currentGame.questions) {
+
+          let username = $currentUser.username;
+          console.log("username:", username)
+          let userScore = $score;
+          console.log("userScore:", userScore)
+          let gameType = $currentGame.gameType;
+          console.log("new_gametype:", gameType)
+
+        const new_score_object = {username: $currentUser.username, score: $score, gameType: $currentGame.gameType}
+        console.log("Sending score object:", new_score_object);
+
+
+        gameOver = true;
+        error_message = "Game over! your scoreStore: " + $score
+        try {
+          await fetch(`/api/scores`, {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(new_score_object)
+          })
+      }catch (err){
+          console.error("error", err)
+      }
+      return;
+    }
+    const index = Math.floor(Math.random() * copy_questions.length)
+    question = copy_questions[index];
+    copy_questions.splice(index, 1);
+    $questionsAsked++;
+}
 
   const newGame = () => {
       $score = 0;
+      $questionsAsked = 0;
       gameOver = false
       error_message = ''
       copy_questions = [...data.questions]
       pickQuestion();
+      gameStart = true
   }
+  $: console.log("gametype:", $gameTypes)
 </script>
 
+{#if $currentUser || $guest}
 <div><button on:click={logOut}>Logg ut</button></div>
+    {/if}
 {#if $currentUser}
-    <h1>Velkommen til Quiz, {$currentUser.username}</h1>
+    <h1>Velkommen til Quiz, {$currentUser.name}</h1>
 {:else if $guest}
     <h1>Velkommen til Quiz, {$guest.username}</h1>
 {/if}
-<div>
+{#if gameStart === true}
+<div class="container">
     <Card>
-        <h3>$Score: {$score}</h3>
-        <p>Spørsmål igjen {copy_questions.length}</p>
+        <h3>Dine poeng: {$score}</h3>
+        <h3>Spørsmål igjen {$currentGame.questions - $questionsAsked +1}</h3>
         <div class="form">
             {#if !gameOver && question}
                 <br>
@@ -99,18 +127,31 @@
                     <SliderQuestion {question} {handleAnswer} {sliderValue}/>
                 {:else if question.type === 'timeline'}
                     <TimelineQ {question} {pickQuestion}/>
+                {:else if question.type === 'sliderInterval'}
+                    <SliderInterval {question} {pickQuestion}/>
                 {/if}
-            {/if}
-
-            {#if gameOver}
-                <p>{error_message}</p>
-                <button on:click={newGame}>Start nytt spill</button>
             {/if}
         </div>
     </Card>
 </div>
+    {/if}
+            {#if !gameStart}
+                <div class="btn">
+                <p>{error_message}</p>
+                <SelectOption/>
+                <button on:click={newGame} disabled={gameStart}>Start nytt spill</button>
+                    </div>
+
+            {/if}
 
 <style>
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: page;
+
+    }
     .form {
         display: flex;
         flex-direction: column;
@@ -129,17 +170,7 @@
         font-size: 1.2em;
     }
 
-    li:hover{
-        cursor: pointer;
-        background-color: #eee;
-        width: 100%;
-        height: 100%;
-    }
-    li{
-        margin: 10px;
-        font-family: comic sans ms,serif;
-        font-size: 1.5em;
-    }
+
     h1{
         text-align: center;
         margin-top: 20px;
@@ -149,5 +180,8 @@
     h1, h2, h3, li{
         font-family: comic sans ms,serif;
         margin: 10px;
+    }
+    .btn{
+
     }
 </style>

@@ -3,20 +3,28 @@
   import noUiSlider from 'nouislider';
   import 'nouislider/dist/nouislider.css';
       import Button from "../shared/Button.svelte";
-      import {score} from "../stores/scoreStore.js"
-      import {questionStore} from "../stores/QuestionStore.js";
+      import {score} from "../stores/gameStore.js"
   export let question;
   export let pickQuestion;
 
     let range = [0,0];
     let sliderEl;
     let correct = range[0] === question.correctMin &&  question.correctMax === range[1];
-    let difficulty = question.difficulty
 
     $: if (question) { range = [question.min, question.max]}
     $: console.log("range", range)
+
+      $: question
+
+      $: if (question) {
+    range = [question.min, question.max];
+  }
 onMount(() => {
-        if(!question) return
+constructSlider();
+})
+;
+    const constructSlider = () =>{
+                if(!question) return
 
         try {
             noUiSlider.create(sliderEl, {
@@ -35,9 +43,7 @@ onMount(() => {
         } catch (err) {
             console.error("Slider failed:", err);
         }
-
-})
-;
+    }
 
     const handleAnswer = () => {
         if(range[0] === question.correctMin &&  question.correctMax === range[1] && question.difficulty === 'easy'){
@@ -53,13 +59,15 @@ onMount(() => {
             console.log("hard, diff:", correct, question.difficulty)
         }
         else{
-            $score -=1
+            $score - question.points >= 0 ? $score -=1 : $score = 0
             console.log("-1 point")
         }
-        questionStore.update( (questions) => {
-      return questions.filter(q => q.question !== question.question)
-    });
+        range = [0,0]
         pickQuestion();
+        if (sliderEl.noUiSlider) {
+  sliderEl.noUiSlider.destroy();
+  constructSlider()
+}
     }
 
 </script>

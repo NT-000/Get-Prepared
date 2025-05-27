@@ -1,7 +1,7 @@
 <script>
     import Button from "../shared/Button.svelte";
     import {questionStore} from "../stores/QuestionStore.js";
-    import {score} from "../stores/scoreStore.js";
+    import {score} from "../stores/gameStore.js";
     export let pickQuestion
 
     export let question;
@@ -9,7 +9,7 @@
     let points = []
     let lineEl;
 
-
+    let errorMessage = ""
     let hoverPosition = null
     let hoverValue = null
 
@@ -26,7 +26,6 @@
         const ratio = Math.max(0, Math.min(1, e.offsetX / e.currentTarget.clientWidth));
         points = [...points, { pos: ratio, value: valueFromRatio(ratio) , label: question.items[currentIndex].label }];
         currentIndex += 1;
-
         clickSound.currentTime = 0;
         clickSound.play();
     }
@@ -40,31 +39,30 @@
 
     const handleMouseMove = (e) => {
         const ratio = e.offsetX / e.currentTarget.clientWidth;
-        console.log("event offsetX:", e.offsetX, e.currentTarget.clientWidth)
-        console.log("event currentTarget.clientwidth:", e.currentTarget.clientWidth)
         hoverValue = valueFromRatio(ratio);
     }
 
     const handleAnswer = () =>{
+        if(points.length !== 3) return errorMessage = "Fyll inn alle punktene på tidslinjen."
     for (let i = 0; i < points.length; i++){
         if(points[i].value === question.items[i].correctValue){
             $score += 1
             console.log("Du greide det, + 1p")
         }
     }
+
     const isCorrectOrder = points.every((point, index) => point.label === question.correctOrder[index]);
         if(isCorrectOrder){
             $score += 3
             console.log("Du greide det, + 3p")
         }
         else {
-            $score -=3;
+            $score - question.points >= 0 ? $score -=3 : $score = 0
             console.log("Du greide det ikke, - 3p")
         }
 
-        questionStore.update( (questions) => {
-            return questions.filter(q => q.question !== question.question)
-        });
+        points = []
+        currentIndex = 0
         pickQuestion()
     }
 
@@ -105,7 +103,6 @@
 </div>
 
 
-
     {#if hoverValue !== null}
         <div class="hover-marker" style="left: {hoverPosition * 100}%">
            Valgt: {hoverValue}
@@ -116,6 +113,7 @@
 {#if points.length === question.items.length}
 
 {/if}
+<p class="error">{errorMessage}</p>
 <Button type="primary" on:click={handleAnswer}>Bekreft svar</Button>
 <button on:click={() => { points = [], currentIndex = 0}}>Tilbakestill markører</button>
 
@@ -247,6 +245,12 @@
 
 .tick-label {
     white-space: nowrap;
+}
+
+.error{
+    color: red;
+    font-size: 0.8rem;
+    font-weight: bolder;
 }
 
 
