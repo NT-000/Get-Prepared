@@ -31,7 +31,7 @@ const handleLogin = async () => {
 
 const handleGuestLogin = async () => {
     const res = await fetch('/api/logged_in_guest', {
-    method: 'POST',
+    method: 'GET',
     credentials: 'include'
   });
     const data = await res.json();

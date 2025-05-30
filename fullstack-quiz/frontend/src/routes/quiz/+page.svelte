@@ -96,7 +96,7 @@
 </script>
 
 {#if $currentUser || $guest}
-<div><button onclick={logOut}>Logg ut</button></div> // Svelte 5 syntax for onclick
+<div><button onclick={logOut}>Logg ut</button></div>  <!--Svelte 5 syntax for onclick-->
     {/if}
 {#if $currentUser}
     <h1>Velkommen til Quiz, {$currentUser.name}</h1>

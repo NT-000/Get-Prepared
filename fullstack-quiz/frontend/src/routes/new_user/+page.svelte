@@ -1,5 +1,7 @@
 <script>
+    const handleNewUser = () = {
 
+    }
 </script>
 
 <main>
