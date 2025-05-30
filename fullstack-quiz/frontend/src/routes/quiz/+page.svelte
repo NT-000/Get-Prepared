@@ -1,5 +1,4 @@
 <script>
-  import { questionStore } from '../../stores/QuestionStore.js';
   import Card from "../../shared/Card.svelte";
   import {currentUser, guest} from "../../stores/userStore.js";
   export let data;
@@ -50,22 +49,13 @@
       option ? console.log(`wrong answer: ${option.text} - ${question.points} points!`) : console.log(`wrong answer: ${question.option} - ${question.points} points!`);
       $score - question.points >= 0 ? $score -= question.points : 0;
     }
-    questionStore.update( (questions) => {
-      return questions.filter(q => q.question !== question.question)
-    });
+    sliderValue = 0
     pickQuestion();
   };
 
     const pickQuestion = async () => {
 
     if($questionsAsked > $currentGame.questions) {
-
-          let username = $currentUser.username;
-          console.log("username:", username)
-          let userScore = $score;
-          console.log("userScore:", userScore)
-          let gameType = $currentGame.gameType;
-          console.log("new_gametype:", gameType)
 
         const new_score_object = {username: $currentUser.username, score: $score, gameType: $currentGame.gameType}
         console.log("Sending score object:", new_score_object);
@@ -106,7 +96,7 @@
 </script>
 
 {#if $currentUser || $guest}
-<div><button on:click={logOut}>Logg ut</button></div>
+<div><button onclick={logOut}>Logg ut</button></div> // Svelte 5 syntax for onclick
     {/if}
 {#if $currentUser}
     <h1>Velkommen til Quiz, {$currentUser.name}</h1>
@@ -139,7 +129,7 @@
                 <div class="btn">
                 <p>{error_message}</p>
                 <SelectOption/>
-                <button on:click={newGame} disabled={gameStart}>Start nytt spill</button>
+                <button onclick={newGame} disabled={gameStart}>Start nytt spill</button>
                     </div>
 
             {/if}

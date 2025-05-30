@@ -1,6 +1,5 @@
 <script>
     import Button from "../shared/Button.svelte";
-    import {questionStore} from "../stores/QuestionStore.js";
     import {score} from "../stores/gameStore.js";
     export let pickQuestion
 

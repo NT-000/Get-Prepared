@@ -23,6 +23,13 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
+@login_manager.user_loader
+def load_user(user_id):
+	if user_id.startswith("guest"):
+		return GuestUser(id=user_id)
+	else:
+		return User.get(user_id)
+
 #Login
 
 @app.route("/api/login", methods=["POST"])
@@ -39,10 +46,22 @@ def login():
 	user = User(str(user_data["_id"]), user_data["username"], user_data["password"], user_data["name"])
 	print("logged in user:", user)
 	login_user(user)
+	print("current user, login guest:", current_user.id, current_user.name)
 	return jsonify({"success": True, "message": "Login successful"}), 200
 
 
-@app.route("/api/logged_in_user", methods=["POST"])
+@app.route("/api/login_guest", methods=["POST"])
+def logged_in_guest():
+	guest_id = f"guest{random.randint(1, 10000)}"
+	guest = GuestUser(guest_id)
+	print("logged in guestuser:", guest_id)
+	login_user(guest)
+	print("current user, login guest:", current_user.username)
+	print("login user:", login_user(guest))
+	return jsonify({"success": True, "id": guest.id, "username": guest.username}), 200
+
+
+@app.route("/api/logged_in_user", methods=["GET"])
 def logged_in_user():
 	if current_user.is_authenticated:
 		return jsonify({
@@ -54,26 +73,15 @@ def logged_in_user():
 	else:
 		return jsonify({"success": False, "id": None}), 200
 
-@app.route("/api/logged_in_guest", methods=["POST"])
-def logged_in_guest():
-	guest_id = f"guest{random.randint(1, 10000)}"
-	guest = GuestUser(guest_id)
-	print("logged in guestuser:", guest_id)
-	login_user(guest)
-	return jsonify({"success": True, "id": guest.id, "username": guest.username}), 200
 
 #Logout
 @app.route("/api/logout", methods=["POST"])
 def logout():
 	logout_user()
+	print("logout user:", logout_user())
+	print("current user:", current_user)
 	return jsonify({"message": "logout successful"}), 200
 
-@login_manager.user_loader
-def load_user(user_id):
-	if user_id.startswith("guest"):
-		return GuestUser(id=user_id)
-	else:
-		return User.get(user_id)
 #Users
 
 @app.route("/api/users", methods=["POST"])
@@ -99,18 +107,17 @@ def get_questions():
 	docs = list(questions_coll.find({}, {"_id": False}))
 	return jsonify(docs), 200
 
-@app.route("/api/add-question", methods=["POST"])
-def add_question():
-	pass
-
 
 #Scores
 @app.route("/api/scores", methods=["GET"])
+@login_required
 def get_scores():
 	docs = list(scores_coll.find({}, {"_id": False}))
-	return jsonify(docs), 200
+	docs_sorted = sorted(docs, key=lambda doc: doc["score"], reverse=True)
+	return jsonify(docs_sorted), 200
 
 @app.route("/api/scores", methods=["POST"])
+@login_required
 def post_scores():
 	data = request.get_json()
 	print("Received data:", data)
