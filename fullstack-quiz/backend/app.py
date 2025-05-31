@@ -3,7 +3,7 @@ import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
-from flask_login import (LoginManager, login_user, login_required, logout_user, current_user, user_logged_in)
+from flask_login import (LoginManager, login_user, login_required, logout_user, current_user)
 
 from backend.models.guest_user import GuestUser
 from models.db import users_coll, db, scores_coll, questions_coll
@@ -51,7 +51,7 @@ def login():
 
 
 @app.route("/api/login_guest", methods=["POST"])
-def logged_in_guest():
+def login_guest():
 	guest_id = f"guest{random.randint(1, 10000)}"
 	guest = GuestUser(guest_id)
 	print("logged in guestuser:", guest_id)
@@ -76,7 +76,9 @@ def logged_in_user():
 
 #Logout
 @app.route("/api/logout", methods=["POST"])
+@login_required
 def logout():
+
 	logout_user()
 	print("logout user:", logout_user())
 	print("current user:", current_user)
@@ -86,12 +88,39 @@ def logout():
 
 @app.route("/api/users", methods=["POST"])
 def create_user():
-	pass
+	data = request.get_json()
+	print("data received, new user:",data)
+
+	try:
+		users_coll.insert_one(data)
+		return jsonify({
+			"success": True,
+		}), 200
+	except Exception as e:
+		print("failed:", e)
+		return jsonify({"success": False}), 400
+
+
+
+
 
 @app.route("/api/users", methods=["GET"])
 def get_users():
 	docs = list(users_coll.find({}, {"_id": False}))
 	return jsonify(docs), 200
+
+@app.route("/api/check_user", methods=["GET"])
+def check_user():
+	username = request.args.get("username")
+
+	if not username:
+		return jsonify({'success': False, 'message': 'Username required'}), 400
+
+	user_exists = users_coll.find_one({"username": username}) is not None
+
+	print("user_exists:",user_exists)
+	print("username:", username)
+	return jsonify({'success': True, "exists": user_exists}), 200
 
 #Questions
 
@@ -110,7 +139,6 @@ def get_questions():
 
 #Scores
 @app.route("/api/scores", methods=["GET"])
-@login_required
 def get_scores():
 	docs = list(scores_coll.find({}, {"_id": False}))
 	docs_sorted = sorted(docs, key=lambda doc: doc["score"], reverse=True)

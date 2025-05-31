@@ -30,14 +30,16 @@ const handleLogin = async () => {
 }
 
 const handleGuestLogin = async () => {
-    const res = await fetch('/api/logged_in_guest', {
-    method: 'GET',
+    const res = await fetch('/api/login_guest', {
+    method: 'POST',
     credentials: 'include'
   });
     const data = await res.json();
     if (data.success){
+        console.log("Navigerer til quiz...");
         await fetchGuestUser()
         await goto("/quiz")
+        console.log("skulle ha navigert");
     }
     else{
         console.error("noe gikk feil, gjest")
@@ -46,21 +48,56 @@ const handleGuestLogin = async () => {
 </script>
 
 <div class="login-form">
-    <h1>Login</h1>
-    <form on:submit|preventDefault={handleLogin}>
-        <input type="text" placeholder="Username" bind:value={username}/>
-        <input type="password" placeholder="Password" bind:value={password}/>
-        <Button>Logg inn</Button>
-    </form>
+    <h1>Quiz</h1>
+        <input type="text" placeholder="Username" bind:value={username} autocomplete="username"/>
+        <input type="password" placeholder="Password" bind:value={password} autocomplete="current-password"/>
+        <br>
+    <div class="buttons">
+        <Button on:click={() => handleLogin()}>Logg inn</Button>
+        <Button on:click={() => handleGuestLogin()}>Logg inn som gjest</Button>
+        <Button on:click={() => goto('/new_user')}>Ny bruker</Button>
+    </div>
 </div>
 <div>
-    <form on:submit|preventDefault={handleGuestLogin}>
-        <Button>Logg inn som gjest</Button>
-    </form>
+
+
 </div>
 
 <style>
     .login-form {
+    display: inline-block;
+        margin: 10px;
+        padding: 10px;
+        background: red;
+        border-radius: 10px;
+        justify-items: center;
+
+    }
+    .buttons{
+        display: block;
+        margin: 10px;
+        padding: 10px;
+    }
+    input{
+        margin: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        font-weight: bolder;
+        font-family: "Comic Sans MS",emoji;
+        box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+        border: 3px solid gold;
+    }
+    h1{
+    color: gold;
+        text-shadow:
+                0 0 5px black,
+                0 0 10px white,
+                0 0 20px white,
+                0 0 40px white,
+                0 0 80px white;
+    }
+    h1 text{
+        border: black 1px solid;
 
     }
 </style>

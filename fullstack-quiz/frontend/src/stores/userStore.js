@@ -4,7 +4,7 @@ export const currentUser = writable(null);
 export const guest = writable(null)
 
 export async function fetchGuestUser(){
-    const res = await fetch('/api/login_guest', {
+    const res = await fetch('/api/logged_in_user', {
         method: 'GET',
       credentials: 'include'
     });

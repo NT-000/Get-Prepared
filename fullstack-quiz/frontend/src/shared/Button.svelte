@@ -22,7 +22,8 @@ export let text;
     }
 .primary{
     background-color: red;
-    color: #ffffff;
+    color: gold;
+    border: 3px solid gold;
 }
 .secondary{
     background-color: #45c496;
