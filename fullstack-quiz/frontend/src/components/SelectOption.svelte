@@ -7,7 +7,7 @@ $:console.log("currentGame:", $currentGame)
 <div>
     <select bind:value={$currentGame}>
         <option disabled>Velg lengde på quizen</option>
-        {#each $gameTypes as type (type)}
+        {#each $gameTypes as type (type.gameType)}
             <option value={type}>{type.gameType}</option>
         {/each}
     </select>

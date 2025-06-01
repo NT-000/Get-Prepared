@@ -2,6 +2,8 @@
 import Button from "../../shared/Button.svelte";
 import {goto} from "$app/navigation";
 import {fetchCurrentUser, fetchGuestUser, guest} from "../../stores/userStore.js";
+import Input from "../../shared/Input.svelte";
+import H1 from "../../shared/H1.svelte";
 
 let username = '';
 let password = '';
@@ -48,9 +50,9 @@ const handleGuestLogin = async () => {
 </script>
 
 <div class="login-form">
-    <h1>Quiz</h1>
-        <input type="text" placeholder="Username" bind:value={username} autocomplete="username"/>
-        <input type="password" placeholder="Password" bind:value={password} autocomplete="current-password"/>
+    <H1>Quiz</H1>
+        <Input text="Username" bind:value={username} autocomplete="username"/>
+        <Input text="Password" type="password" bind:value={password} autocomplete="current-password"/>
         <br>
     <div class="buttons">
         <Button on:click={() => handleLogin()}>Logg inn</Button>
@@ -64,40 +66,31 @@ const handleGuestLogin = async () => {
 </div>
 
 <style>
-    .login-form {
-    display: inline-block;
-        margin: 10px;
-        padding: 10px;
-        background: red;
-        border-radius: 10px;
-        justify-items: center;
 
+    .login-form {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 32px;
+    max-width: 400px;
+    margin: 60px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
     }
     .buttons{
-        display: block;
-        margin: 10px;
-        padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     }
-    input{
-        margin: 10px;
-        padding: 10px;
-        border-radius: 10px;
-        font-weight: bolder;
-        font-family: "Comic Sans MS",emoji;
-        box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
-        border: 3px solid gold;
-    }
-    h1{
-    color: gold;
-        text-shadow:
-                0 0 5px black,
-                0 0 10px white,
-                0 0 20px white,
-                0 0 40px white,
-                0 0 80px white;
-    }
-    h1 text{
-        border: black 1px solid;
 
+    h1{
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 24px;
     }
 </style>
