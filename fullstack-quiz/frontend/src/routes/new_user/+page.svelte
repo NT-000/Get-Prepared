@@ -12,12 +12,12 @@
     let passwordCheck = "";
     let usernameAvailable = null;
 
-    $: if (username && username.length > 4){
+    $: if (username && username.length > 4) {
         checkUsername(username)
     }
 
     const checkUsername = async (username) => {
-        if(password === passwordCheck){
+        if (password === passwordCheck) {
             const res = await fetch(`/api/check_user?username=${username}`, {
                 method: 'GET',
                 credentials: 'include'
@@ -27,28 +27,28 @@
         }
 
     }
-    const handleSubmit = async () =>{
-        if(usernameAvailable && username.length > 4){
+    const handleSubmit = async () => {
+        if (usernameAvailable && username.length > 4) {
             const new_user = {
                 "username": username,
                 "name": name,
                 "password": password
             }
-            try{
+            try {
                 const res = await fetch('api/users', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'
+                    headers: {
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(new_user)
                 });
                 const data = await res.json()
-                if(data.success){
+                if (data.success) {
                     await goto('/login')
-                }
-                else{
+                } else {
                     console.error("error:", data.message)
                 }
-            }catch (err) {
+            } catch (err) {
                 console.error(err)
             }
         }
@@ -63,11 +63,11 @@
                 <div class="info"><H1 text="Lag ny bruker"/></div>
                 <Input bind:value={username} text="Brukernavn..." on:blur={()=> checkUsername(username)}/>
 
-                    {#if usernameAvailable}
-                        <p style="color: green;">Brukernavnet er ledig</p>
-                    {:else if usernameAvailable === false}
-                        <p style="color: red;">Brukernavnet er allerede i bruk</p>
-                    {/if}
+                {#if usernameAvailable}
+                    <p style="color: green;">Brukernavnet er ledig</p>
+                {:else if usernameAvailable === false}
+                    <p style="color: red;">Brukernavnet er allerede i bruk</p>
+                {/if}
 
                 <Input bind:value={name} text="Navnet ditt..."/>
                 <Input bind:value={password} text="Velg ditt passord..."/>
@@ -83,46 +83,51 @@
 <style>
 
     main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f5f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f5f7fa;
 
     }
+
     form {
-    background-color: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
     }
-    .info{
-    text-align: center;
-    margin-bottom: 24px;
+
+    .info {
+        text-align: center;
+        margin-bottom: 24px;
     }
+
     .info h1 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #333;
-}
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+    }
+
     input:focus {
-    border-color: #0077ff;
-    outline: none;
-}
-    p{
+        border-color: #0077ff;
+        outline: none;
+    }
+
+    p {
         padding: 5px;
         font-weight: bolder;
-        margin:10px;
+        margin: 10px;
 
     }
 
 
-    .inputs{
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    .inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
     }
 
 </style>

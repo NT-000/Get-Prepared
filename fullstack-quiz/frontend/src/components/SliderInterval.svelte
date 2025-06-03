@@ -1,30 +1,35 @@
 <script>
-      import { onMount } from 'svelte';
-  import noUiSlider from 'nouislider';
-  import 'nouislider/dist/nouislider.css';
-      import Button from "../shared/Button.svelte";
-      import {score} from "../stores/gameStore.js"
-  export let question;
-  export let pickQuestion;
+    import {onMount} from 'svelte';
+    import noUiSlider from 'nouislider';
+    import 'nouislider/dist/nouislider.css';
+    import Button from "../shared/Button.svelte";
+    import {score, questions_on_quiz} from "../stores/gameStore.js"
 
-    let range = [0,0];
+    export let question;
+    export let pickQuestion;
+
+    let range = [0, 0];
     let sliderEl;
-    let correct = range[0] === question.correctMin &&  question.correctMax === range[1];
+    $: correct = range[0] === question.correctMin && question.correctMax === range[1];
 
-    $: if (question) { range = [question.min, question.max]}
-    $: console.log("range", range)
+    $: if (question) {
+        range = [question.min, question.max]
+    }
 
-      $: question
+    $:                 if (sliderEl && sliderEl.noUiSlider) {
+        sliderEl.noUiSlider.set([question.min, question.max]);
+    }
 
-      $: if (question) {
-    range = [question.min, question.max];
-  }
-onMount(() => {
-constructSlider();
-})
-;
-    const constructSlider = () =>{
-                if(!question) return
+
+    onMount(() => {
+        if (question.min !== null && question.max !== null) {
+            constructSlider();
+        }
+
+    })
+    ;
+    const constructSlider = () => {
+        if (!question) return
 
         try {
             noUiSlider.create(sliderEl, {
@@ -46,34 +51,37 @@ constructSlider();
     }
 
     const handleAnswer = () => {
-        if(range[0] === question.correctMin &&  question.correctMax === range[1] && question.difficulty === 'easy'){
-            $score += 1
-            console.log("easy, diff:", correct, question.difficulty)
-        }
-        else if(range[0] === question.correctMin &&  question.correctMax === range[1] && question.difficulty === 'medium'){
+
+        let pointsEarned = 0;
+        if (correct && question.difficulty === 'easy') {
             $score += 2
-            console.log("medium, diff:", correct, question.difficulty)
-        }
-        else if(range[0] === question.correctMin &&  question.correctMax === range[1] && question.difficulty === 'hard'){
+            pointsEarned += 2
+
+            console.log("easy, diff:", correct, question.difficulty)
+        } else if (correct && question.difficulty === 'medium') {
             $score += 3
+            pointsEarned += 3
+            console.log("medium, diff:", correct, question.difficulty)
+        } else if (correct && question.difficulty === 'hard') {
+            $score += 5
+            pointsEarned += 5
             console.log("hard, diff:", correct, question.difficulty)
-        }
-        else{
-            $score - question.points >= 0 ? $score -=1 : $score = 0
+        } else {
+            $score - question.points >= 0 ? $score -= 1 : $score = 0
+            pointsEarned - question.points >= 0 ? pointsEarned -= 1 : pointsEarned = 0
             console.log("-1 point")
         }
-        range = [0,0]
+        $questions_on_quiz.push({...question, answer: (range[0] + "-" + range[1]), points: pointsEarned})
+
         pickQuestion();
-        if (sliderEl.noUiSlider) {
-  sliderEl.noUiSlider.destroy();
-  constructSlider()
-}
+
+
     }
 
 </script>
 <h2>Slider Intervall</h2>
 <p>{question.question}</p>
-<p>Finn intervallet på {Math.round(question.correctMax-question.correctMin)}</p>
+<p>Finn intervallet på {Math.round(question.correctMax - question.correctMin)}</p>
 <div class="interval">
     <div class="form">
         <div bind:this={sliderEl}></div>

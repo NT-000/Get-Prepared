@@ -1,10 +1,8 @@
 import os
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 from flask_login import (LoginManager, login_user, login_required, logout_user, current_user)
-
 from backend.models.guest_user import GuestUser
 from models.db import users_coll, db, scores_coll, questions_coll
 from models.user import User
@@ -100,10 +98,6 @@ def create_user():
 		print("failed:", e)
 		return jsonify({"success": False}), 400
 
-
-
-
-
 @app.route("/api/users", methods=["GET"])
 def get_users():
 	docs = list(users_coll.find({}, {"_id": False}))
@@ -129,9 +123,29 @@ def get_collection(collection):
 	docs = list(db[collection].find({}, {"_id": False}))
 	return jsonify(docs), 200
 
+@app.route('/api/questions/filtered', methods=["POST"])
+def filtered_questions():
+	data = request.get_json()
+	categories = data.get("categories", [])
+	difficulty = data.get("difficulty")
+	query = {}
+
+	if categories:
+		query["category"] = {"$in": categories}
+	if difficulty:
+		query["difficulty"] = difficulty
+	print("query:", query)
+
+	try:
+		questions = list(questions_coll.find(query, {"_id": False}))
+		return jsonify(questions), 200
+	except Exception as e:
+		print("failed:", e)
+		return jsonify({"success": False, "message": str(e)}), 400
+
+
 
 @app.route("/api/questions", methods=["GET"])
-@login_required
 def get_questions():
 	docs = list(questions_coll.find({}, {"_id": False}))
 	return jsonify(docs), 200

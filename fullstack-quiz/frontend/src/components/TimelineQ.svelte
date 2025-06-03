@@ -2,6 +2,7 @@
     import Button from "../shared/Button.svelte";
     import {score} from "../stores/gameStore.js";
     export let pickQuestion
+    import {questions_on_quiz} from "../stores/gameStore.js";
 
     export let question;
     let currentIndex = 0
@@ -42,39 +43,49 @@
     }
 
     const handleAnswer = () =>{
-        if(points.length !== 3) return errorMessage = "Fyll inn alle punktene på tidslinjen."
-    for (let i = 0; i < points.length; i++){
-        if(points[i].value === question.items[i].correctValue){
-            $score += 1
-            console.log("Du greide det, + 1p")
-        }
-    }
+        let pointsEarned = 0;
 
-    const isCorrectOrder = points.every((point, index) => point.label === question.correctOrder[index]);
+        if(points.length !== 3) return errorMessage = "Fyll inn alle punktene på tidslinjen."
+
+        for (let i = 0; i < points.length; i++){
+            if(points[i].value === question.items[i].correctValue){
+                $score += 1
+                pointsEarned += 1
+                console.log("Du greide det, + 1p")
+            }
+        }
+
+        const isCorrectOrder = points.every((point, index) => point.label === question.correctOrder[index]);
         if(isCorrectOrder){
+
             $score += 3
+
+            pointsEarned += 3
             console.log("Du greide det, + 3p")
         }
         else {
             $score - question.points >= 0 ? $score -=3 : $score = 0
+            pointsEarned - question.points >= 0 ? pointsEarned -=3 : $score = 0
             console.log("Du greide det ikke, - 3p")
         }
-
+        $questions_on_quiz.push({...question, answer_time: points, isCorrectOrder, _points: pointsEarned})
         points = []
         currentIndex = 0
         pickQuestion()
+
     }
 
     const getYearLabels = () => {
-    const labels = [];
-    const start = Math.floor(minYear / 10) * 10;
-    const end = Math.ceil(maxYear / 10) * 10;
-    const step = 50;
+        const labels = [];
+        const start = Math.floor(minYear / 10) * 10;
+        const end = Math.ceil(maxYear / 10) * 10;
+        let step = 25;
+        question.max - question.min < 101 ? step = 25 : step = 50;
         for (let y = start; y <= end; y += step) {
-        labels.push(y);
-    }
-    return labels;
-};
+            labels.push(y);
+        }
+        return labels;
+    };
 
 
 </script>
@@ -82,38 +93,37 @@
 
 <h3>Timeline</h3>
 <h2>{question.question}</h2>
-{#if points.length <= question.items.length}
-<p>Plasser: <strong>{question.items[currentIndex]?.label}</strong></p>
-    {/if}
+{#if points.length + 1 <= question.items.length}
+    <p>Plasser: <strong>{question.items[currentIndex]?.label}</strong></p>
+{/if}
 <div class="container">
-<div class="timeline" bind:this={lineEl} on:click={handleClick} on:mousemove={handleMouseMove} on:mouseleave={() => hoverValue = null}>
-    {#each points as point, i (i)}
-        <div class="marker" style="left: {point.pos * 100}%">
-            {valueFromRatio(point.pos)}
-        </div>
-    {/each}
+    <div class="hover-value">
+        <strong>{hoverValue}</strong>
+    </div>
+    <div class="timeline" bind:this={lineEl} on:click={handleClick} on:mousemove={handleMouseMove} on:mouseleave={() => hoverValue = null}>
+        {#each points as point, i (i)}
+            <div class="marker" style="left: {point.pos * 100}%">
+                {valueFromRatio(point.pos)}
+            </div>
+        {/each}
 
-    {#each getYearLabels() as year}
-        <div class="year-tick" style="left: {(100 * (year - minYear) / (maxYear - minYear))}%">
-            <div class="tick-line"></div>
-            <div class="tick-label">{year}</div>
-        </div>
-    {/each}
-</div>
+        {#each getYearLabels() as year, i (i)}
+            <div class="year-tick" style="left: {(100 * (year - minYear) / (maxYear - minYear))}%">
+                <div class="tick-line"></div>
+                <div class="tick-label">{year}</div>
+            </div>
+        {/each}
+    </div>
 
+    <div class="hover-marker" style="left: {hoverPosition * 100}%"></div>
 
-    {#if hoverValue !== null}
-        <div class="hover-marker" style="left: {hoverPosition * 100}%">
-           Valgt: {hoverValue}
-        </div>
-    {/if}
 </div>
 
 {#if points.length === question.items.length}
 
 {/if}
 <p class="error">{errorMessage}</p>
-<Button type="primary" on:click={handleAnswer}>Bekreft svar</Button>
+<Button type="button" on:click={() => handleAnswer()}>Bekreft svar</Button>
 <button on:click={() => { points = [], currentIndex = 0}}>Tilbakestill markører</button>
 
 
@@ -121,7 +131,7 @@
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #1e1e1e;
-        color: #f5f5f5;
+        color: black;
         margin: 0;
         padding: 0;
         text-align: center;
@@ -138,7 +148,7 @@
     }
 
     h2, h3 {
-        color: #ffffff;
+        color: black;
         margin-bottom: 1rem;
     }
 
@@ -174,15 +184,15 @@
     }
 
     @keyframes popIn {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+        100% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
     }
-    100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
 
     .marker:hover {
         background: #ff7875;
@@ -225,32 +235,35 @@
         background-color: #ff4d4f;
     }
 
-.year-tick {
-    position: absolute;
-    bottom: -25px;
-    transform: translateX(-50%);
-    text-align: center;
-    color: #ccc;
-    font-size: 0.7rem;
-    z-index: 5;
-}
+    .year-tick {
+        position: absolute;
+        bottom: -25px;
+        transform: translateX(-50%);
+        text-align: center;
+        color: #ccc;
+        font-size: 0.7rem;
+        z-index: 5;
+    }
 
-.tick-line {
-    width: 2px;
-    height: 8px;
-    background-color: #999;
-    margin: 0 auto 3px;
-}
+    .tick-line {
+        width: 2px;
+        height: 8px;
+        background-color: #999;
+        margin: 0 auto 3px;
+    }
 
-.tick-label {
-    white-space: nowrap;
-}
+    .tick-label {
+        white-space: nowrap;
+    }
 
-.error{
-    color: red;
-    font-size: 0.8rem;
-    font-weight: bolder;
-}
+    .error{
+        color: red;
+        font-size: 0.8rem;
+        font-weight: bolder;
+    }
+    .hover-value{
+        margin-bottom: 20px;
+    }
 
 
 </style>
