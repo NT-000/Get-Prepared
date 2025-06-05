@@ -2,36 +2,39 @@
     import Card from "../shared/Card.svelte";
 
     export let question;
+    export let isOpen = false
 
 </script>
 
 
 <div>
-    <Card>
+    <Card correct={question.points > 0} wrong={question.points === 0} active={isOpen} bind:isOpen>
 
-        Spørsmål:{question.question}
+        <div class="question">{question.question}</div>
+        {#if isOpen}
+            <div class="answer">
+                <label>Svar:</label>
+                {#if question.type === "timeline"}
 
-        <div class="answer">
-            <label>Svar:</label>
-            {#if question.type === "timeline"}
-                <p>Årståll:</p>
-                {#each question.answer_time as point, i (i)}
-                    {point.value},
-                {/each}
-            {/if}
-            <strong>{question.answer?.text || question.answer}</strong>
-            <br>
-            <label>Riktig svar:</label>
-            {#if question.type === "timeline"}
-                <ul>
-                    {#each question.items as option, i (i)}
-                        <li style="list-style: upper-roman">{option.correctValue} - {option.label}</li>
+                    {#each question.answer_time as point, i (i)}
+                        <li>
+                            {point.value} - {point.label}
+                        </li>
                     {/each}
-                </ul>
-            {/if}
-
-        </div>
-        Poeng fått: {question._points}
+                {/if}
+                <strong>{question.answer?.text || question.answer}</strong>
+                <br>
+                <label>Riktig svar:</label>
+                {#if question.type === "timeline"}
+                    <ul>
+                        {#each question.items as option, i (i)}
+                            <li style="list-style: upper-roman">{option.correctValue} - {option.label}</li>
+                        {/each}
+                    </ul>
+                {/if}
+            </div>
+            Poeng fått: {question._points}
+        {/if}
 
     </Card>
     <br>
@@ -44,8 +47,14 @@
 
     }
 
+
+    strong {
+        font-style: italic;
+
+    }
+
     label {
-        border-bottom: 3px solid #A5D6D9;
         font-weight: bolder;
+        margin-bottom: 20px;
     }
 </style>

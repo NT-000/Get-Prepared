@@ -7,6 +7,10 @@
 
     export let question;
     export let pickQuestion;
+    let isShowHint = false;
+    const toggleHint = () => {
+        isShowHint = !isShowHint
+    }
 
     let range = [0, 0];
     let sliderEl;
@@ -16,7 +20,7 @@
         range = [question.min, question.max]
     }
 
-    $:                 if (sliderEl && sliderEl.noUiSlider) {
+    $: if (sliderEl && sliderEl.noUiSlider) {
         sliderEl.noUiSlider.set([question.min, question.max]);
     }
 
@@ -72,16 +76,18 @@
             console.log("-1 point")
         }
         $questions_on_quiz.push({...question, answer: (range[0] + "-" + range[1]), points: pointsEarned})
-
         pickQuestion();
-
-
     }
 
 </script>
 <h2>Slider Intervall</h2>
 <p>{question.question}</p>
-<p>Finn intervallet på {Math.round(question.correctMax - question.correctMin)}</p>
+{#if !isShowHint}
+    <div onclick={toggleHint}>Vis hint (-0.5 poeng)</div>
+{/if}
+{#if isShowHint}
+    <p>Finn intervallet på {Math.round(question.correctMax - question.correctMin)}</p>
+{/if}
 <div class="interval">
     <div class="form">
         <div bind:this={sliderEl}></div>

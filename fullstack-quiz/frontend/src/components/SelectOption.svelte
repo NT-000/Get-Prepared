@@ -15,8 +15,14 @@
 </div>
 
 <style>
-    .input {
+    select {
         border-radius: 10px;
-        color: #9C1A1C;
+        padding: 5px;
+        text-align: center;
+    }
+
+    select:focus {
+        border: none;
+        background: lightblue;
     }
 </style>

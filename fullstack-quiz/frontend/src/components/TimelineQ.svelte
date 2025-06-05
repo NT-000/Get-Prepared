@@ -13,9 +13,13 @@
     let hoverPosition = null
     let hoverValue = null
 
-    const minYear = question.min;
-    const maxYear = question.max;
 
+    let minYear = question.min;
+    let maxYear = question.max;
+  $: if(question){
+        minYear = question.min;
+        maxYear = question.max;
+    }
     $: console.log("points:", points)
     $: console.log("scoreStore til:", $score)
 
@@ -119,9 +123,6 @@
 
 </div>
 
-{#if points.length === question.items.length}
-
-{/if}
 <p class="error">{errorMessage}</p>
 <Button type="button" on:click={() => handleAnswer()}>Bekreft svar</Button>
 <button on:click={() => { points = [], currentIndex = 0}}>Tilbakestill markører</button>

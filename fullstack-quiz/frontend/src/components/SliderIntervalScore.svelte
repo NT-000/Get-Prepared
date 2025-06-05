@@ -4,20 +4,23 @@
 
     export let question;
 
+    let isOpen = false;
 </script>
 
 <main>
-    <Card>
-        Spørsmål:{question.question}
+    <Card correct={question.points > 0} wrong={question.points === 0} active={isOpen} bind:isOpen>
+        <div>{question.question}</div>
+        {#if isOpen}
+            <div class="answer">
+                <label>Svar:</label>
+                <strong>{question.answer}</strong>
+                <br>
+                <label>Riktig svar:</label>
+                <strong>Mellom {question.correctMin + "-" + question.correctMax}</strong>
+            </div>
+            Poeng: {question.points}
+        {/if}
 
-        <div class="answer">
-            <label>Svar:</label>
-            <strong>{question.answer}</strong>
-            <br>
-            <label>Riktig svar:</label>
-            <strong>{question.correctMax + "-" + question.correctMin}</strong>
-        </div>
-        Poeng: {question.points || 0}
     </Card>
 </main>
 
@@ -25,11 +28,9 @@
 <style>
     .answer {
         margin-top: 5px;
-
     }
 
     label {
-        border-bottom: 3px solid #A5D6D9;
         font-weight: bolder;
     }
 </style>
