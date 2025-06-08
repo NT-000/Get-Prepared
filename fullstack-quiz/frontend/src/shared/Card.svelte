@@ -3,15 +3,18 @@
     export let wrong = false
     export let active = false
     export let isOpen = false
+    export let highscoreType = "";
 
     const toggle = () => {
         isOpen = !isOpen
     }
 </script>
 
-<div class="card" class:correct={correct} class:wrong={wrong} class:active={active} class:hoverable={!active}
+<div class="card {highscoreType}" class:correct={correct} class:wrong={wrong} class:active={active}
+     class:hoverable={!active}
+     class:highscoreType={highscoreType}
      onclick={toggle}>
-    <slot></slot>
+
 </div>
 
 <style>
@@ -24,6 +27,7 @@
         transition: background-color 0.2s ease;
         cursor: pointer;
     }
+
 
     .card.correct {
         background-color: #36d399;

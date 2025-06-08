@@ -16,6 +16,8 @@
 
     let audio = new Audio('/relaxing.mp3')
     let audioQ = new Audio('/new_q.mp3')
+    let audioWin = new Audio('/yey.mp3')
+    let audioLose = new Audio('/sloppy.ogg')
     let question;
     let error_message = ''
     let gameStart = false
@@ -44,6 +46,7 @@
                 currentUser.set(null);
                 guest.set(null);
                 await goto("/login")
+                audio.pause()
             } else {
                 console.error('utlogging feilet');
             }
@@ -113,6 +116,7 @@
             }
             console.log("Sending score object:", new_score_object);
             gameStart = false;
+            isNewGame = false;
             error_message = "Spillet er over, din poengsum:" + $score + "/" + totalPoints;
             try {
                 await fetch(`/api/scores`, {
@@ -131,13 +135,11 @@
             }
             return;
         }
-
         const index = Math.floor(Math.random() * $questionStore.length)
         question = $questionStore[index];
         totalPoints += question?.points;
         console.log("spørsmål fått:", $questions_on_quiz)
         $questionStore.splice(index, 1);
-
     }
 
     $: console.log("gametype:", $gameTypes)
@@ -157,6 +159,7 @@
         <H1>Velkommen til Quiz, {$guest.username}!</H1>
     {/if}
 </div>
+
 {#if gameStart}
     <div class="container">
         <Card>
@@ -166,13 +169,15 @@
                 {#if gameStart && question}
                     <br>
                     {#if question.type === 'normal'}
-                        <NormalQuestion {question} {pickQuestion}/>
+                        <NormalQuestion {question} {pickQuestion} {audioWin} {audioLose}/>
                     {:else if question.type === 'slider'}
-                        <SliderQuestion {question} {pickQuestion}/>
+                        <SliderQuestion {question} {pickQuestion} {audioWin} {audioLose}/>
                     {:else if question.type === 'timeline'}
-                        <TimelineQ {question} {pickQuestion}/>
+                        <TimelineQ {question} {pickQuestion} {audioWin} {audioLose}/>
                     {:else if question.type === 'sliderInterval'}
-                        <SliderInterval {question} {pickQuestion}/>
+                        {#key question}
+                            <SliderInterval {question} {pickQuestion} {audioWin} {audioLose}/>
+                        {/key}
                     {/if}
                 {/if}
             </div>
@@ -185,12 +190,15 @@
 {#if !gameStart && isNewGame}
     <div class="btn">
         <Paragraph>{error_message}</Paragraph>
+        <H1><img src="/crown.png" style="height: 250px; width: 250px"></H1>
         <Paragraph>Velg spilltype</Paragraph>
         <SelectOption/>
         <div>
             <select bind:value={difficulty}>
                 {#each difficulties as level, i (i)}
-                    <option>{level}</option>
+                    <option>
+                        {level}
+                    </option>
                 {/each}
             </select>
         </div>

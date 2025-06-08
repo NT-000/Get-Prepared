@@ -10,25 +10,25 @@
 </script>
 
 <main>
-    <slot>
-        {#each $questions_on_quiz as question, i (i)}
-            <div>
-                {#if question.type === "timeline"}
-                    <TimeLineScoreCard {question}/>
-                {:else if question.type === "normal"}
-                    <NormalScore {question}/>
-                {:else if question.type === "slider"}
-                    <SliderScore {question}/>
-                {:else if question.type === "sliderInterval"}
-                    <SliderIntervalScore {question}/>
-                {/if}
-                <br>
-            </div>
-        {/each}
-        {#if !isNewGame}
-            <Button on:click={() => (isNewGame = true)}>Prøv igjen</Button>
-        {/if}
-    </slot>
+
+    {#each $questions_on_quiz as question, i (i)}
+        <div>
+            {#if question.type === "timeline"}
+                <TimeLineScoreCard {question}/>
+            {:else if question.type === "normal"}
+                <NormalScore {question}/>
+            {:else if question.type === "slider"}
+                <SliderScore {question}/>
+            {:else if question.type === "sliderInterval"}
+                <SliderIntervalScore {question}/>
+            {/if}
+            <br>
+        </div>
+    {/each}
+    {#if !isNewGame}
+        <Button on:click={() => (isNewGame = true)}>Prøv igjen</Button>
+    {/if}
+
 </main>
 
 <style>

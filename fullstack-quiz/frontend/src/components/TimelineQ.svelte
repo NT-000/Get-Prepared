@@ -13,6 +13,9 @@
     let hoverPosition = null
     let hoverValue = null
 
+    export let audioWin;
+    export let audioLose;
+
 
     let minYear = question.min;
     let maxYear = question.max;
@@ -63,12 +66,13 @@
         if(isCorrectOrder){
 
             $score += 3
-
+            audioWin.play();
             pointsEarned += 3
             console.log("Du greide det, + 3p")
         }
         else {
             $score - question.points >= 0 ? $score -=3 : $score = 0
+            audioLose.play();
             pointsEarned - question.points >= 0 ? pointsEarned -=3 : $score = 0
             console.log("Du greide det ikke, - 3p")
         }
@@ -104,7 +108,7 @@
     <div class="hover-value">
         <strong>{hoverValue}</strong>
     </div>
-    <div class="timeline" bind:this={lineEl} on:click={handleClick} on:mousemove={handleMouseMove} on:mouseleave={() => hoverValue = null}>
+    <div class="timeline" aria-label="timeline" bind:this={lineEl} on:click={handleClick} on:mousemove={handleMouseMove} on:mouseleave={() => hoverValue = null}>
         {#each points as point, i (i)}
             <div class="marker" style="left: {point.pos * 100}%">
                 {valueFromRatio(point.pos)}

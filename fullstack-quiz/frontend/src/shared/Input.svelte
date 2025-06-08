@@ -5,7 +5,7 @@
     export let value;
 </script>
 
-<input class="{typeBtn}" type="{type}" placeholder="{text}" bind:value/>
+<input class="{typeBtn}" type="{type}" placeholder="{text}" bind:value on:blur/>
 
 <style>
     .primary {
@@ -21,7 +21,7 @@
         transition: all 0.2s ease-in-out;
         width: 100%;
         box-sizing: border-box;
-
+        text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
     }
 
     .primary:focus {
@@ -29,6 +29,7 @@
         box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
         outline: none;
     }
+
 
     .secondary {
         background-color: #f1f1f1;

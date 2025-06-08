@@ -10,25 +10,35 @@
     let name = "";
     let password = "";
     let passwordCheck = "";
-    let usernameAvailable = null;
+    let usernameAvailable;
+    let isPasswordLook = false
+    let passwordLook = "password"
 
-    $: if (username && username.length > 4) {
-        checkUsername(username)
+    const togglePassLook = () => {
+        isPasswordLook = !isPasswordLook
+        if (isPasswordLook) {
+            passwordLook = ""
+        } else {
+            passwordLook = "password"
+        }
     }
 
     const checkUsername = async (username) => {
-        if (password === passwordCheck) {
+        if (username.length > 4) {
             const res = await fetch(`/api/check_user?username=${username}`, {
                 method: 'GET',
                 credentials: 'include'
             });
             const data = await res.json();
             usernameAvailable = !data.exists;
+        } else {
+            console.error("Brukernavn for kort, mer enn 4 tegn")
+            usernameAvailable = null
         }
 
     }
     const handleSubmit = async () => {
-        if (usernameAvailable && username.length > 4) {
+        if (usernameAvailable && password === passwordCheck) {
             const new_user = {
                 "username": username,
                 "name": name,
@@ -56,25 +66,33 @@
 </script>
 
 <main>
-    <form on:submit={handleSubmit}>
+    <form on:submit|preventDefault={handleSubmit}>
 
         <div class="fields">
             <div class="inputs">
                 <div class="info"><H1 text="Lag ny bruker"/></div>
-                <Input bind:value={username} text="Brukernavn..." on:blur={()=> checkUsername(username)}/>
-
                 {#if usernameAvailable}
                     <p style="color: green;">Brukernavnet er ledig</p>
                 {:else if usernameAvailable === false}
                     <p style="color: red;">Brukernavnet er allerede i bruk</p>
+                {:else if username.length < 4 && username.length > 1}
+                    <p>Brukernavnet må inneholde mer enn fire tegn.</p>
                 {/if}
+                <Input bind:value={username} text="Brukernavn..." type="new-name"
+                       on:blur={()=> checkUsername(username)}/>
 
                 <Input bind:value={name} text="Navnet ditt..."/>
-                <Input bind:value={password} text="Velg ditt passord..."/>
-                <Input bind:value={passwordCheck} text="Tast passordet på nytt...."/>
-                <Button>Lag ny bruker</Button>
+                <div class="pass-wrapper">
+                    <Input bind:value={password} text="Velg ditt passord..." type="{passwordLook}"/> <img src="/eye.png"
+                                                                                                          class="eye-icon"
+                                                                                                          on:mouseleave={togglePassLook}
+                                                                                                          on:mouseover={togglePassLook}>
+                </div>
+                <div class="pass-check-wrapper">
+                    <Input bind:value={passwordCheck} text="Tast passordet på nytt...." type="{passwordLook}"/>
+                </div>
+                <Button type="submit">Lag ny bruker</Button>
             </div>
-
         </div>
 
     </form>
@@ -99,6 +117,29 @@
         width: 100%;
         max-width: 400px;
     }
+
+    .pass-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .eye-icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        opacity: 0.7;
+        z-index: 10;
+    }
+
+    .eye-icon:hover {
+        opacity: 1;
+    }
+
 
     .info {
         text-align: center;

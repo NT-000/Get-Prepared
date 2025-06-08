@@ -6,19 +6,22 @@
     import {questions_on_quiz} from "../stores/gameStore.js";
 
     export let pickQuestion;
+    export let audioWin;
+    export let audioLose;
 
     let sliderValue = 0;
+    $: if (question) sliderValue = 0;
+    $:console.log("oppdatert slider verdi:", sliderValue)
 
     const handleAnswer = (sliderValue, question) => {
         let pointsEarned = 0;
 
         sliderValue === question.correctAnswer ? console.log(`correct answer: ${question.question} + ${question.points} points!`) : console.log(`wrong answer: ${question.question} - ${question.points} points!`);
-        sliderValue === question.correctAnswer ? $score += question.points : $score = Math.max(0, $score - question.points);
+        sliderValue === question.correctAnswer ? ($score += question.points) && audioWin.play() : ($score = Math.max(0, $score - question.points)) && audioLose.play();
         sliderValue === question.correctAnswer ? pointsEarned += question.points : pointsEarned = Math.max(0, $score - question.points);
 
         $questions_on_quiz.push({...question, answer: sliderValue, points: pointsEarned});
         console.log("spørsmål fått 2:", $questions_on_quiz)
-        sliderValue = 0;
         pickQuestion();
     };
 

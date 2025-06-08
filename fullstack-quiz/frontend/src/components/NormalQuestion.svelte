@@ -3,6 +3,8 @@
 
     export let pickQuestion;
     export let question;
+    export let audioWin;
+    export let audioLose;
 
     const handleAnswer = (option) => {
         let pointsEarned = 0;
@@ -10,15 +12,16 @@
         if (isCorrect) {
             $score += question.points;
             pointsEarned = question.points;
+            audioWin.play()
             console.log(`correct answer: ${question.question} + ${question.points} points!`);
         } else {
             $score = Math.max(0, $score - question.points);
+            audioLose.play()
             pointsEarned = 0;
             console.log(`wrong answer: ${question.question} - ${question.points} points!`);
         }
 
         $questions_on_quiz.push({...question, answer: option, points: pointsEarned});
-
         pickQuestion();
     };
 </script>
