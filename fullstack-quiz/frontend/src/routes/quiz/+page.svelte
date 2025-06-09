@@ -22,7 +22,7 @@
     let error_message = ''
     let gameStart = false
     let isOpen = false;
-    let difficulty = 'Alle'
+    let difficulty = ''
     const difficulties = ['Alle', 'Lett', 'Medium', 'Vanskelig']
     let selectedCategories = []
     let categories = ['Sport', 'Naturvitenskap', 'Historie', 'Musikk', 'Mat og drikke', 'Kunst og kultur', 'Vitenskap', 'Film', 'Geografi', 'Litteratur', 'Samfunn', 'Astronomi', 'Teknologi', 'Filosofi', 'Miljø']
@@ -31,8 +31,8 @@
 
     $:console.log("vanskelighetsgrad:", difficulty)
     $:console.log("VALGTE KATERGORIER:", selectedCategories)
-    $:console.log("antall spørsmål", $questionsAsked)
-    $:console.log("spørsmål:", $questionStore)
+    $:console.log("antall spørsmål spurt", $questionsAsked)
+    $:console.log("spørsmål, QUESTIONsTORE:", $questionStore)
 
     $: console.log("isNewGame bool:", isNewGame)
 
@@ -92,6 +92,7 @@
                 totalPoints = 0
                 await pickQuestion()
                 gameStart = true
+                console.log("game start:", gameStart)
             } else {
                 error_message = "Kunne ikke hente spørsmål..."
             }
@@ -138,7 +139,7 @@
         const index = Math.floor(Math.random() * $questionStore.length)
         question = $questionStore[index];
         totalPoints += question?.points;
-        console.log("spørsmål fått:", $questions_on_quiz)
+        console.log("SPØRSMÅL BESVART:", $questions_on_quiz)
         $questionStore.splice(index, 1);
     }
 

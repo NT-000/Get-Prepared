@@ -14,7 +14,9 @@
     {#each highscoresLeaders as score, i (i)}
         <div class={`score-card- ${i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : ''}`} in:draw>
             <div class="header">
-                <strong>{i + 1}</strong>
+                <strong>
+                    {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : ""}
+                </strong>
             </div>
             <h2> {score.gameType}</h2>
             <p><strong>{score.username}</strong></p>

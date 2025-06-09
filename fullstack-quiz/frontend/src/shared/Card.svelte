@@ -10,11 +10,13 @@
     }
 </script>
 
+
 <div class="card {highscoreType}" class:correct={correct} class:wrong={wrong} class:active={active}
      class:hoverable={!active}
      class:highscoreType={highscoreType}
      onclick={toggle}>
-
+    <slot></slot>
+    
 </div>
 
 <style>

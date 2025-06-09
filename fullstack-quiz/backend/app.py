@@ -21,6 +21,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
+
 @login_manager.user_loader
 def load_user(user_id):
 	if user_id.startswith("guest"):
@@ -28,7 +29,8 @@ def load_user(user_id):
 	else:
 		return User.get(user_id)
 
-#Login
+
+# Login
 
 @app.route("/api/login", methods=["POST"])
 def login():
@@ -72,22 +74,22 @@ def logged_in_user():
 		return jsonify({"success": False, "id": None}), 200
 
 
-#Logout
+# Logout
 @app.route("/api/logout", methods=["POST"])
 @login_required
 def logout():
-
 	logout_user()
 	print("logout user:", logout_user())
 	print("current user:", current_user)
 	return jsonify({"message": "logout successful"}), 200
 
-#Users
+
+# Users
 
 @app.route("/api/users", methods=["POST"])
 def create_user():
 	data = request.get_json()
-	print("data received, new user:",data)
+	print("data received, new user:", data)
 
 	try:
 		users_coll.insert_one(data)
@@ -98,10 +100,12 @@ def create_user():
 		print("failed:", e)
 		return jsonify({"success": False}), 400
 
+
 @app.route("/api/users", methods=["GET"])
 def get_users():
 	docs = list(users_coll.find({}, {"_id": False}))
 	return jsonify(docs), 200
+
 
 @app.route("/api/check_user", methods=["GET"])
 def check_user():
@@ -112,22 +116,25 @@ def check_user():
 
 	user_exists = users_coll.find_one({"username": username}) is not None
 
-	print("user_exists:",user_exists)
+	print("user_exists:", user_exists)
 	print("username:", username)
 	return jsonify({'success': True, "exists": user_exists}), 200
 
-#Questions
+
+# Questions
 
 @app.route("/api/questions/<collection>", methods=["GET"])
 def get_collection(collection):
 	docs = list(db[collection].find({}, {"_id": False}))
 	return jsonify(docs), 200
 
+
+# Uses POST instead of GET because of the possible length of data
 @app.route('/api/questions/filtered', methods=["POST"])
 def filtered_questions():
 	data = request.get_json()
 	categories = data.get("categories", [])
-	difficulty = data.get("difficulty")
+	difficulty = data.get("difficulty", None)
 	query = {}
 
 	if categories:
@@ -144,19 +151,19 @@ def filtered_questions():
 		return jsonify({"success": False, "message": str(e)}), 400
 
 
-
 @app.route("/api/questions", methods=["GET"])
 def get_questions():
 	docs = list(questions_coll.find({}, {"_id": False}))
 	return jsonify(docs), 200
 
 
-#Scores
+# Scores
 @app.route("/api/scores", methods=["GET"])
 def get_scores():
 	docs = list(scores_coll.find({}, {"_id": False}))
 	docs_sorted = sorted(docs, key=lambda doc: doc["score"], reverse=True)
 	return jsonify(docs_sorted), 200
+
 
 @app.route("/api/scores", methods=["POST"])
 @login_required
@@ -182,5 +189,6 @@ def post_scores():
 def delete_scores():
 	pass
 
+
 if __name__ == "__main__":
-	app.run(host="0.0.0.0", port=5000,debug=True)
+	app.run(host="0.0.0.0", port=5000, debug=True)
