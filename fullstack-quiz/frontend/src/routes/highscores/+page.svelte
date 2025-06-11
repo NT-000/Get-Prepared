@@ -1,4 +1,6 @@
 <script>
+    import Timer from "../../shared/Timer.svelte";
+
     export let data;
     import {highscores} from "../../stores/scoreStore.js";
     import ScoreCardHighScore from "../../components/highscore_components/ScoreCardHighScore.svelte";
@@ -17,7 +19,7 @@
 
 </script>
 
-
+<Timer/>
 <div class="container">
 
     <div>
@@ -44,11 +46,4 @@
         padding: 20px;
     }
 
-
-    h1 {
-        text-align: center;
-        font-size: 2rem;
-        margin-top: 20px;
-        color: #333;
-    }
 </style>

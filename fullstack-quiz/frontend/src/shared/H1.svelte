@@ -19,7 +19,6 @@
         display: inline-block;
         padding-bottom: 3px;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-
     }
 </style>
 

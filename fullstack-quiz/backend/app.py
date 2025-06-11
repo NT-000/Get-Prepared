@@ -4,7 +4,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from flask_login import (LoginManager, login_user, login_required, logout_user, current_user)
 from backend.models.guest_user import GuestUser
-from models.db import users_coll, db, scores_coll, questions_coll
+from models.db import users_coll, db, scores_coll, questions_coll, time_coll
 from models.user import User
 import random
 
@@ -129,7 +129,7 @@ def get_collection(collection):
 	return jsonify(docs), 200
 
 
-# Uses POST instead of GET because of the possible length of data
+# use POST instead of GET because of the possible length of search params URL, maybe GET would be better
 @app.route('/api/questions/filtered', methods=["POST"])
 def filtered_questions():
 	data = request.get_json()
@@ -188,6 +188,27 @@ def post_scores():
 @app.route("/api/scores", methods=["DELETE"])
 def delete_scores():
 	pass
+
+
+# TIME
+
+@app.route("/api/time", methods=["GET"])
+def get_time():
+	doc = time_coll.find_one({}, {"_id": False})
+	return jsonify(doc), 200
+
+
+@app.route("/api/time", methods=["PUT"])
+def update_time():
+	try:
+		data = request.get_json()
+		print("Received data:", data)
+		result = time_coll.update_one({}, {"$set": {"endTimestamp": data["endTimestamp"]}})
+	except Exception as e:
+		print("failed:", e)
+		return jsonify({"success": False}), 400
+
+	return jsonify({"matched_count": result.matched_count, "modified_count": result.modified_count}), 200
 
 
 if __name__ == "__main__":
