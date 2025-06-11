@@ -11,6 +11,21 @@
     let s = 0;
     let interval;
     let loading = true
+    let hasDeleted = false
+
+
+    async function deleteScores() {
+        try {
+            const res = await fetch('/api/scores', {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+            const data = await res.json();
+            console.log('deleted scores count', data.deleted_count);
+        } catch (err) {
+            console.error("could not delete highscores:", err);
+        }
+    }
 
     const updateTimer = () => {
         const now = Date.now();
@@ -20,8 +35,12 @@
         h = Math.floor(count / 3600);
         m = Math.floor((count % 3600) / 60);
         s = count % 60;
-    };
 
+        if (count <= 0 && !hasDeleted) {
+            hasDeleted = true;
+            deleteScores();
+        }
+    };
 
     const timeUpdate = async () => {
         try {
@@ -42,13 +61,14 @@
 
     const get_time = async () => {
         const res = await fetch('/api/time');
-
         const data = await res.json();
-        if (data.endTimestamp) {
+        if (data.endTimestamp && Date.now() < data.endTimestamp) {
             end = data.endTimestamp
             console.log("data.endTimestamp hit:", end)
         } else {
+            await deleteScores();
             end = Date.now() + data.countdown * 1000;
+
             await fetch('/api/time', {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
@@ -96,6 +116,7 @@
 
 
         {:else }
+            <strong>Sletta alle poengsummene etter 24 timer!</strong>
             <br>
             <Button type="button" onclick={timeUpdate}>Oppdater tid</Button>
         {/if}
@@ -119,16 +140,6 @@
         flex-wrap: wrap;
     }
 
-    .hour, .minutes, .seconds {
-        background-color: black;
-        color: white;
-        padding: 20px 30px;
-        border-radius: 8px;
-        font-weight: bold;
-        min-width: 80px;
-        text-align: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
 
     .time-block {
         display: flex;

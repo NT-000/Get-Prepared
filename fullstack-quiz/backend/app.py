@@ -187,7 +187,8 @@ def post_scores():
 
 @app.route("/api/scores", methods=["DELETE"])
 def delete_scores():
-	pass
+	result = scores_coll.delete_many({})
+	return jsonify({"success": True, "delete_count": result.deleted_count}), 200
 
 
 # TIME
