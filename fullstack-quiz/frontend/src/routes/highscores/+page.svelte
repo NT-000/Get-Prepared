@@ -5,7 +5,8 @@
     import {highscores} from "../../stores/scoreStore.js";
     import ScoreCardHighScore from "../../components/highscore_components/ScoreCardHighScore.svelte";
 
-    let copy_highscores = [...data.highscores.slice(0, 10)]
+    let copy_highscores = [...data.highscores]
+    let copy_AllScores = [...data.highscores.slice(0, 10)]
     console.log("copy_high:", copy_highscores)
     console.log("highscores:", $highscores)
     console.log("data", data)
@@ -13,6 +14,8 @@
     let highscoresShort = copy_highscores.filter(sGame => sGame.gameType === "Kort - 10 spørsmål").slice(0, 10)
     let highscoresMedium = copy_highscores.filter(sGame => sGame.gameType === "Medium - 20 spørsmål").slice(0, 10)
     let highscoresLong = copy_highscores.filter(sGame => sGame.gameType === "Lang - 30 spørsmål").slice(0, 10)
+
+    console.log("highscore short:", highscoresShort)
 
     let highscoresLeaders;
     let length;
@@ -23,7 +26,7 @@
 <div class="container">
 
     <div>
-        <ScoreCardHighScore highscoresLeaders={copy_highscores} text="Høyeste poengsummer"/>
+        <ScoreCardHighScore highscoresLeaders={copy_AllScores} text="Høyeste poengsummer"/>
     </div>
 
     <div>
