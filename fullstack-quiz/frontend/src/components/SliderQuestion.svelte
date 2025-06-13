@@ -1,17 +1,19 @@
 <script>
     import Button from "../shared/Button.svelte";
 
-    export let question;
     import {score} from "../stores/gameStore.js";
     import {questions_on_quiz} from "../stores/gameStore.js";
 
-    export let pickQuestion;
-    export let audioWin;
-    export let audioLose;
 
-    let sliderValue = 0;
-    $: if (question) sliderValue = 0;
-    $:console.log("oppdatert slider verdi:", sliderValue)
+    const {question, pickQuestion, audioWin, audioLose} = $props();
+
+    let sliderValue = $state(0);
+    $effect(() => {
+        if (question) {
+            sliderValue = 0;
+        }
+    })
+    console.log("oppdatert slider verdi:", sliderValue)
 
     const handleAnswer = (sliderValue, question) => {
         let pointsEarned = 0;

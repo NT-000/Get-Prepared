@@ -35,25 +35,7 @@
     $:console.log("spørsmål, QUESTIONsTORE:", $questionStore)
 
     $: console.log("isNewGame bool:", isNewGame)
-
-    const logOut = async () => {
-        try {
-            const res = await fetch(`/api/logout`, {
-                method: 'POST',
-                credentials: 'include',
-            });
-            if (res.ok) {
-                currentUser.set(null);
-                guest.set(null);
-                await goto("/login")
-                audio.pause()
-            } else {
-                console.error('utlogging feilet');
-            }
-        } catch {
-            console.error('noe gikk galt ved utlogging')
-        }
-    }
+    
 
     const toggleCat = () => {
         isOpen = !isOpen
@@ -147,17 +129,14 @@
 
 </script>
 
-{#if $currentUser || $guest}
-    <div>
-        <Button on:click={logOut} text="Logg ut"/>
-    </div>  <!--Svelte 5 syntax for on:click = onclick-->
 
-{/if}
 <div class="logged-in">
-    {#if $currentUser}
+    {#if $currentUser && !gameStart}
         <H1>Velkommen til Quiz, {$currentUser.name}!</H1>
-    {:else if $guest}
+    {:else if $guest && !gameStart}
         <H1>Velkommen til Quiz, {$guest.username}!</H1>
+    {:else if !isNewGame && !gameStart}
+        <H1>Din poengsum og svar</H1>
     {/if}
 </div>
 

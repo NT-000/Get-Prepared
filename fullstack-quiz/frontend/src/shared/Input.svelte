@@ -1,17 +1,34 @@
 <script>
-    export let typeBtn = 'primary'
+    export let typeInput = 'primary'
     export let text = ""
     export let type = "text"
     export let value;
+    export let autocomplete = "";
 </script>
 
-<input class="{typeBtn}" type="{type}" placeholder="{text}" bind:value on:blur/>
+<input class="{typeInput}" type="{type}" placeholder="{text}" bind:value on:blur autocomplete="{autocomplete}"/>
 
 <style>
     .primary {
         background-color: #ffffff;
         color: #333;
         margin: 12px 0;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-weight: 500;
+        font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        transition: all 0.2s ease-in-out;
+        width: 100%;
+        box-sizing: border-box;
+        text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .name-check {
+        background-color: #ffffff;
+        color: #333;
+        margin: 12px 0 0;
         padding: 12px 16px;
         border-radius: 8px;
         font-weight: 500;

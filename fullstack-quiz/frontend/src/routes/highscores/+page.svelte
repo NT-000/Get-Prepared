@@ -1,10 +1,10 @@
 <script>
     import Timer from "../../shared/Timer.svelte";
-
-    export let data;
+    
     import {highscores} from "../../stores/scoreStore.js";
     import ScoreCardHighScore from "../../components/highscore_components/ScoreCardHighScore.svelte";
 
+    const {data} = $props()
     let copy_highscores = [...data.highscores]
     let copy_AllScores = [...data.highscores.slice(0, 10)]
     console.log("copy_high:", copy_highscores)

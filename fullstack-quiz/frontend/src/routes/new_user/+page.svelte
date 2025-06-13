@@ -13,6 +13,7 @@
     let usernameAvailable;
     let isPasswordLook = false
     let passwordLook = "password"
+    let passCheck = ""
 
     const togglePassLook = () => {
         isPasswordLook = !isPasswordLook
@@ -38,6 +39,9 @@
 
     }
     const handleSubmit = async () => {
+        if (password !== passwordCheck) {
+            passCheck = "Passordene er ikke like."
+        }
         if (usernameAvailable && password === passwordCheck) {
             const new_user = {
                 "username": username,
@@ -71,26 +75,37 @@
         <div class="fields">
             <div class="inputs">
                 <div class="info"><H1 text="Lag ny bruker"/></div>
-                {#if usernameAvailable}
-                    <p style="color: green;">Brukernavnet er ledig</p>
-                {:else if usernameAvailable === false}
-                    <p style="color: red;">Brukernavnet er allerede i bruk</p>
-                {:else if username.length < 4 && username.length > 1}
-                    <p>Brukernavnet må inneholde mer enn fire tegn.</p>
-                {/if}
-                <Input bind:value={username} text="Brukernavn..." type="new-name"
-                       on:blur={()=> checkUsername(username)}/>
 
+                <div class="name-check">
+                    <Input bind:value={username} typeInput="name-check" text="Brukernavn..." type="new-name"
+                           on:blur={()=> checkUsername(username)}/>
+                    {#if usernameAvailable}
+                        <p style="color: green;">Brukernavnet er ledig</p>
+                    {:else if usernameAvailable === false}
+                        <p style="color: red;">Brukernavnet er allerede i bruk</p>
+                    {:else if username.length < 4 && username.length > 1}
+                        <p>Brukernavnet må inneholde mer enn fire tegn.</p>
+                    {/if}
+                </div>
                 <Input bind:value={name} text="Navnet ditt..."/>
+
                 <div class="pass-wrapper">
-                    <Input bind:value={password} text="Velg ditt passord..." type="{passwordLook}"/> <img src="/eye.png"
-                                                                                                          class="eye-icon"
-                                                                                                          on:mouseleave={togglePassLook}
-                                                                                                          on:mouseover={togglePassLook}>
+                    <Input bind:value={password} text="Velg ditt passord..." type="{passwordLook}"
+                           autocomplete="new-password"/> <img src="/eye.png"
+                                                              class="eye-icon"
+                                                              on:mouseleave={togglePassLook}
+                                                              on:mouseover={togglePassLook}>
                 </div>
-                <div class="pass-check-wrapper">
-                    <Input bind:value={passwordCheck} text="Tast passordet på nytt...." type="{passwordLook}"/>
+
+                <div class="pass-wrapper">
+                    <Input bind:value={passwordCheck} text="Tast passordet på nytt...." type="{passwordLook}"
+                           autocomplete="new-password"/>
+                    <img src="/eye.png"
+                         class="eye-icon"
+                         on:mouseleave={togglePassLook}
+                         on:mouseover={togglePassLook}>
                 </div>
+                <p>{passCheck}</p>
                 <Button type="submit">Lag ny bruker</Button>
             </div>
         </div>
@@ -160,8 +175,14 @@
     p {
         padding: 5px;
         font-weight: bolder;
-        margin: 10px;
+        margin-bottom: 10px;
+        font-size: 0.8rem;
+        width: 100%;
+    }
 
+    .name-check p {
+        width: 500px;
+        color: #40a9ff;
     }
 
 

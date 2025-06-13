@@ -79,7 +79,7 @@ def logged_in_user():
 @login_required
 def logout():
 	logout_user()
-	print("logout user:", logout_user())
+	print("logout user:", logout_user)
 	print("current user:", current_user)
 	return jsonify({"message": "logout successful"}), 200
 
