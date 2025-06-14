@@ -1,18 +1,13 @@
 <script>
-    import Card from "../../shared/Card.svelte";
     import {currentUser, guest} from "../../stores/userStore.js";
     import {score, gameTypes, currentGame, questionsAsked, questions_on_quiz} from "../../stores/gameStore.js"
-    import SliderQuestion from "../../components/SliderQuestion.svelte";
-    import TimelineQ from "../../components/TimelineQ.svelte";
-    import {goto} from "$app/navigation";
-    import SliderInterval from "../../components/SliderInterval.svelte";
     import SelectOption from "../../components/SelectOption.svelte";
     import Button from "../../shared/Button.svelte";
     import H1 from "../../shared/H1.svelte";
     import {questionStore} from "../../stores/QuestionStore.js";
     import Paragraph from "../../shared/Paragraph.svelte";
     import ScoreCard from "../../components/ScoreCard.svelte";
-    import NormalQuestion from "../../components/NormalQuestion.svelte";
+    import QuestionCard from "../../components/questions/QuestionCard.svelte";
 
     let audio = new Audio('/relaxing.mp3')
     let audioQ = new Audio('/new_q.mp3')
@@ -35,7 +30,7 @@
     $:console.log("spørsmål, QUESTIONsTORE:", $questionStore)
 
     $: console.log("isNewGame bool:", isNewGame)
-    
+
 
     const toggleCat = () => {
         isOpen = !isOpen
@@ -141,28 +136,7 @@
 </div>
 
 {#if gameStart}
-    <div class="container">
-        <Card>
-            <h3>Dine poeng: {$score}</h3>
-            <h3>Spørsmål igjen {$questionStore.length - $questionsAsked}</h3>
-            <div class="form">
-                {#if gameStart && question}
-                    <br>
-                    {#if question.type === 'normal'}
-                        <NormalQuestion {question} {pickQuestion} {audioWin} {audioLose}/>
-                    {:else if question.type === 'slider'}
-                        <SliderQuestion {question} {pickQuestion} {audioWin} {audioLose}/>
-                    {:else if question.type === 'timeline'}
-                        <TimelineQ {question} {pickQuestion} {audioWin} {audioLose}/>
-                    {:else if question.type === 'sliderInterval'}
-                        {#key question}
-                            <SliderInterval {question} {pickQuestion} {audioWin} {audioLose}/>
-                        {/key}
-                    {/if}
-                {/if}
-            </div>
-        </Card>
-    </div>
+    <QuestionCard {gameStart} {question} {audioWin} {audioLose} {pickQuestion}/>
 {/if}
 {#if !isNewGame}
     <ScoreCard bind:isNewGame={isNewGame}/>

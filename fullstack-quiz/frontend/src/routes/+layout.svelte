@@ -27,8 +27,9 @@
     }
 
 </script>
-<header>
-    {#if data.user.username}
+{#if data.user.username}
+    <header>
+
         <div class="logged-in-user">Innlogget bruker: <strong>{data.user.username}</strong></div>
         <A href="/login" text="Innlogging"/>
         <A href="/highscores" text="Høyeste poengsummer"/>
@@ -38,9 +39,9 @@
                 <Button on:click={logOut} text="Logg ut"/>
             </div>  <!--Svelte 5 syntax for on:click = onclick-->
         {/if}
-    {:else}
-    {/if}
-</header>
+    </header>
+{/if}
+
 {@render children()}
 <footer>© 2025 El Kameleono</footer>
 
