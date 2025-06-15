@@ -1,10 +1,10 @@
 <script>
-    import {questions_on_quiz} from "../stores/gameStore";
+    import {questions_on_quiz} from "../../../stores/gameStore.js";
     import TimeLineScoreCard from "./TimeLineScoreCard.svelte";
     import NormalScore from "./NormalScore.svelte";
     import SliderIntervalScore from "./SliderIntervalScore.svelte";
     import SliderScore from "./SliderScore.svelte";
-    import Button from "../shared/Button.svelte";
+    import Button from "../../../shared/Button.svelte";
 
     export let isNewGame = false;
 </script>

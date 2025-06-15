@@ -1,8 +1,8 @@
 <script>
-    import Button from "../shared/Button.svelte";
+    import Button from "../../../shared/Button.svelte";
 
-    import {score} from "../stores/gameStore.js";
-    import {questions_on_quiz} from "../stores/gameStore.js";
+    import {score} from "../../../stores/gameStore.js";
+    import {questions_on_quiz} from "../../../stores/gameStore.js";
 
 
     const {question, pickQuestion, audioWin, audioLose} = $props();

@@ -1,5 +1,5 @@
 <script>
-    import {currentGame, gameTypes} from "../stores/gameStore.js";
+    import {currentGame, gameTypes} from "../../../stores/gameStore.js";
 
     $:console.log("currentGame:", $currentGame)
 </script>

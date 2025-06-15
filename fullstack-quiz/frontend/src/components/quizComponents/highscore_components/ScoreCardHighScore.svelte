@@ -1,6 +1,6 @@
 <script>
 
-    import H1 from "../../shared/H1.svelte";
+    import H1 from "../../../shared/H1.svelte";
 
     export let highscoresLeaders;
     export let text = ""

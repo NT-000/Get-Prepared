@@ -1,42 +1,49 @@
 <script>
     import {currentUser, guest} from "../../stores/userStore.js";
-    import {score, gameTypes, currentGame, questionsAsked, questions_on_quiz} from "../../stores/gameStore.js"
-    import SelectOption from "../../components/SelectOption.svelte";
+    import {score, currentGame, questionsAsked, questions_on_quiz} from "../../stores/gameStore.js"
+    import SelectOption from "../../components/quizComponents/questions/SelectOption.svelte";
     import Button from "../../shared/Button.svelte";
     import H1 from "../../shared/H1.svelte";
     import {questionStore} from "../../stores/QuestionStore.js";
     import Paragraph from "../../shared/Paragraph.svelte";
-    import ScoreCard from "../../components/ScoreCard.svelte";
-    import QuestionCard from "../../components/questions/QuestionCard.svelte";
+    import ScoreCard from "../../components/quizComponents/highscore_components/ScoreCard.svelte";
+    import QuestionCard from "../../components/quizComponents/questions/QuestionCard.svelte";
+    import Categories from "../../components/Categories.svelte";
+
+
+    const {data} = $props()
+
 
     let audio = new Audio('/relaxing.mp3')
     let audioQ = new Audio('/new_q.mp3')
     let audioWin = new Audio('/yey.mp3')
     let audioLose = new Audio('/sloppy.ogg')
-    let question;
-    let error_message = ''
-    let gameStart = false
-    let isOpen = false;
-    let difficulty = ''
+    let question = $state({});
+    let user = data.user;
+    let error_message = $state("")
+    let gameStart = $state(false)
+
+
+    let difficulty = $state("Alle")
     const difficulties = ['Alle', 'Lett', 'Medium', 'Vanskelig']
-    let selectedCategories = []
-    let categories = ['Sport', 'Naturvitenskap', 'Historie', 'Musikk', 'Mat og drikke', 'Kunst og kultur', 'Vitenskap', 'Film', 'Geografi', 'Litteratur', 'Samfunn', 'Astronomi', 'Teknologi', 'Filosofi', 'Miljø']
+    let selectedCategories = $state([])
+
+
     let totalPoints = 0;
     let isNewGame = true;
 
-    $:console.log("vanskelighetsgrad:", difficulty)
-    $:console.log("VALGTE KATERGORIER:", selectedCategories)
-    $:console.log("antall spørsmål spurt", $questionsAsked)
-    $:console.log("spørsmål, QUESTIONsTORE:", $questionStore)
+    $effect(() => {
 
-    $: console.log("isNewGame bool:", isNewGame)
+        console.log("Valgte kategorier:", $state.snapshot(selectedCategories));
+        console.log("isGameStart:", gameStart)
+        console.log("isNewGame:", isNewGame)
+    })
 
-
-    const toggleCat = () => {
-        isOpen = !isOpen
+    const handleCategoriesChange = (newCategories) => {
+        selectedCategories = newCategories;
     }
-
     const fetchFilteredQuestions = async () => {
+        console.log("inside fetchQ")
         await audio.play()
         audio.loop = true;
         try {
@@ -80,7 +87,6 @@
 
     console.log("guest:", $guest)
     console.log("currentUser", $currentUser)
-    $: console.log("scoreStore: ", $score);
 
 
     const pickQuestion = async () => {
@@ -120,7 +126,6 @@
         $questionStore.splice(index, 1);
     }
 
-    $: console.log("gametype:", $gameTypes)
 
 </script>
 
@@ -156,19 +161,7 @@
                 {/each}
             </select>
         </div>
-        <div class="cats" on:click={toggleCat}>Kategorier<img src="/fad--open.png"></div>
-        {#if isOpen}
-            <div class="categories-container">
-                <div class="categories">
-                    {#each categories as cat, i (i)}
-                        <div class="category-item">
-                            <input type="checkbox" value={cat} bind:group={selectedCategories}/>
-                            <div class="label_cats">{cat}</div>
-                        </div>
-                    {/each}
-                </div>
-            </div>
-        {/if}
+        <Categories onChange={handleCategoriesChange}/>
         {#if isNewGame}
             <Button type="button" on:click={fetchFilteredQuestions} text="Start nytt spill"/>
         {/if}
@@ -177,64 +170,7 @@
 {/if}
 
 <style>
-    .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 40px;
-    }
 
-    .form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 32px;
-        border-radius: 12px;
-        width: 100%;
-        max-width: 640px;
-        background-color: #ffffff;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        gap: 20px;
-    }
-
-    .categories {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px 20px;
-        width: 100%;
-        max-width: 600px;
-    }
-
-    .categories-container {
-        background: white;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-        padding: 30px;
-        gap: 10px;
-    }
-
-    .cats {
-        font-weight: bolder;
-        cursor: pointer;
-    }
-
-    .cats img:hover {
-        border: #40a9ff;
-        cursor: pointer;
-        transform: scale(1.2);
-    }
-
-    .category-item {
-        display: flex;
-        align-items: center;
-    }
-
-    .label_cats {
-        font-weight: 600;
-        font-size: 1rem;
-        margin-bottom: 6px;
-        color: #444;
-    }
 
     h3 {
         font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
@@ -278,16 +214,5 @@
         border-radius: 10px;
     }
 
-    input[type="checkbox"] {
-        margin-right: 8px;
-        margin-bottom: 10px;
-
-    }
-
-    input[type="checkbox"]:hover {
-        transform: scale(1.2);
-        background: lightblue;
-        box-shadow: 0 4px 14px blue;
-    }
 
 </style>

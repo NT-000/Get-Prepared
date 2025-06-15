@@ -2,9 +2,9 @@
     import {onDestroy, onMount} from 'svelte';
     import noUiSlider from 'nouislider';
     import 'nouislider/dist/nouislider.css';
-    import Button from "../shared/Button.svelte";
-    import {score, questions_on_quiz} from "../stores/gameStore.js"
-    import Paragraph from "../shared/Paragraph.svelte";
+    import Button from "../../../shared/Button.svelte";
+    import {score, questions_on_quiz} from "../../../stores/gameStore.js"
+    import Paragraph from "../../../shared/Paragraph.svelte";
 
     export let question;
     export let pickQuestion;

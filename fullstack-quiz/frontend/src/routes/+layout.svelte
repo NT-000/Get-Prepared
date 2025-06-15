@@ -1,9 +1,8 @@
 <script>
 
     import A from "../shared/A.svelte";
-    import Button from "../shared/Button.svelte";
     import {currentUser, guest} from "../stores/userStore.js";
-    import {goto} from "$app/navigation";
+    import {invalidateAll} from "$app/navigation";
 
     const {data, children} = $props()
 
@@ -16,7 +15,7 @@
             if (res.ok) {
                 currentUser.set(null);
                 guest.set(null);
-                await goto("/login")
+                await invalidateAll();
 
             } else {
                 console.error('utlogging feilet');
@@ -25,6 +24,7 @@
             console.error('noe gikk galt ved utlogging')
         }
     }
+
 
 </script>
 {#if data.user.username}
@@ -36,7 +36,7 @@
         <A href="/new_user" text="Ny bruker"/>
         {#if data.user}
             <div>
-                <Button on:click={logOut} text="Logg ut"/>
+                <A href="/login" onclick={logOut} text="Logg ut"/>
             </div>  <!--Svelte 5 syntax for on:click = onclick-->
         {/if}
     </header>
@@ -68,4 +68,6 @@
         padding: 10px;
         color: white;
     }
+
+
 </style>

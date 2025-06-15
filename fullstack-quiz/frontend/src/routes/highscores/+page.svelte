@@ -1,8 +1,8 @@
 <script>
     import Timer from "../../shared/Timer.svelte";
-    
+
     import {highscores} from "../../stores/scoreStore.js";
-    import ScoreCardHighScore from "../../components/highscore_components/ScoreCardHighScore.svelte";
+    import ScoreCardHighScore from "../../components/quizComponents/highscore_components/ScoreCardHighScore.svelte";
 
     const {data} = $props()
     let copy_highscores = [...data.highscores]

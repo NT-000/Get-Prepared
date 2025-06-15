@@ -1,5 +1,5 @@
 <script>
-    import {questions_on_quiz, score} from "../stores/gameStore.js";
+    import {questions_on_quiz, score} from "../../../stores/gameStore.js";
 
     export let pickQuestion;
     export let question;

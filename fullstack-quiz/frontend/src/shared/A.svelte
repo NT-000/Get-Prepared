@@ -1,10 +1,14 @@
 <script>
 
-    const {href, text} = $props()
+    const {href, text, onclick} = $props()
+
+
 </script>
 
 
-<a href={href}>{text}</a>
+<a href={href} onclick={onclick}>
+    {text}
+</a>
 <style>
     a {
         border: none;

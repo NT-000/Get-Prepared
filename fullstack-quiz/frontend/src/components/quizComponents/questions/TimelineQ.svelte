@@ -1,8 +1,8 @@
 <script>
-    import Button from "../shared/Button.svelte";
-    import {score} from "../stores/gameStore.js";
+    import Button from "../../../shared/Button.svelte";
+    import {score} from "../../../stores/gameStore.js";
     export let pickQuestion
-    import {questions_on_quiz} from "../stores/gameStore.js";
+    import {questions_on_quiz} from "../../../stores/gameStore.js";
 
     export let question;
     let currentIndex = 0
@@ -231,14 +231,6 @@
         background-color: #40a9ff;
     }
 
-    .reset {
-        margin-top: 0.5rem;
-        background-color: #f5222d;
-    }
-
-    .reset:hover {
-        background-color: #ff4d4f;
-    }
 
     .year-tick {
         position: absolute;

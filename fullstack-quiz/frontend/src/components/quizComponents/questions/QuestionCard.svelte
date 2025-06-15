@@ -1,11 +1,11 @@
 <script>
-    import {score, questionsAsked} from "../../stores/gameStore.js";
-    import {questionStore} from "../../stores/QuestionStore.js";
-    import Card from "../../shared/Card.svelte";
-    import NormalQuestion from "../NormalQuestion.svelte";
-    import SliderQuestion from "../SliderQuestion.svelte";
-    import TimelineQ from "../TimelineQ.svelte";
-    import SliderInterval from "../SliderInterval.svelte";
+    import {score, questionsAsked} from "../../../stores/gameStore.js";
+    import {questionStore} from "../../../stores/QuestionStore.js";
+    import Card from "../../../shared/Card.svelte";
+    import NormalQuestion from "./NormalQuestion.svelte";
+    import SliderQuestion from "./SliderQuestion.svelte";
+    import TimelineQ from "./TimelineQ.svelte";
+    import SliderInterval from "./SliderInterval.svelte";
 
     const {gameStart, question, pickQuestion, audioWin, audioLose} = $props()
 </script>
@@ -33,3 +33,26 @@
         </div>
     </Card>
 </div>
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40px;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 32px;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 640px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        gap: 20px;
+    }
+</style>
