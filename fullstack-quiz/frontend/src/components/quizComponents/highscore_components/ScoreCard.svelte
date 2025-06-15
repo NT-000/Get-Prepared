@@ -7,6 +7,11 @@
     import Button from "../../../shared/Button.svelte";
 
     export let isNewGame = false;
+    const handleNewGame = () => {
+        isNewGame = true
+        $questions_on_quiz = []
+    }
+
 </script>
 
 <main>
@@ -26,7 +31,7 @@
         </div>
     {/each}
     {#if !isNewGame}
-        <Button on:click={() => (isNewGame = true)}>Prøv igjen</Button>
+        <Button on:click={handleNewGame}>Prøv igjen</Button>
     {/if}
 
 </main>

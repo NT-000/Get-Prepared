@@ -1,10 +1,14 @@
 <script>
 
     import A from "../shared/A.svelte";
-    import {currentUser, guest} from "../stores/userStore.js";
+    import {currentUser} from "../stores/userStore.js";
     import {invalidateAll} from "$app/navigation";
 
     const {data, children} = $props()
+
+    $effect(() => {
+        console.log("logged-in user:", data.user)
+    })
 
     const logOut = async () => {
         try {
@@ -14,7 +18,6 @@
             });
             if (res.ok) {
                 currentUser.set(null);
-                guest.set(null);
                 await invalidateAll();
 
             } else {

@@ -1,13 +1,13 @@
 <script>
     import Button from "../../shared/Button.svelte";
     import {goto} from "$app/navigation";
-    import {fetchCurrentUser, fetchGuestUser, guest} from "../../stores/userStore.js";
+    import {fetchCurrentUser, currentUser} from "../../stores/userStore.js";
     import Input from "../../shared/Input.svelte";
     import H1 from "../../shared/H1.svelte";
 
     let username = '';
     let password = '';
-    $: console.log("Guestuser:", $guest)
+    $: console.log("Guestuser:", $currentUser)
 
     const handleLogin = async () => {
         try {
@@ -38,7 +38,7 @@
         const data = await res.json();
         if (data.success) {
             console.log("Navigerer til quiz...");
-            await fetchGuestUser()
+            await fetchCurrentUser()
             await goto("/quiz")
             console.log("skulle ha navigert");
         } else {

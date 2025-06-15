@@ -1,5 +1,5 @@
 <script>
-    import {currentUser, guest} from "../../stores/userStore.js";
+    import {currentUser} from "../../stores/userStore.js";
     import {score, currentGame, questionsAsked, questions_on_quiz} from "../../stores/gameStore.js"
     import SelectOption from "../../components/quizComponents/questions/SelectOption.svelte";
     import Button from "../../shared/Button.svelte";
@@ -10,16 +10,11 @@
     import QuestionCard from "../../components/quizComponents/questions/QuestionCard.svelte";
     import Categories from "../../components/Categories.svelte";
 
-
-    const {data} = $props()
-
-
     let audio = new Audio('/relaxing.mp3')
     let audioQ = new Audio('/new_q.mp3')
     let audioWin = new Audio('/yey.mp3')
     let audioLose = new Audio('/sloppy.ogg')
     let question = $state({});
-    let user = data.user;
     let error_message = $state("")
     let gameStart = $state(false)
 
@@ -30,7 +25,7 @@
 
 
     let totalPoints = 0;
-    let isNewGame = true;
+    let isNewGame = $state(true);
 
     $effect(() => {
 
@@ -85,7 +80,6 @@
         }
     }
 
-    console.log("guest:", $guest)
     console.log("currentUser", $currentUser)
 
 
@@ -94,7 +88,7 @@
         if ($questionsAsked >= $questionStore.length) {
 
             const new_score_object = {
-                username: ($currentUser || $guest).username,
+
                 score: $score,
                 gameType: $currentGame.gameType
             }
@@ -133,9 +127,7 @@
 <div class="logged-in">
     {#if $currentUser && !gameStart}
         <H1>Velkommen til Quiz, {$currentUser.name}!</H1>
-    {:else if $guest && !gameStart}
-        <H1>Velkommen til Quiz, {$guest.username}!</H1>
-    {:else if !isNewGame && !gameStart}
+    {:else if !isNewGame}
         <H1>Din poengsum og svar</H1>
     {/if}
 </div>
@@ -149,7 +141,7 @@
 {#if !gameStart && isNewGame}
     <div class="btn">
         <Paragraph>{error_message}</Paragraph>
-        <H1><img src="/crown.png" style="height: 250px; width: 250px"></H1>
+        <H1><img src="/crown.png" style="height: 250px; width: 250px" alt="img-crown"></H1>
         <Paragraph>Velg spilltype</Paragraph>
         <SelectOption/>
         <div>

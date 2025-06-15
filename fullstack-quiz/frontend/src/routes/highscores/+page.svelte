@@ -18,7 +18,6 @@
     console.log("highscore short:", highscoresShort)
 
     let highscoresLeaders;
-    let length;
 
 </script>
 
@@ -30,15 +29,15 @@
     </div>
 
     <div>
-        <ScoreCardHighScore highscoresLeaders={highscoresShort} text="Topp 10 - Kort spill" length="short"/>
+        <ScoreCardHighScore highscoresLeaders={highscoresShort} text="Topp 10 - Kort spill"/>
     </div>
 
     <div>
-        <ScoreCardHighScore highscoresLeaders={highscoresMedium} text="Topp 10 - Medium spill" length="medium"/>
+        <ScoreCardHighScore highscoresLeaders={highscoresMedium} text="Topp 10 - Medium spill"/>
     </div>
 
     <div>
-        <ScoreCardHighScore highscoresLeaders={highscoresLong} text="Topp 10 - Langt spill" length="long"/>
+        <ScoreCardHighScore highscoresLeaders={highscoresLong} text="Topp 10 - Langt spill"/>
     </div>
 </div>
 

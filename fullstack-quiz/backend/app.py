@@ -129,8 +129,9 @@ def get_collection(collection):
 	return jsonify(docs), 200
 
 
-# use POST instead of GET because of the possible length of search params URL, maybe GET would be better
+# used POST instead of GET because of potential complex filtering
 @app.route('/api/questions/filtered', methods=["POST"])
+@login_required
 def filtered_questions():
 	data = request.get_json()
 	categories = data.get("categories", [])
@@ -170,12 +171,11 @@ def get_scores():
 def post_scores():
 	data = request.get_json()
 	print("Received data:", data)
-	username = data.get("username")
 	score = data.get("score")
 	game_type = data.get("gameType")
 
 	try:
-		new_score_object = {"username": username, "score": score, "gameType": game_type}
+		new_score_object = {"username": current_user.username, "score": score, "gameType": game_type}
 		result = scores_coll.insert_one(new_score_object)
 		inserted_id = str(result.inserted_id)
 		print("inserted id:", inserted_id)
