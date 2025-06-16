@@ -117,8 +117,6 @@
 
         {:else }
             <strong>Sletta alle poengsummene etter 24 timer!</strong>
-            <br>
-            <Button type="button" onclick={timeUpdate}>Oppdater tid</Button>
         {/if}
     </div>
 
@@ -126,35 +124,82 @@
 </main>
 
 <style>
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 280px;
+        margin-top: 30px;
+    }
 
     .countdown-clock {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
-        padding: 20px;
-        border-radius: 10px;
-        border: 3px solid black;
-        background-color: white;
+        gap: 20px;
+        background: linear-gradient(120deg, #e9f4fd 0%, #f9faff 100%);
+        padding: 32px 38px;
+        border-radius: 24px;
+        border: none;
+        box-shadow: 0 2px 24px 0 rgba(80, 130, 230, 0.10);
         font-size: 1.5rem;
         flex-wrap: wrap;
+        margin: 20px 0;
+        min-width: 320px;
+        transition: box-shadow 0.2s;
     }
 
+    .countdown-clock:hover {
+        box-shadow: 0 6px 40px 0 rgba(80, 130, 230, 0.16);
+    }
 
     .time-block {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 1px 8px 0 rgba(120, 150, 255, 0.07);
+        padding: 14px 18px 10px 18px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 0 10px;
+        margin: 0 4px;
+        min-width: 72px;
+        transition: transform 0.15s;
     }
 
     .value {
-        font-size: 2rem;
-        font-weight: bold;
+        font-size: 2.3rem;
+        font-weight: 700;
+        color: #3477eb;
+        letter-spacing: 1px;
+        line-height: 1.1;
+        animation: pop 0.25s;
     }
 
     .label {
-        font-size: 0.9rem;
-        color: #ccc;
+        font-size: 1rem;
+        color: #8aa7c2;
+        margin-top: 3px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
     }
+
+    @keyframes pop {
+        0% {
+            transform: scale(1.2);
+        }
+        70% {
+            transform: scale(0.97);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    strong {
+        font-size: 1.1rem;
+        color: #29519a;
+        letter-spacing: 1px;
+        margin-top: 18px;
+    }
+
 </style>

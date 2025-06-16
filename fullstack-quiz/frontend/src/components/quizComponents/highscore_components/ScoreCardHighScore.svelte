@@ -29,15 +29,19 @@
 <style>
 
     .title {
-        margin: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 40px;
     }
 
     .scores {
         display: flex;
         flex-direction: column;
-        gap: 26px;
+        gap: 30px;
         width: 100%;
         max-width: 500px;
+        margin-left: 40px;
     }
 
 
@@ -47,7 +51,8 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         text-align: center;
         transition: transform 0.2s;
-        margin-left: 20px;
+        margin-left: 40px;
+
     }
 
     .gold {

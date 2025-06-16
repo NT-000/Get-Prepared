@@ -1,13 +1,13 @@
 <script>
 
-    const {href, text, onclick} = $props()
+    const {href, text, emoji, onclick} = $props()
 
 
 </script>
 
 
 <a href={href} onclick={onclick}>
-    {text}
+    {text}{emoji}
 </a>
 <style>
     a {
@@ -16,7 +16,7 @@
         border-radius: 8px;
         padding: 12px;
         font-weight: 600;
-        font-size: 1rem;
+        font-size: 1.5rem;
         font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
         transition: all 0.2s ease-in-out;
         margin: 10px;
@@ -25,6 +25,6 @@
     }
 
     a:hover {
-        border-bottom: 4px solid #005fcc;
+        color: gold;
     }
 </style>

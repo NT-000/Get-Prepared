@@ -14,7 +14,7 @@
 
 </script>
 
-<div class="cats" onclick={handleToggleCat}>Kategorier<img src="/fad--open.png"></div>
+<div class="cats" onclick={handleToggleCat}>Kategorier ☰</div>
 {#if isOpen}
     <div class="categories-container">
         <div class="categories">
@@ -42,9 +42,11 @@
 
     .categories-container {
         background: white;
+        width: 80%;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         padding: 30px;
         gap: 10px;
+        border-radius: 10px;
     }
 
     .category-item {
@@ -62,12 +64,13 @@
     .cats {
         font-weight: bolder;
         cursor: pointer;
+        font-size: 1.2rem;
     }
 
-    .cats img:hover {
-        border: #40a9ff;
+    .cats:hover {
+        border-bottom: 2px solid #40a9ff;
         cursor: pointer;
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
 
     input[type="checkbox"] {

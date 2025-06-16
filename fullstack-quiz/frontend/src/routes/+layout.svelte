@@ -19,7 +19,6 @@
             if (res.ok) {
                 currentUser.set(null);
                 await invalidateAll();
-
             } else {
                 console.error('utlogging feilet');
             }
@@ -33,15 +32,21 @@
 {#if data.user.username}
     <header>
 
-        <div class="logged-in-user">Innlogget bruker: <strong>{data.user.username}</strong></div>
-        <A href="/login" text="Innlogging"/>
-        <A href="/highscores" text="Høyeste poengsummer"/>
-        <A href="/new_user" text="Ny bruker"/>
-        {#if data.user}
-            <div>
-                <A href="/login" onclick={logOut} text="Logg ut"/>
-            </div>  <!--Svelte 5 syntax for on:click = onclick-->
-        {/if}
+        <div class="navbar">
+            <div class="navbar-left">
+                <span class="logo"> <img src="/el_logo.png"></span>
+                <span class="logged-in-user">🔑<strong>{data.user.username}</strong>
+            </span>
+            </div>
+            <nav class="navbar-right">
+                <A href="/login" text="Startside" emoji="🏠"/>
+                <A href="/highscores" text="Høyeste poengsummer" emoji="🏆"/>
+                <A href="/quiz" text="Lag ny quiz" emoji="🧩"/>
+                {#if data.user}
+                    <A href="/login" onclick={logOut} text="Logg ut" emoji="🏃🚪"/>
+                {/if}
+            </nav>
+        </div>
     </header>
 {/if}
 
@@ -51,12 +56,52 @@
 
 <style>
     header {
-        margin: 10px;
-        padding: 10px;
-        text-align: center;
+        padding: 0;
+        width: 100%;
+        height: 100px;
         background-color: #005fcc;
         border-radius: 10px;
+        border: 3px solid black;
+        margin-bottom: 24px;
     }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 30px;
+        gap: 20px;
+    }
+
+    .navbar-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .logo {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #fff76e;
+        letter-spacing: 2px;
+    }
+
+    .logo img {
+        width: 95px;
+        height: 75px;
+    }
+
+    .logged-in-user {
+        font-size: 1.2rem;
+        color: lawngreen;
+    }
+
+    .navbar-right {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
 
     footer {
         display: flex;
@@ -65,12 +110,4 @@
         padding: 10px;
         font-style: italic;
     }
-
-    .logged-in-user {
-        font-size: 0.8rem;
-        padding: 10px;
-        color: white;
-    }
-
-
 </style>

@@ -106,7 +106,6 @@
                     body: JSON.stringify(new_score_object)
                 })
                 audio.pause()
-                audio.currentTime = 0;
                 audio.loop = false;
             } catch {
                 console.error("error")
@@ -124,86 +123,110 @@
 </script>
 
 
-<div class="logged-in">
-    {#if $currentUser && !gameStart}
-        <H1>Velkommen til Quiz, {$currentUser.name}!</H1>
-    {:else if !isNewGame}
-        <H1>Din poengsum og svar</H1>
-    {/if}
-</div>
-
-{#if gameStart}
-    <QuestionCard {gameStart} {question} {audioWin} {audioLose} {pickQuestion}/>
-{/if}
-{#if !isNewGame}
-    <ScoreCard bind:isNewGame={isNewGame}/>
-{/if}
-{#if !gameStart && isNewGame}
-    <div class="btn">
-        <Paragraph>{error_message}</Paragraph>
-        <H1><img src="/crown.png" style="height: 250px; width: 250px" alt="img-crown"></H1>
-        <Paragraph>Velg spilltype</Paragraph>
-        <SelectOption/>
-        <div>
-            <select bind:value={difficulty}>
-                {#each difficulties as level, i (i)}
-                    <option>
-                        {level}
-                    </option>
-                {/each}
-            </select>
-        </div>
-        <Categories onChange={handleCategoriesChange}/>
-        {#if isNewGame}
-            <Button type="button" on:click={fetchFilteredQuestions} text="Start nytt spill"/>
+<div class="container">
+    <div class="logged-in">
+        {#if $currentUser && !gameStart}
+            <H1>Er du klar for the loop, {$currentUser.name}?</H1>
         {/if}
     </div>
+    {#if gameStart}
+        <QuestionCard {gameStart} {question} {audioWin} {audioLose} {pickQuestion}/>
+    {/if}
+    {#if !isNewGame}
+        <H1>Din poengsum og svar</H1>
+        <Paragraph>{error_message}</Paragraph>
+        <ScoreCard bind:isNewGame={isNewGame}/>
+    {/if}
+    {#if !gameStart && isNewGame}
+        <div class="game-container">
 
-{/if}
+            <p>Har du det som trengs? - Dr Dean</p>
+            <H1><img src="/dr.png" style="height: 250px; width: 250px" alt="logo"></H1>
+            <Paragraph>Lengde på quizen🧠</Paragraph>
+            <SelectOption/>
+            <div class="difficulty-select">
+                <Paragraph>Vanskelighetsgrad💡</Paragraph>
+                <select bind:value={difficulty}>
 
+                    {#each difficulties as level, i (i)}
+                        <option>
+                            {level}
+                        </option>
+                    {/each}
+                </select>
+            </div>
+            <Categories onChange={handleCategoriesChange}/>
+            {#if isNewGame}
+                <Button type="button" on:click={fetchFilteredQuestions} text="Start nytt spill"/>
+            {/if}
+        </div>
+
+    {/if}
+</div>
 <style>
 
 
-    h3 {
-        font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
-        color: #2d2d2d;
-        margin: 10px 0;
-    }
-
-    .btn {
+    .container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 40px;
-        gap: 20px;
-        background: #ffffff;
-        padding: 24px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        margin: 36px auto 0 auto;
+        gap: 16px;
+        background-color: #f2f6fc;
+        padding: 30px 14px;
+        border-radius: 16px;
+        max-width: 750px;
+        border: 1.5px solid #e1e9f0;
+        box-shadow: 0 2px 12px rgba(20, 60, 100, 0.05);
+        width: 95vw;
     }
 
     .logged-in {
+        text-align: center;
+        margin-bottom: 6px;
+    }
+
+    .game-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 40px;
+        width: 100%;
+        max-width: 420px;
+        background: #fff;
+        padding: 26px 14px 18px 14px;
+        border-radius: 12px;
+        border: 2px solid #e1e9f0;
+        box-shadow: 0 1px 8px rgba(50, 80, 130, 0.04);
+        gap: 18px;
+        margin-top: 10px;
+    }
+
+    .difficulty-select {
+        width: 100%;
+        text-align: center;
+        margin-top: 0;
     }
 
     select {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        border-radius: 10px;
+        border-radius: 7px;
+        border: 1px solid #b8c6d4;
         padding: 10px;
-        width: 200px;
-        text-align: center;
+        width: 100%;
+        max-width: 210px;
+        font-size: 1rem;
+        margin-top: 6px;
+        background: #f7fafc;
+        transition: border 0.17s;
     }
 
     select:focus {
-        background: lightblue;
+        outline: none;
+        border: 1.5px solid #40a9ff;
+        background: #eaf6ff;
     }
 
     option {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        border-radius: 10px;
+        padding: 8px;
     }
 
 

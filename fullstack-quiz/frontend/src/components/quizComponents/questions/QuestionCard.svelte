@@ -39,20 +39,29 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 40px;
+        min-height: 60vh;
+        margin-top: 36px;
     }
+
 
     .form {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 32px;
+        padding: 18px 2px 0 2px;
         border-radius: 12px;
         width: 100%;
-        max-width: 640px;
-        background-color: #ffffff;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        background: transparent;
+        box-shadow: none;
         text-align: center;
-        gap: 20px;
+        gap: 22px;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin: 0 0 7px 0;
+        color: #254b80;
+        letter-spacing: 1px;
     }
 </style>
