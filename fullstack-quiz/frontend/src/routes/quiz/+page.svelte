@@ -147,7 +147,6 @@
             <div class="difficulty-select">
                 <Paragraph>Vanskelighetsgrad💡</Paragraph>
                 <select bind:value={difficulty}>
-
                     {#each difficulties as level, i (i)}
                         <option>
                             {level}

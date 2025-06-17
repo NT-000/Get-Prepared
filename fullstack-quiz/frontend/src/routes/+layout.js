@@ -16,6 +16,7 @@ export async function load({fetch, url}) {
         throw redirect(302, '/login');
     }
 
+
     return {
         user: {
             id: payload.id,
