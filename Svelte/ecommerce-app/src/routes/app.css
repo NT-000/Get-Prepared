@@ -1,54 +1,101 @@
-body{
+body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1rem;
 }
 
-h1{
-    font-size: 2.5rem;
+.page-section {
+    padding: 80px 0;
+    margin-left: 12vw;
+    margin-right: 20vw;
+    max-width: 1150px;
+}
+
+h1 {
+    font-size: 4.5rem;
     font-family: "Winky Sans", sans-serif;
     font-optical-sizing: auto;
 
     font-style: normal;
 }
 
-.text-center{
+.text-center {
     text-align: center;
 }
 
-.bold{
+.bold {
     font-weight: bold;
 }
 
-h2{
-    font-size: 1.75rem;
+.b-bottom {
+    border-bottom: solid 2px lightgray;
+}
+
+h2 {
+    font-size: 2.75rem;
     font-family: "Anton", sans-serif;
     font-weight: bold;
     line-height: 1.25;
 }
 
-h3{
+h3 {
     font-size: 1.4rem;
     font-family: "Anton", sans-serif;
     font-weight: bold;
     line-height: 1.4;
 }
 
-h4{
+h4 {
     font-size: 1rem;
     font-family: "Anton", sans-serif;
     font-weight: bold;
     line-height: 1.5;
 }
 
-.gold{
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-indent: 0;
+}
+
+.gold {
     color: gold;
 }
 
-.mb-l{
-    margin-bottom: 1rem;
+.m-xs {
+    margin-top: 8px;
 }
 
-.gradient-gold{
+.mt-s {
+    margin-top: 16px;
+}
+
+.mt-m {
+    margin-top: 32px;
+}
+
+.mt-l {
+    margin-top: 64px;
+}
+
+.mb-xs {
+    margin-bottom: 8px;
+}
+
+.mb-s {
+    margin-bottom: 16px;
+}
+
+.mb-m {
+    margin-bottom: 32px;
+}
+
+.mb-l {
+    margin-bottom: 64px;
+}
+
+.gradient-gold {
     background: linear-gradient(
             135deg,
             #fffbe5,
@@ -59,10 +106,10 @@ h4{
     );
 }
 
-.red{
+.red {
     color: red;
 }
 
-h1,h2,h3,h4,h5,h6, p{
+h1, h2, h3, h4, h5, h6, p, span {
     margin: 0;
 }
