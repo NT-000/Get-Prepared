@@ -4,7 +4,7 @@
 	let { faq, isExpanded, ...props } = $props();
 </script>
 
-<button class="container" class:container-expanded={isExpanded} {...props}>
+<button class="container" class:select-question={!isExpanded} class:container-expanded={isExpanded} {...props}>
 	<div class="question-and-answer">
 		<p class="question mb-s">{faq.headline}</p>
 		<p class="answer">
@@ -22,6 +22,12 @@
         padding: 12px 0 12px 12px;
         border-bottom: 1px solid grey;
         text-align: left;
+        width: 100%;
+    }
+
+    .select-question:hover {
+        transform: scale(1.02);
+        border-bottom: 3px solid black;
     }
 
     .question-and-answer {
@@ -31,6 +37,7 @@
 
     .answer {
         max-height: 0;
+        font: 400 14px "Lucida Grande", Helvetica, Arial, sans-serif;
         overflow: hidden;
         opacity: 0;
         transition: max-height 0.3s ease-out,

@@ -3,6 +3,8 @@
 	import bookCover from '$assets/etl.png';
 	import mobileCover from '$assets/etl_mobile.png';
 	import { Button, Blink } from '$components/index.js';
+
+	const { children } = $props();
 </script>
 
 <section class="hero">
@@ -22,20 +24,25 @@
 	</div>
 	<div class="hero-text text-center">
 
-		<h1>THIS BOOK WILL</h1>
-		<h1>ALTER YOUR LIFE</h1>
-		<img class="snippet-book" src={snippet_book} alt="">
-		<h1 class="gold">FOR THE BETTER</h1>
+		{#if children}
+			{@render children()}
+		{:else }
+			<h1>THIS BOOK WILL</h1>
+			<h1>ALTER YOUR LIFE</h1>
+			<img class="snippet-book" src={snippet_book} alt="">
+			<h1 class="gold">FOR THE BETTER</h1>
 
-		<p class="mb-l">
-			I entered the loop five years ago.
-			After struggling with social interactions I went to a temple in Tibet and practiced "looping".
-			Then suddenly I became sort of an expert on the human psyche and found the key to interact with these human
-			beings.
-			I will in this book reveal the secret to "loopholing " and other tips and tricks to have in your social-toolbox.
-		</p>
-		<Button class="regular">Buy book now</Button>
+			<p class="mb-l">
+				I entered the loop five years ago.
+				After struggling with social interactions I went to a temple in Tibet and practiced "looping".
+				Then suddenly I became sort of an expert on the human psyche and found the key to interact with these human
+				beings.
+				I will in this book reveal the secret to "loopholing " and other tips and tricks to have in your social-toolbox.
+			</p>
+			<Button class="regular">Buy book now</Button>
+		{/if}
 	</div>
+
 
 </section>
 

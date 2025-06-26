@@ -33,11 +33,11 @@
 
 	let selectedFaq = $state(-1);
 
-	let onclick = (index) => {
-		if (selectedFaq === index) {
+	let onclick = (id) => {
+		if (selectedFaq === id) {
 			selectedFaq = -1;
 		} else {
-			selectedFaq = index;
+			selectedFaq = id;
 		}
 	};
 </script>
@@ -54,9 +54,9 @@
 		</div>
 	</div>
 	<div class="additional-info mt-m">
-		<Button class="mt-s">Buy now</Button>
+		<Button class="regular mb-m">Buy now</Button>
 		<a href="https://x.com">
-			<p>Follow me on X! <img src="{logo}" alt="x-icon" class="x-icon" /></p>
+			<p>Follow me on <img src="{logo}" alt="x-icon" class="x-icon" /></p>
 		</a>
 
 	</div>
@@ -72,21 +72,26 @@
         text-align: left;
     }
 
+    .additional-info a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
     .faqs:hover {
         cursor: pointer;
     }
 
 
     .x-icon {
-        height: 50px;
-        left: 400px;
+        height: 36px;
+        width: 36px;
+        display: inline-block;
     }
 
 
     img {
         display: block;
-        height: 1.5vw;
-        right: 0;
         transition: transform 0.3s linear;
     }
 
