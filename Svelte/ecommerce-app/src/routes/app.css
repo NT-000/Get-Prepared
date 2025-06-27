@@ -106,8 +106,23 @@ li {
     );
 }
 
+.gradient-purple {
+    background: linear-gradient(
+            135deg,
+            #e2cbff,
+            #e2cbff 25%,
+            #deeaff 50%,
+            #ece5ff 75%,
+            #927bce
+    );
+}
+
 .red {
     color: red;
+}
+
+.gold {
+    color: gold;
 }
 
 h1, h2, h3, h4, h5, h6, p, span {

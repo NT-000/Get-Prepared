@@ -9,18 +9,25 @@
 
 <section class="hero">
 	<div class="showcase">
-		<h1>Life changing book</h1>
-		<h1>BUY IT NOW!</h1>
-		<Blink>
-			<h2 class="red">
-				25% OFF!!!
-			</h2>
-		</Blink>
+		{#if !children}
+			<h1>A Life changing book</h1>
 
+			<h1>BUY IT NOW!</h1>
+			<Blink>
+				<h2 class="red">
+					25% OFF!!!
+				</h2>
+			</Blink>
+			<h5>Now available as e-book</h5>
+		{:else}
+			<Blink>
+				<h1>IT'S TIME TO ENTER THE LOOP</h1>
+			</Blink>
+		{/if}
 
 		<img class="book-cover" src={bookCover} alt="">
 		<img class="mobile-cover" src={mobileCover} alt="">
-		<h5>Now available as e-book</h5>
+
 	</div>
 	<div class="hero-text text-center">
 
