@@ -7,9 +7,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "prepare": "svelte-kit sync",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "prepare": "svelte-kit sync || echo",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write ."
   },
@@ -30,7 +28,9 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^7.4.0",
+    "@sveltejs/adapter-auto": "^6.0.1",
     "@sveltejs/adapter-static": "^3.0.8",
+    "@sveltejs/adapter-vercel": "^5.7.2",
     "stripe": "^18.2.1"
   }
 }
