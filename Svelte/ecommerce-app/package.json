@@ -10,6 +10,7 @@
     "prepare": "svelte-kit sync || echo",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
+    "deploy:vercel": "vercel deploy --prod --dir=build",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write ."
   },
