@@ -7,7 +7,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "prepare": "svelte-kit sync || echo ''",
+    "prepare": "svelte-kit sync",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "lint": "eslint . && prettier --check .",
@@ -16,7 +16,6 @@
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
     "@eslint/js": "^9.18.0",
-    "@sveltejs/adapter-vercel": "^5.7.2",
     "@sveltejs/kit": "2.22.1",
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
     "eslint": "^9.18.0",
