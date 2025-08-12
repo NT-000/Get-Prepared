@@ -1,0 +1,84 @@
+########################
+# .NET / C# Build Files
+########################
+bin/
+obj/
+out/
+[Bb]uild/
+[Ll]og/
+[Tt]emp/
+*.tmp
+*.log
+
+########################
+# Rider / JetBrains
+########################
+.idea/
+*.iml
+/shelf/
+/workspace.xml
+/modules.xml
+/contentModel.xml
+/projectSettingsUpdater.xml
+
+########################
+# Visual Studio
+########################
+.vs/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+########################
+# NuGet
+########################
+*.nupkg
+# Uncomment for ignoring NuGet packages folder
+# packages/
+# Keep package config
+!packages/*.config
+
+########################
+# ReSharper
+########################
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+########################
+# DotCover
+########################
+*.dotCover
+
+########################
+# Editor HTTP Client
+########################
+/httpRequests/
+
+########################
+# Database / Data Sources
+########################
+/dataSources/
+/dataSources.local.xml
+
+########################
+# VS Code
+########################
+.vscode/
+
+########################
+# OS Files
+########################
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+
+########################
+# Others
+########################
+*.db
+*.bak
+*.swp
+*.lock
