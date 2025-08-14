@@ -1,14 +1,15 @@
-type shopStorage = Record<string, number>
+type Fruits = "apple" | "banana" | "peach" | "strawberry" | "carrot";
+type shopStorage = Record<Fruits, number>
 
 const storage: shopStorage = {
     apple: 22,
     banana: 32,
     peach: 32,
-    carrot:23,
     strawberry: 32,
+    carrot:23,
 };
 
-type Fruits = keyof typeof storage;
+
 
 function printFruits(store: shopStorage) {
    let total : number = 0;
@@ -19,7 +20,5 @@ function printFruits(store: shopStorage) {
     }
     console.log("Total: ", total);
 }
-
-console.log("Storage:",storage);
 
 printFruits(storage);
