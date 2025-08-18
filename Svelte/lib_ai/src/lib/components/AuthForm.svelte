@@ -1,26 +1,38 @@
 <script lang="ts">
     import {Button} from "$components/index";
+    import type {ActionData} from "../../../.svelte-kit/types/src/routes/register/$types";
 
     interface ComponentProps {
         isRegistration: boolean
+        form: ActionData
     }
 
-    let {isRegistration}: ComponentProps = $props();
+    let {isRegistration, form}: ComponentProps = $props();
 </script>
 
 <div class="default-margin auth-container">
     <div class="mb-l">
         <h1>{isRegistration ? "Register" : "Login"}</h1>
     </div>
+
     <div class="form-and-social-login">
-        <form class="auth-form" method="POST">
-            {#if isRegistration}
-                <input placeholder="Name" type="text" name="name">
+        <form class="auth-form" method="POST" action={isRegistration ? "" : "/login/signInWithPassword"}>
+
+            {#if form && form.errors?.length}
+                {#each form.errors as error}
+                    <div class="auth-error">
+                        {error}
+                    </div>
+                {/each}
             {/if}
-            <input placeholder="Email" type="email" name="email">
-            <input placeholder="Password" type="password" name="password">
             {#if isRegistration}
-                <input placeholder="Confirm Password" type="password" name="confirmPassword">
+                <input placeholder="Name" type="text" name="name" required value={form?.name || ""}>
+            {/if}
+            <input placeholder="Email" type="email" name="email" value={form?.email || ""} required>
+            <input placeholder="Password" type="password" name="password" value={form?.password || ""} required>
+            {#if isRegistration}
+                <input placeholder="Confirm Password" autocomplete="new-password" type="password"
+                       name="confirmPassword" required>
             {/if}
 
             <Button type="submit">{isRegistration ? "Register" : "Login"}</Button>
@@ -36,7 +48,9 @@
             {/if}
         </form>
         <div class="social-login">
-
+            <form method="POST" action={isRegistration ? "/login/?/googleLogin" : "?/googleLogin"}>
+                <Button type="submit">Log in using Google</Button>
+            </form>
         </div>
     </div>
 </div>
@@ -89,12 +103,12 @@
     }
 
     .auth-error {
-        color: white;
-        background: red;
+        color: red;
         padding: 10px;
         font-size: 18px;
         width: 100%;
         margin-bottom: 10px;
+        font-weight: bold;
     }
 
     .auth-error:last-of-type {
