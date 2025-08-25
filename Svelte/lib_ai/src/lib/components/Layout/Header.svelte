@@ -12,7 +12,7 @@
 </script>
 
 <header>
-    <a href="/">
+    <a href={user ? "/private/dashboard" : "/"}>
         <img src="{logo}" class="logo" alt="home">
     </a>
 
