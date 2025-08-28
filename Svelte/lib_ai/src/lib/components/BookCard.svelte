@@ -36,7 +36,7 @@
             <Icon icon="famicons:eye"/>
         </h4>
         <div class="book-info">
-            <h2>{book.title}</h2>
+            <h3>{book.title}</h3>
             <h3>{book.author}</h3>
             <StarRating {book}/>
             <p>Date added: {convertToLocalString(book.created_at)}</p>
