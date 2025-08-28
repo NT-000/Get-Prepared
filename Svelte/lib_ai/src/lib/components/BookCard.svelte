@@ -20,16 +20,6 @@
         })
     }
 
-    function convertStars(book: Book) {
-        let html = "";
-        $inspect(book.rating)
-        for (let i = 0; i < (book?.rating ?? 0); i++) {
-
-            html += `<Icon icon="famicons:star-sharp"/>`;
-        }
-        return html;
-    }
-
     let bookStatus = $derived(
         book.finished_read ? "Finished" : book.started_reading ? "Currently reading" : "Not started"
     )
@@ -51,8 +41,6 @@
             <StarRating {book}/>
             <p>Date added: {convertToLocalString(book.created_at)}</p>
         </div>
-
-
     </a>
 </div>
 

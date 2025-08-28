@@ -1,10 +1,15 @@
 <script lang="ts">
-    import {getUserState} from "$lib/state/user-state.svelte";
+    import {type Book, getUserState} from "$lib/state/user-state.svelte";
     import {BookCard, Button} from "$components";
     import Icon from "@iconify/svelte";
+    import PickRating from "$components/PickRating.svelte";
+    import BookCategory from "$components/BookCategory.svelte";
+    import SearchGenre from "$components/SearchGenre.svelte";
 
+    let searchGenre = $state("")
     const userContext = getUserState();
     let isOpen: boolean = $state(false);
+
 
     $inspect(isOpen)
     $inspect(userContext.userName)
@@ -14,6 +19,7 @@
 </script>
 
 
+<PickRating value={4}/>
 <section class="dashboard">
     <div class="dashboard-header mb-m">
 
@@ -28,13 +34,13 @@
     </div>
     <Button onclick={() => isOpen = !isOpen}>Open book menu</Button>
     {#if userContext.userBooks?.length && isOpen}
-        <ul>
-            {#each userContext.userBooks as book}
-                <li>
-                    <BookCard {book}/>
-                </li>
-            {/each}
-        </ul>
+
+        <BookCategory booksToDisplay={userContext.userBooks.slice(0,5)} categoryName={"Random books"}/>
+        <SearchGenre books={userContext.userBooks} {searchGenre}/>
+        <BookCategory booksToDisplay={[...userContext.userBooks].sort((a,b) => (b.rating ?? 0) - (a.rating ?? 0))}
+                      categoryName={"Favorites"}/>
+        <!--        <BookCategory books={userContext.userBooks ?? 0} categoryName={"Favorites"}/>-->
+
     {/if}
 </section>
 
