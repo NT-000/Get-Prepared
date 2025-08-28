@@ -66,6 +66,29 @@ export class UserState {
         await this.supabase?.auth.signOut();
         await goto("/login");
     }
+
+    fetchBookByGenreSortedByRating(searchGenre: string) {
+        return this.userBooks.filter(book => book.genre === searchGenre).toSorted((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
+    }
+
+    fetchUnreadBooks(): Book[] {
+
+        return this.userBooks.filter(b => !b.started_reading).toSorted((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+    }
+
+    fetchCurrentlyReading(): Book[] {
+        return this.userBooks.filter(b => b.started_reading && !b.finished_read).toSorted((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+    }
+
+    fetchFavoriteBooks(): Book[] {
+
+        return this.userBooks.filter(b => b.rating).toSorted((a, b) => (b.rating ?? 0) - (a.rating ?? 0)).slice(0, 5)
+    }
+
+    fetchFinishedBook(): Book[] {
+        $inspect("logg ferdig bøker:", this.userBooks.map(b => b.finished_read))
+        return this.userBooks.filter(b => b.finished_read).toSorted((a, b) => new Date(b.finished_read!).getTime() - new Date(a.finished_read!).getTime())
+    }
 }
 
 const USER_STATE_KEY = Symbol("USER_STATE");

@@ -36,9 +36,9 @@
     {#if userContext.userBooks?.length && isOpen}
 
         <BookCategory booksToDisplay={userContext.userBooks.slice(0,5)} categoryName={"Random books"}/>
-        <SearchGenre books={userContext.userBooks} {searchGenre}/>
-        <BookCategory booksToDisplay={[...userContext.userBooks].sort((a,b) => (b.rating ?? 0) - (a.rating ?? 0))}
-                      categoryName={"Favorites"}/>
+        <SearchGenre {searchGenre}/>
+        <BookCategory booksToDisplay={userContext.fetchFavoriteBooks()}
+                      categoryName={"Your Favorite Books"}/>
         <!--        <BookCategory books={userContext.userBooks ?? 0} categoryName={"Favorites"}/>-->
 
     {/if}

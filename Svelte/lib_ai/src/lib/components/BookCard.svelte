@@ -23,6 +23,18 @@
     let bookStatus = $derived(
         book.finished_read ? "Finished" : book.started_reading ? "Currently reading" : "Not started"
     )
+
+    function calculateDaysPast(book: Book) {
+
+        let start = new Date(book.started_reading).getTime();
+        let end = new Date(book.finished_read).getTime();
+
+        let days = ((end - start) / (1000 * 60 * 60 * 24));
+
+        console.log("book start:", book.started_reading)
+
+        return days;
+    }
 </script>
 
 <div class={book.finished_read ? "read" : "notRead"}>
@@ -40,6 +52,13 @@
             <h3>{book.author}</h3>
             <StarRating {book}/>
             <p>Date added: {convertToLocalString(book.created_at)}</p>
+            {#if book.started_reading}
+                <p>Date started reading: {convertToLocalString(book.started_reading)}</p>
+            {/if}
+            {#if book.finished_read}
+                <p>Date finished book: {convertToLocalString(book.finished_read)}</p>
+                <h3 class="days-counter">Days: {calculateDaysPast(book)}</h3>
+            {/if}
         </div>
     </a>
 </div>
@@ -81,6 +100,14 @@
         height: 100%;
         object-fit: cover;
         border-radius: 10px;
+    }
+
+    .days-counter {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: gold;
+        padding: 16px;
     }
 
 
