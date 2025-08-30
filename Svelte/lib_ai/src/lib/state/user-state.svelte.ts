@@ -89,6 +89,31 @@ export class UserState {
         $inspect("logg ferdig bøker:", this.userBooks.map(b => b.finished_read))
         return this.userBooks.filter(b => b.finished_read).toSorted((a, b) => new Date(b.finished_read!).getTime() - new Date(a.finished_read!).getTime())
     }
+
+    async updateBookRating(bookRating: number, book: Book) {
+        await this.supabase?.from("books").update({rating: bookRating}).eq("id", book.id).single()
+    }
+
+    fetchFavoriteGenre() {
+        const genreCounts: { [key: string]: number } = {};
+
+        if (this.userBooks.length === 0) {
+            return "";
+        }
+        this.userBooks.forEach(book => {
+            const genre = book.genre;
+            if (genre) {
+                if (!genreCounts[genre]) {
+                    genreCounts[genre] = 1;
+                } else {
+                    genreCounts[genre]++;
+                }
+            }
+        })
+        console.log("genrecounts:", genreCounts);
+        const mostCommonBooks = Object.keys(genreCounts).reduce((a, b) => genreCounts[a] > genreCounts[b] ? a : b)
+        return mostCommonBooks || null;
+    }
 }
 
 const USER_STATE_KEY = Symbol("USER_STATE");
