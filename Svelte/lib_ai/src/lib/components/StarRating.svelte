@@ -23,5 +23,11 @@
 
     .rating {
         display: flex;
+        font-size: 40px;
+        border: none;
+        outline: none;
+        background: none;
+        padding: 0;
+        color: transparent;
     }
 </style>

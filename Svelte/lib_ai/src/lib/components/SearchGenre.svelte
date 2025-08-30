@@ -2,8 +2,7 @@
 
     import {type Book, getUserState} from "$lib/state/user-state.svelte";
     import {BookCategory, Button} from "$components/index";
-    import convertToLocalString from "$components/BookCard.svelte"
-    import * as sea from "node:sea";
+    import Icon from "@iconify/svelte";
 
     type SearchProps = {
         searchGenre: string,
@@ -24,6 +23,7 @@
 
     let {searchGenre}: SearchProps = $props();
     let selectedCat = $state(-1)
+    let isGenre = $state(false)
 
     let userContext = getUserState();
 
@@ -43,12 +43,30 @@
 <section>
 
 
-    <div class="btn-cat">
-        {#each categories as cat}
-            <Button isSelected={selectedCat === cat.id} onclick={() => searchParam(cat)}>{cat.name}</Button>
-        {/each}
+    <button onclick={() => isGenre = !isGenre}>
+        {#if isGenre}
+            <span class="closed">Close Categories
+            <span class="icon-wrapper">
+                <Icon class="icon" icon="solar:list-arrow-up-bold"/>
+            </span>
+            </span>
+        {:else}
 
-    </div>
+            <span class="open">Open Categories
+            <span class="icon-wrapper">
+                <Icon class="icon" icon="solar:list-arrow-down-outline"/>
+            </span>
+            </span>
+        {/if}
+    </button>
+    {#if isGenre}
+        <div class="btn-cat">
+            {#each categories as cat}
+                <Button isSelected={selectedCat === cat.id} onclick={() => searchParam(cat)}>{cat.name}</Button>
+            {/each}
+        </div>
+    {/if}
+
     {#if searchGenre !== "Not read" && searchGenre !== "Currently reading" && searchGenre !== "Finished books"}
         <BookCategory
                 booksToDisplay={userContext.fetchBookByGenreSortedByRating(searchGenre)}
@@ -64,8 +82,36 @@
 
 <style>
     .btn-cat {
+        display: flex;
         object-fit: cover;
-        background-color: transparent;
+        background: transparent;
         width: 70%;
     }
+
+    button {
+        background-color: transparent;
+        font-size: 40px;
+    }
+
+    .closed {
+        width: 22px;
+        height: 20px;
+    }
+
+    .icon-wrapper {
+        display: inline-flex;
+        font-size: 60px;
+        transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .closed:hover .icon-wrapper,
+    .open:hover .icon-wrapper {
+        transform: scale(1.3);
+    }
+
+    .icon-wrapper:hover {
+        font-weight: bold;
+        transform: scale(1.3);
+    }
+
 </style>

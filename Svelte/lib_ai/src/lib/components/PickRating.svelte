@@ -1,28 +1,38 @@
 <script lang="ts">
 
     import Icon from "@iconify/svelte";
+    import {type Book, getUserState} from "../state/user-state.svelte"
+    import {invalidateAll} from "$app/navigation";
 
     interface StarRatingProps {
         value: number,
+        book: Book,
         updateDatabaseRating?: (updatedRating: number) => void;
     }
 
-    let {value, updateDatabaseRating}: StarRatingProps = $props();
+    let userContext = getUserState()
 
-    function handleRating(updatedRating: number) {
+    let {value, updateDatabaseRating, book}: StarRatingProps = $props();
+
+    async function handleRating(updatedRating: number) {
         value = updatedRating;
         if (updateDatabaseRating) {
             updateDatabaseRating(updatedRating)
+            console.log("update1");
+        } else {
+            await userContext.updateBookRating(updatedRating, book)
+            console.log("update2");
+            await invalidateAll()
         }
     }
 </script>
 
 
 <div class="rating">
-    Rating:
     <div class="rating-container">
         {#each Array(5) as _, i}
-            <button class="star" onclick={() => handleRating(i + 1)}>
+
+            <button class="star" class:active={value > i} onclick={() => handleRating(i + 1)}>
                 <Icon
                         icon="famicons:star"
                         color={value > i ? "gold" : "black"}
@@ -41,6 +51,22 @@
         outline: none;
     }
 
+    @keyframes pulse {
+        0% {
+            transform: scale(0.9);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .star.active {
+        animation: pulse 1.5s ease-in-out infinite;
+        transform-origin: center;
+    }
 
     .star {
         border: none;

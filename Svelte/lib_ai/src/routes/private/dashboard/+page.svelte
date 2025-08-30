@@ -1,15 +1,14 @@
 <script lang="ts">
     import {type Book, getUserState} from "$lib/state/user-state.svelte";
-    import {BookCard, Button} from "$components";
     import Icon from "@iconify/svelte";
-    import PickRating from "$components/PickRating.svelte";
     import BookCategory from "$components/BookCategory.svelte";
     import SearchGenre from "$components/SearchGenre.svelte";
 
     let searchGenre = $state("")
     const userContext = getUserState();
-    let isOpen: boolean = $state(false);
+    let isOpen: boolean = $state(true);
 
+    let booksFromFavoriteGenre = $derived(userContext.fetchFavoriteGenre())
 
     $inspect(isOpen)
     $inspect(userContext.userName)
@@ -18,8 +17,6 @@
 
 </script>
 
-
-<PickRating value={4}/>
 <section class="dashboard">
     <div class="dashboard-header mb-m">
 
@@ -32,15 +29,16 @@
             <p>Your place to add new favorites, all at one place</p>
         </div>
     </div>
-    <Button onclick={() => isOpen = !isOpen}>Open book menu</Button>
+    <!--    <Button onclick={() => isOpen = !isOpen}>Open book menu</Button>-->
     {#if userContext.userBooks?.length && isOpen}
 
-        <BookCategory booksToDisplay={userContext.userBooks.slice(0,5)} categoryName={"Random books"}/>
         <SearchGenre {searchGenre}/>
-        <BookCategory booksToDisplay={userContext.fetchFavoriteBooks()}
-                      categoryName={"Your Favorite Books"}/>
-        <!--        <BookCategory books={userContext.userBooks ?? 0} categoryName={"Favorites"}/>-->
+        <BookCategory booksToDisplay={userContext.userBooks.slice(0,5)} categoryName={"Random books"}/>
 
+        <BookCategory booksToDisplay={userContext.fetchFavoriteBooks()}
+                      categoryName={"Your Top Rated Books"}/>
+        <BookCategory booksToDisplay={userContext.fetchBookByGenreSortedByRating(booksFromFavoriteGenre ?? "")}
+                      categoryName={`Your top genre: ${userContext.fetchFavoriteGenre()}`}/>
     {/if}
 </section>
 

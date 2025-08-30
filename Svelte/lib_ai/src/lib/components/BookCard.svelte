@@ -2,7 +2,7 @@
     import type {Book} from "$lib/state/user-state.svelte";
     import Icon from "@iconify/svelte";
     import StarRating from "$components/StarRating.svelte";
-    import PickRating from "$components/PickRating.svelte";
+    import {calculateDaysPast, convertToLocalString} from "$components/helperFunctions/helpers";
 
     interface BookProps {
         book: Book,
@@ -10,31 +10,12 @@
 
     let {book}: BookProps = $props();
 
-    function convertToLocalString(date: string) {
-        const newDate = new Date(date);
-        return newDate.toLocaleDateString("no-NO", {
-            weekday: "short",
-            year: "numeric",
-            month: "long",
-            day: "2-digit",
-        })
-    }
 
     let bookStatus = $derived(
-        book.finished_read ? "Finished" : book.started_reading ? "Currently reading" : "Not started"
+        book.finished_read ? "Read" : book.started_reading ? "Currently reading" : "Not started"
     )
 
-    function calculateDaysPast(book: Book) {
 
-        let start = new Date(book.started_reading).getTime();
-        let end = new Date(book.finished_read).getTime();
-
-        let days = ((end - start) / (1000 * 60 * 60 * 24));
-
-        console.log("book start:", book.started_reading)
-
-        return days;
-    }
 </script>
 
 <div class={book.finished_read ? "read" : "notRead"}>
@@ -45,6 +26,9 @@
             {/if}
         </div>
         <h4>{bookStatus}
+            {#if book.finished_read}
+                in {calculateDaysPast(book)} Days
+            {/if}
             <Icon icon="famicons:eye"/>
         </h4>
         <div class="book-info">
@@ -57,7 +41,6 @@
             {/if}
             {#if book.finished_read}
                 <p>Date finished book: {convertToLocalString(book.finished_read)}</p>
-                <h3 class="days-counter">Days: {calculateDaysPast(book)}</h3>
             {/if}
         </div>
     </a>
@@ -71,12 +54,16 @@
         width: 100%;
         min-width: 360px;
         max-width: 450px;
-        height: 300px;
+        height: 320px;
         border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         text-decoration: none;
         text-align: left;
         color: white;
+    }
+
+    .book-info:last-of-type {
+        padding-bottom: 20px;
     }
 
     .book-info {
@@ -125,6 +112,7 @@
         font-family: "Winky Sans", sans-serif;
         font-style: italic;
     }
+
 
     h4 {
         position: absolute;
