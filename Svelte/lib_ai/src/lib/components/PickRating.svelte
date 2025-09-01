@@ -2,40 +2,39 @@
 
     import Icon from "@iconify/svelte";
     import {type Book, getUserState} from "../state/user-state.svelte"
-    import {invalidateAll} from "$app/navigation";
 
     interface StarRatingProps {
-        value: number,
         book: Book,
         updateDatabaseRating?: (updatedRating: number) => void;
     }
 
-    let userContext = getUserState()
 
-    let {value, updateDatabaseRating, book}: StarRatingProps = $props();
+    let {updateDatabaseRating, book}: StarRatingProps = $props();
+
+    let currentRating = $state(book.rating ?? 0)
 
     async function handleRating(updatedRating: number) {
-        value = updatedRating;
+        currentRating = updatedRating;
         if (updateDatabaseRating) {
             updateDatabaseRating(updatedRating)
             console.log("update1");
         } else {
-            await userContext.updateBookRating(updatedRating, book)
-            console.log("update2");
-            await invalidateAll()
+            console.log("else, error");
         }
     }
+
+
 </script>
 
 
 <div class="rating">
     <div class="rating-container">
-        {#each Array(5) as _, i}
+        {#each Array(5) as _, i (i)}
 
-            <button class="star" class:active={value > i} onclick={() => handleRating(i + 1)}>
+            <button class="star" class:active={currentRating > i} onclick={() => handleRating(i + 1)}>
                 <Icon
                         icon="famicons:star"
-                        color={value > i ? "gold" : "black"}
+                        color={currentRating > i ? "gold" : "black"}
                         width="40"
                 />
             </button>

@@ -1,7 +1,9 @@
 import type {Session, SupabaseClient, User} from "@supabase/supabase-js";
 import {getContext, setContext} from "svelte";
-import {goto} from "$app/navigation";
+import {goto, invalidateAll} from "$app/navigation";
 import type {Database} from "$lib/types/database.types";
+
+import {uuid} from "@supabase/supabase-js/dist/main/lib/helpers";
 
 
 interface UserStateProps {
@@ -90,8 +92,42 @@ export class UserState {
         return this.userBooks.filter(b => b.finished_read).toSorted((a, b) => new Date(b.finished_read!).getTime() - new Date(a.finished_read!).getTime())
     }
 
+    //POST
+
+    async uploadImageCover(file: File, bookId: number): Promise<void> {
+        if (!this.user || !this.supabase || !file) {
+            return;
+        }
+
+        const filePath = `${this.user.id}/${uuid()}_${file.name}`;
+        const {error: uploadError} = await this.supabase.storage.from("book-covers").upload(filePath, file)
+
+        if (uploadError) {
+            return console.error(uploadError);
+        }
+
+        const {data: {publicUrl},} = this.supabase.storage.from("book-covers").getPublicUrl(filePath)
+
+        // await this.updateBook(bookId, {cover_img: publicUrl});
+    }
+
+    // UPDATE
     async updateBookRating(bookRating: number, book: Book) {
         await this.supabase?.from("books").update({rating: bookRating}).eq("id", book.id).single()
+    }
+
+    async updateBook(book: Partial<Book> & { id: number }) {
+
+        const {id, ...rest} = book;
+        console.log("book updateBook, userContext", rest);
+        await this.supabase?.from("books").update(rest).eq("id", id)
+        await invalidateAll()
+    }
+
+    // DELETE
+
+    async deleteBook(book: Book) {
+        await this.supabase?.from("books").delete().eq("id", book.id).single()
     }
 
     fetchFavoriteGenre() {
