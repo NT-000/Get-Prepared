@@ -1,0 +1,211 @@
+<script lang="ts">
+    import Dropzone from "svelte-file-dropzone";
+    import Icon from "@iconify/svelte";
+    import {convertFileToBase64} from "$lib/utils/openai-helpers";
+    import {BookCard, Button} from "$components";
+
+    interface OpenAiBook {
+        bookTitle: string,
+        author: string,
+        description: string,
+        genre: string,
+    }
+
+    let isLoading = $state(false)
+
+    let errorMessage = $state("")
+
+    let uploadedBooks = $state<OpenAiBook[]>([]);
+
+    let booksAddedSuccessfully = $state(false)
+
+    function deleteBook() {
+
+    }
+
+    async function handleDrop(e: CustomEvent<any>) {
+        const {acceptedFiles} = e.detail;
+
+        if (acceptedFiles.length) {
+            isLoading = true;
+            const fileToSendToOpenAi = acceptedFiles[0];
+
+            const base64String = await convertFileToBase64(fileToSendToOpenAi)
+
+            try {
+                const response = await fetch("/api/scan-shelf", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({base64: base64String})
+                });
+
+                isLoading = false;
+                const result = (await response.json()) as { bookArray: OpenAiBook[] };
+
+                uploadedBooks = result.bookArray;
+                console.log("updatedbooks:", uploadedBooks)
+                console.log("updatedbooks length:", uploadedBooks.length)
+                console.log("result frontend:", result.bookArray)
+            } catch (error) {
+                errorMessage = "Error while uploading file."
+            }
+        } else {
+            errorMessage = `Could not upload file. Are you sure the file size is smaller than 10MB?`
+        }
+    }
+</script>
+
+<section>
+    <h3 style="font-size: 50px">Take a picture to add new books</h3>
+    {#if uploadedBooks.length === 0}
+        <div class="upload-area">
+            <div class="upload-container">
+                {#if errorMessage}
+                    <p class="text-center mb-s upload-error">{errorMessage}</p>
+                {/if}
+                {#if isLoading}
+                    <div class="spinner-container">
+                        Loading...
+                        <div class="spinner">
+
+                        </div>
+                    </div>
+                {:else}
+                    <Dropzone
+                            on:drop={handleDrop}
+                            multiple={false}
+                            accept="image/*" maxSize={10* 1024 * 1024}
+                            containerClasses={"dropzone-cover"}>
+                        <Icon class="icon" icon="bi:camera-fill" width="40"/>
+                        <p>Drag a picture here or select a file</p>
+                    </Dropzone>
+                {/if}
+            </div>
+        </div>
+    {:else if !booksAddedSuccessfully}
+        <div class="uploaded-book-container">
+            <table class="upload-table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Description</th>
+                    <th>Genre</th>
+                </tr>
+                </thead>
+                <tbody>
+                {#each uploadedBooks as book, i}
+                    <tr>
+                        <td>{book.bookTitle}</td>
+                        <td>{book.author}</td>
+                        <td>{book.description}</td>
+                        <td>{book.genre}</td>
+                        <td>
+                            <button onclick={() => console.log("delete me")}>
+                                <Icon icon="streamline:delete-1-solid" width="24" color="red"/>
+                            </button>
+                        </td>
+                    </tr>
+
+                {/each}
+                </tbody>
+            </table>
+            <Button onclick={() => console.log("add all remaining books")}>Add all books</Button>
+        </div>
+    {:else}
+        <h4>The selected {uploadedBooks.length} av been added to your library.</h4>
+    {/if}
+</section>
+
+<style>
+
+    .upload-area {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .upload-container {
+        width: 600px;
+        height: 600px;
+        border: 1px solid black;
+        background: lightgray;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .upload-table {
+        width: 100%;
+        background-color: white;
+        border-radius: 10px;
+        border-collapse: collapse;
+    }
+
+    .upload-table thead {
+        font-weight: bold;
+        font-size: 22px;
+        text-align: center;
+        border-bottom: 3px solid black;
+    }
+
+    .upload-table td {
+        padding: 12px;
+        border-bottom: 1px solid lightgray;
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .upload-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .upload-error {
+        color: red;
+
+    }
+
+    .spinner {
+        display: inline-block;
+        animation: spin 1s infinite linear;
+        border-radius: 50%;
+        border: 4px solid rgba(0, 0, 0, 0.2);
+        border-right-color: black;
+        width: 40px;
+        height: 40px;
+        cursor: progress;
+    }
+
+    :global(.dropzone-cover) {
+        display: flex;
+        min-width: 600px !important;
+        min-height: 400px !important;
+        height: 100%;
+        justify-content: center;
+        flex: 0 !important;
+    }
+
+    :global(.dropzone-cover):hover {
+        scale: 1.2;
+        color: black !important;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .spinner {
+        display: flex;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+
+</style>
+

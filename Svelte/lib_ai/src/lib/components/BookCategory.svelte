@@ -1,7 +1,8 @@
 <script lang="ts">
 
-    import type {Book} from "$lib/state/user-state.svelte";
-    import {BookCard} from "$components/index";
+    import {type Book, getUserState} from "$lib/state/user-state.svelte";
+    import {BookCard, Button} from "$components/index";
+    import Icon from "@iconify/svelte";
 
     interface BookCategoryProps {
         categoryName: string,
@@ -9,10 +10,24 @@
     }
 
     let {categoryName, booksToDisplay}: BookCategoryProps = $props();
+    let userContext = getUserState();
+
+    function handleRefresh() {
+    }
 </script>
 
 <section class="book-category mb-m">
-    <h3 class="cat-name">{categoryName}</h3>
+    {#if categoryName === "Random books"}
+        <h3 class="cat-name">
+            <span>{categoryName}
+                <Button type="button" onclick={() => handleRefresh()} isIcon={true}>
+                    <Icon icon="material-symbols:frame-reload" class="refresh-random"/>
+                </Button>
+            </span>
+        </h3>
+    {:else}
+        <h3>{categoryName}</h3>
+    {/if}
     <div class="book-container">
         {#each booksToDisplay as book}
             <BookCard {book}/>
@@ -45,5 +60,9 @@
     .books-container::-webkit-scrollbar-thumb:hover {
         background-color: rgba(0, 0, 0, 0.3);
         border-radius: 3px;
+    }
+
+    :global(.refresh-random) {
+        background-color: transparent;
     }
 </style>

@@ -4,7 +4,6 @@
     import {Button, StarRating} from "$components";
     import Icon from "@iconify/svelte";
     import ModalConfirm from "$lib/shared/ModalConfirm.svelte";
-    import {invalidateAll} from "$app/navigation";
     import {calculateDaysPast} from "$components/helperFunctions/helpers";
     import Dropzone from "svelte-file-dropzone";
 
@@ -162,75 +161,74 @@
 
     <section>
         <h1>EDIT MODE</h1>
-        <div class="book-container">
-            <div class="book-info">
-                <p>Title</p>
-                <input placeholder={book.title} bind:value={newTitle}/>
-                <p>Author</p>
-                <input placeholder={book.author} bind:value={newAuthor}/>
-                <p>Enter new rating</p>
-                <PickRating {book}
-                            updateDatabaseRating={(rating) => updateRating(rating)}/>
-                <p>Enter description</p>
-                <textarea bind:value={newDescription}
-                          class="book-description-edit" placeholder={book.description}></textarea>
+        <div class="book-info">
+            <p>Title</p>
+            <input placeholder={book.title} bind:value={newTitle}/>
+            <p>Author</p>
+            <input placeholder={book.author} bind:value={newAuthor}/>
+            <p>Rating</p>
+            {#if book.finished_read}
+                <PickRating {book} updateDatabaseRating={(rating) => updateRating(rating)}/>
+            {:else}
+                <p class="mb-m">You can rate or change the rating of the book after you have read it</p>
+            {/if}
+            <p>Enter description</p>
+            <textarea bind:value={newDescription}
+                      class="book-description-edit" placeholder={book.description}></textarea>
 
-                <div class="categories-edit">
-                    <p>Selected genre:</p>
-                    <select bind:value={newGenre}>
-                        <option disabled>Select genre</option>
-                        {#each categories as cat}
-                            <option>{cat.name}</option>
-                        {/each}
-                    </select>
-                </div>
+            <div class="categories-edit">
+                <p>Selected genre:</p>
+                <select bind:value={newGenre}>
+                    <option disabled>Select genre</option>
+                    {#each categories as cat}
+                        <option>{cat.name}</option>
+                    {/each}
+                </select>
             </div>
-            <div class="try">
-                <div class="book-cover">
-                    {#if !book.cover_img}
-                        <div class="img-box">
+        </div>
 
-                            {@render bookStatusXDays()}
-                            <Dropzone
-                                    on:drop={handleDrop}
-                                    multiple={false} accept="image/*" maxSize={5* 1024 * 1024}
-                                    containerClasses={"dropzone-cover"} containerStyles="min-height: 100%">
-                                                    <span class="add-image">Add cover image
+        <div class="book-cover">
+            {#if !book.cover_img}
+                {@render bookStatusXDays()}
+                <Dropzone
+                        on:drop={handleDrop}
+                        multiple={false} accept="image/*" maxSize={5* 1024 * 1024}
+                        containerClasses={"dropzone-cover"}>
+                  <span class="add-image">Click or drop image in here
                     <span class="icon-wrapper">
                         <Icon class="icon" icon="bi:camera-fill" width="40"/>
                     </span>
-                    </span>
-                            </Dropzone>
-                        </div>
-                    {:else}
-                        <img src={book.cover_img} alt=""/>
-                    {/if}
-                    <div class="status-book">
-                        {#if !finished}
-                            <Button
-                                    onclick={() => getDate()}>{book.started_reading || start ? "Mark as read" : "Mark as currently reading"}
-                            </Button>
-                        {:else}
-                            <p>You Have Finished This Book!</p>
-                            <Icon icon="ic:round-celebration" width="40"></Icon>
-                        {/if}
-                    </div>
-                </div>
-            </div>
-            <Button onclick={() => updateBook()}>
-                Save page
-            </Button>
+                  </span>
+                </Dropzone>
 
-            {#if !isConfirmed}
-                <Button onclick={() => isConfirmed = !isConfirmed}>Delete Book
-                    <Icon icon="material-symbols:delete-outline"></Icon>
-                </Button>
+            {:else}
+                <img src={book.cover_img} alt=""/>
             {/if}
-            {#if isConfirmed}
-                <ModalConfirm isOpen={isConfirmed} onAnswer={handleAnswer}
-                              text={"Are You sure you want to delete the book?"}/>
-            {/if}
+            <div class="status-book">
+                {#if !finished}
+                    <Button
+                            onclick={() => getDate()}>{book.started_reading || start ? "Mark as read" : "Mark as currently reading"}
+                    </Button>
+                {:else}
+                    <p>You Have Finished This Book!</p>
+                    <Icon icon="ic:round-celebration" width="40"></Icon>
+                {/if}
+            </div>
         </div>
+
+        <Button onclick={() => updateBook()}>
+            Save page
+        </Button>
+
+        {#if !isConfirmed}
+            <Button isWarning={true} onclick={() => isConfirmed = !isConfirmed}>Delete Book From Library
+                <Icon icon="material-symbols:delete-outline"></Icon>
+            </Button>
+        {/if}
+        {#if isConfirmed}
+            <ModalConfirm isOpen={isConfirmed} onAnswer={handleAnswer}
+                          text={"Are You sure you want to delete the book?"}/>
+        {/if}
     </section>
 
 {/snippet}
@@ -244,10 +242,6 @@
 
 <style>
 
-
-    .book-container {
-
-    }
 
     .book-status-snippet {
         padding: 10px;
@@ -284,23 +278,22 @@
     .book-cover {
         width: 40%;
         position: absolute;
-        left: 25%;
+        left: 27%;
         top: 25%;
         justify-content: center;
         align-items: center;
-        min-height: 500px;
+        height: 600px;
         max-width: 400px;
         margin-left: 200px;
-        border-style: double;
+        border: thick solid grey;
         border-radius: 12px;
-        border-width: thick;
+        text-align: center;
     }
 
     .book-cover img {
         object-fit: cover;
-        max-width: 100%;
-        min-width: 100%;
-
+        height: 100%;
+        width: 100%;
     }
 
     .icon-wrapper {
@@ -315,13 +308,6 @@
         justify-content: center;
     }
 
-    .try {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        width: 100%;
-    }
 
     .status-book {
         position: absolute;
@@ -337,12 +323,15 @@
     .add-image {
         display: flex;
         position: absolute;
-        top: 40%;
-        left: 20%;
+        top: 45%;
+        left: 12%;
         align-items: center;
         justify-content: center;
-        font-size: 23px;
+        font-size: 20px;
         font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+        object-fit: cover;
     }
 
     .add-image:hover .icon-wrapper {
@@ -375,6 +364,19 @@
     .underline {
         text-decoration: underline;
         text-decoration-color: grey;
+    }
+
+    :global(.dropzone-cover) {
+        height: 100% !important;
+        border-radius: 15px !important;
+        object-fit: cover !important;
+        background: transparent !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        cursor: pointer !important;
+        border: unset !important;
     }
 
 </style>

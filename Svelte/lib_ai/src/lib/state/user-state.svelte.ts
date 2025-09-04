@@ -106,9 +106,9 @@ export class UserState {
             return console.error(uploadError);
         }
 
-        const {data: {publicUrl},} = this.supabase.storage.from("book-covers").getPublicUrl(filePath)
+        const {data: {publicUrl}} = this.supabase.storage.from("book-covers").getPublicUrl(filePath)
 
-        // await this.updateBook(bookId, {cover_img: publicUrl});
+        await this.updateBook({id: bookId, cover_img: publicUrl});
     }
 
     // UPDATE
@@ -127,7 +127,13 @@ export class UserState {
     // DELETE
 
     async deleteBook(book: Book) {
-        await this.supabase?.from("books").delete().eq("id", book.id).single()
+        if (!this.supabase) return;
+
+        const {error, status} = await this.supabase?.from("books").delete().eq("id", book.id).single()
+        if (!error && status === 204) {
+            this.userBooks = this.userBooks.filter(book => book.id !== book.id)
+            await goto("private/dashboard")
+        }
     }
 
     fetchFavoriteGenre() {
