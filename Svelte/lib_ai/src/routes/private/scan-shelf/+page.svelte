@@ -2,25 +2,24 @@
     import Dropzone from "svelte-file-dropzone";
     import Icon from "@iconify/svelte";
     import {convertFileToBase64} from "$lib/utils/openai-helpers";
-    import {BookCard, Button} from "$components";
+    import {Button} from "$components";
+    import {type OpenAiBook, getUserState} from "$lib/state/user-state.svelte";
+    import {goto} from "$app/navigation";
+    import ModalConfirm from "$lib/shared/ModalConfirm.svelte";
 
-    interface OpenAiBook {
-        bookTitle: string,
-        author: string,
-        description: string,
-        genre: string,
-    }
-
+    let userContext = getUserState();
     let isLoading = $state(false)
+
+    let isConfirmed = $state(false)
 
     let errorMessage = $state("")
 
     let uploadedBooks = $state<OpenAiBook[]>([]);
 
-    let booksAddedSuccessfully = $state(false)
+    let isBooksAddedSuccessfully = $state(false)
 
-    function deleteBook() {
-
+    function removeBook(index: number) {
+        uploadedBooks.splice(index, 1)
     }
 
     async function handleDrop(e: CustomEvent<any>) {
@@ -45,14 +44,28 @@
                 const result = (await response.json()) as { bookArray: OpenAiBook[] };
 
                 uploadedBooks = result.bookArray;
-                console.log("updatedbooks:", uploadedBooks)
-                console.log("updatedbooks length:", uploadedBooks.length)
-                console.log("result frontend:", result.bookArray)
             } catch (error) {
                 errorMessage = "Error while uploading file."
             }
         } else {
             errorMessage = `Could not upload file. Are you sure the file size is smaller than 10MB?`
+        }
+    }
+
+    async function handleAnswer(a: "yes" | "no") {
+
+        if (a === "yes") {
+            isLoading = true
+            try {
+                await userContext.addBooksToLibrary(uploadedBooks);
+                isBooksAddedSuccessfully = true
+                isConfirmed = false;
+            } catch (error: any) {
+                errorMessage = error.message;
+            }
+
+        } else {
+            isConfirmed = false;
         }
     }
 </script>
@@ -84,7 +97,7 @@
                 {/if}
             </div>
         </div>
-    {:else if !booksAddedSuccessfully}
+    {:else if !isBooksAddedSuccessfully}
         <div class="uploaded-book-container">
             <table class="upload-table">
                 <thead>
@@ -103,7 +116,7 @@
                         <td>{book.description}</td>
                         <td>{book.genre}</td>
                         <td>
-                            <button onclick={() => console.log("delete me")}>
+                            <button onclick={() => removeBook(i)}>
                                 <Icon icon="streamline:delete-1-solid" width="24" color="red"/>
                             </button>
                         </td>
@@ -112,10 +125,20 @@
                 {/each}
                 </tbody>
             </table>
-            <Button onclick={() => console.log("add all remaining books")}>Add all books</Button>
+            {#if !isConfirmed}
+                <Button onclick={() => isConfirmed = !isConfirmed}>Add books</Button>
+            {:else}
+                {#if isConfirmed}
+                    <ModalConfirm isOpen={isConfirmed} onAnswer={handleAnswer}
+                    >{uploadedBooks.length === 1 ? "Are you sure you want to add this book?" : "Are you sure you want to add these books?"}</ModalConfirm>
+                {/if}
+            {/if}
         </div>
     {:else}
-        <h4>The selected {uploadedBooks.length} av been added to your library.</h4>
+        <h4>The selected {uploadedBooks.length} books have been added to your library.</h4>
+        <div class="mt-m italic">
+            <Button onclick={() => goto("dashboard")}>Go Back To Library</Button>
+        </div>
     {/if}
 </section>
 

@@ -1,6 +1,6 @@
 import type {Session, SupabaseClient, User} from "@supabase/supabase-js";
 import {getContext, setContext} from "svelte";
-import {goto, invalidateAll} from "$app/navigation";
+import {goto, invalidate, invalidateAll} from "$app/navigation";
 import type {Database} from "$lib/types/database.types";
 
 import {uuid} from "@supabase/supabase-js/dist/main/lib/helpers";
@@ -10,6 +10,13 @@ interface UserStateProps {
     session: Session | null;
     supabase: SupabaseClient | null;
     user: User | null;
+}
+
+export interface OpenAiBook {
+    bookTitle: string,
+    author: string,
+    description: string,
+    genre: string,
 }
 
 export interface Book {
@@ -109,6 +116,25 @@ export class UserState {
         const {data: {publicUrl}} = this.supabase.storage.from("book-covers").getPublicUrl(filePath)
 
         await this.updateBook({id: bookId, cover_img: publicUrl});
+    }
+
+    async addBooksToLibrary(books: OpenAiBook[]) {
+        if (!this.supabase || !this.user) return;
+        const userId = this.user.id;
+        const newBooks = books.map(book => ({
+            title: book.bookTitle,
+            author: book.author,
+            description: book.description,
+            genre: book.genre,
+            user_id: userId,
+        }))
+
+        const {error} = await this.supabase.from("books").insert(newBooks)
+
+        if (error) throw new Error(error.message);
+        else {
+            await this.fetchUserData();
+        }
     }
 
     // UPDATE

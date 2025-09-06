@@ -227,7 +227,8 @@
         {/if}
         {#if isConfirmed}
             <ModalConfirm isOpen={isConfirmed} onAnswer={handleAnswer}
-                          text={"Are You sure you want to delete the book?"}/>
+            >Are You sure you want to delete the book?
+            </ModalConfirm>
         {/if}
     </section>
 
