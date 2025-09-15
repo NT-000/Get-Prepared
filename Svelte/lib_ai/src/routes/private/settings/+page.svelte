@@ -5,10 +5,11 @@
     import Icon from "@iconify/svelte";
 
     let userContext = getUserState()
-    let {userName} = $derived(userContext)
-    let email = $derived(userContext.user?.email || "")
+    let userName = $state(userContext.userName || "")
+    let email = $state(userContext.user?.email || "")
     let isEditMode = $state(false)
     let isConfirmed = $state(false)
+
 
     let averageRating = $derived.by(() => {
         let allRatedBooks = userContext.userBooks.filter((book) => book.rating)
@@ -26,10 +27,24 @@
 
         if (a === "yes") {
             console.log("user deleted test")
+            await userContext.deleteUser();
             isConfirmed = false;
         } else {
             isConfirmed = false;
         }
+    }
+
+    $effect(() => {
+        if (userContext.userName) {
+            userName = userContext.userName
+        }
+    })
+
+    async function toggleEditModeAndSaveToDb() {
+        if (isEditMode) {
+            await userContext.updateUserInfo(email, userName)
+        }
+        isEditMode = !isEditMode
     }
 
 </script>
@@ -50,7 +65,7 @@
             <h3>{email}</h3>
         {/if}
         <Button isSecondary={true}
-                onclick={() => isEditMode = !isEditMode}>{isEditMode ? "Save changes" : "Edit"}
+                onclick={() => toggleEditModeAndSaveToDb()}>{isEditMode ? "Save changes" : "Edit"}
         </Button>
         {#if isEditMode}
             <Button onclick={() => isConfirmed = !isConfirmed}>Delete account</Button>

@@ -71,10 +71,6 @@ export class UserState {
         this.userName = userNamesResponse.data.name;
     }
 
-    async logout() {
-        await this.supabase?.auth.signOut();
-        await goto("/login");
-    }
 
     fetchBookByGenreSortedByRating(searchGenre: string) {
         return this.userBooks.filter(book => book.genre === searchGenre).toSorted((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
@@ -137,6 +133,53 @@ export class UserState {
         }
     }
 
+    async updateUserInfo(email: string, userName: string) {
+        if (!this.session) return;
+        try {
+            const response = await fetch("/api/update-account", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${this.session.access_token}`,
+                },
+                body: JSON.stringify({email, userName}),
+            })
+            if (response.ok) {
+                this.userName = userName;
+            }
+        } catch (error) {
+            console.error("failed to update account", error);
+        }
+    }
+
+    async deleteUser() {
+        if (!this.session) return;
+        try {
+            const response = await fetch("/api/delete-account", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${this.session.access_token}`,
+                }
+            })
+            if (response.ok) {
+                console.log("deleted account")
+                await this.logout()
+                await goto("/")
+            }
+
+
+        } catch (error) {
+            console.error("failed to delete account", error);
+        }
+
+    }
+
+    async logout() {
+        await this.supabase?.auth.signOut();
+        await goto("/login");
+    }
+
     // UPDATE
     async updateBookRating(bookRating: number, book: Book) {
         await this.supabase?.from("books").update({rating: bookRating}).eq("id", book.id).single()
@@ -165,7 +208,7 @@ export class UserState {
     fetchFavoriteGenre() {
         const genreCounts: { [key: string]: number } = {};
 
-        if (this.userBooks.length === 0) {
+        if (this.userBooks.filter((book) => book.genre).length === 0) {
             return "";
         }
         this.userBooks.forEach(book => {

@@ -18,28 +18,42 @@
 </script>
 
 <section class="dashboard">
-    <div class="dashboard-header mb-m">
-
-        <a href="/private/scan-shelf" class="add-book">
-            <Icon icon="solar:add-circle-outline" width="70" height="100"/>
-            <p>Add new book</p>
-        </a>
-        <div class="headline">
-            <h3>Hello, {userContext.user?.user_metadata.full_name}!</h3>
-            <p>Your place to add new favorites, all at one place</p>
-        </div>
-    </div>
-    <!--    <Button onclick={() => isOpen = !isOpen}>Open book menu</Button>-->
     {#if userContext.userBooks?.length && isOpen}
+        <div class="dashboard-header mb-m">
+            <a href="/private/scan-shelf" class="add-book">
+                <Icon icon="solar:add-circle-outline" width="70" height="100"/>
+                <p>Add new book</p>
+            </a>
+            <div class="headline">
+                <h3>Hello, {userContext.user?.user_metadata.full_name}!</h3>
+                <p>Your place to add new favorites, all at one place</p>
+            </div>
+        </div>
+
 
         <SearchGenre {searchGenre}/>
         <BookCategory booksToDisplay={userContext.userBooks.slice(0,5)} categoryName={"Random books"}/>
 
-        <BookCategory booksToDisplay={userContext.fetchFavoriteBooks()}
-                      categoryName={"Your Top Rated Books"}/>
-        <BookCategory booksToDisplay={userContext.fetchBookByGenreSortedByRating(booksFromFavoriteGenre ?? "")}
-                      categoryName={`Your top genre: ${userContext.fetchFavoriteGenre()}`}/>
+        {#if userContext.fetchFavoriteBooks().length}
+            <BookCategory booksToDisplay={userContext.fetchFavoriteBooks()}
+                          categoryName={"Your Top Rated Books"}/>
+        {/if}
+        {#if userContext.fetchFavoriteGenre()}
+            <BookCategory booksToDisplay={userContext.fetchBookByGenreSortedByRating(booksFromFavoriteGenre ?? "")}
+                          categoryName={`Your top genre: ${userContext.fetchFavoriteGenre()}`}/>
+        {/if}
+
+    {:else}
+        <div class="no-books">
+
+            <a href="/private/scan-shelf">
+
+                <h4>You currently have zero books in your library, click here to add some.</h4>
+                <Icon icon="solar:add-circle-outline" width="30" height="30"></Icon>
+            </a>
+        </div>
     {/if}
+
 </section>
 
 <style>
@@ -47,6 +61,14 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
+        align-items: flex-start;
+    }
+
+    .no-books {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        justify-content: flex-start;
         align-items: flex-start;
     }
 
@@ -72,6 +94,15 @@
 
     a {
         text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    h4 {
+        font-style: italic;
     }
 
 </style>
