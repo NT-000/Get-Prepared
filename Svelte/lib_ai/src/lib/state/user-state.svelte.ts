@@ -19,6 +19,13 @@ export interface OpenAiBook {
     genre: string,
 }
 
+export interface EditedOpenAiBookArray {
+    bookTitle: string,
+    author: string,
+    description: string,
+    genre: string,
+}
+
 export interface Book {
     author: string | null
     cover_img: string | null
@@ -31,6 +38,8 @@ export interface Book {
     started_reading: string | null
     title: string
     user_id: string
+    isbn: string | null
+    yearPublished?: number | null
 }
 
 export class UserState {
@@ -114,14 +123,15 @@ export class UserState {
         await this.updateBook({id: bookId, cover_img: publicUrl});
     }
 
-    async addBooksToLibrary(books: OpenAiBook[]) {
+    async addBooksToLibrary(books: Book[]) {
         if (!this.supabase || !this.user) return;
         const userId = this.user.id;
         const newBooks = books.map(book => ({
-            title: book.bookTitle,
+            title: book.title,
             author: book.author,
             description: book.description,
             genre: book.genre,
+            cover_img: book.cover_img,
             user_id: userId,
         }))
 

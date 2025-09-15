@@ -3,7 +3,7 @@
     import Icon from "@iconify/svelte";
     import {convertFileToBase64} from "$lib/utils/openai-helpers";
     import {Button} from "$components";
-    import {type OpenAiBook, getUserState} from "$lib/state/user-state.svelte";
+    import {type OpenAiBook, getUserState, type Book} from "$lib/state/user-state.svelte";
     import {goto} from "$app/navigation";
     import ModalConfirm from "$lib/shared/ModalConfirm.svelte";
 
@@ -14,7 +14,7 @@
 
     let errorMessage = $state("")
 
-    let uploadedBooks = $state<OpenAiBook[]>([]);
+    let uploadedBooks = $state<Book[]>([]);
 
     let isBooksAddedSuccessfully = $state(false)
 
@@ -41,9 +41,10 @@
                 });
 
                 isLoading = false;
-                const result = (await response.json()) as { bookArray: OpenAiBook[] };
+                const result = (await response.json()) as { booksEditedFromApi: Book[] };
 
-                uploadedBooks = result.bookArray;
+                uploadedBooks = result.booksEditedFromApi;
+                console.log("uploadedBooks:", uploadedBooks)
             } catch (error) {
                 errorMessage = "Error while uploading file."
             }
@@ -111,10 +112,11 @@
                 <tbody>
                 {#each uploadedBooks as book, i}
                     <tr>
-                        <td>{book.bookTitle}</td>
+                        <td>{book.title}</td>
                         <td>{book.author}</td>
                         <td>{book.description}</td>
                         <td>{book.genre}</td>
+                        <td>{book.cover_img ? "Yes" : "No"}</td>
                         <td>
                             <button onclick={() => removeBook(i)}>
                                 <Icon icon="streamline:delete-1-solid" width="24" color="red"/>
