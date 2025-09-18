@@ -6,6 +6,7 @@
     import {type OpenAiBook, getUserState, type Book} from "$lib/state/user-state.svelte";
     import {goto} from "$app/navigation";
     import ModalConfirm from "$lib/shared/ModalConfirm.svelte";
+    import LoadingSpinner from "$lib/shared/LoadingSpinner.svelte";
 
     let userContext = getUserState();
     let isLoading = $state(false)
@@ -15,6 +16,8 @@
     let errorMessage = $state("")
 
     let uploadedBooks = $state<Book[]>([]);
+
+    let newBooks = $state<Book[]>([])
 
     let isBooksAddedSuccessfully = $state(false)
 
@@ -44,7 +47,9 @@
                 const result = (await response.json()) as { booksEditedFromApi: Book[] };
 
                 uploadedBooks = result.booksEditedFromApi;
-                console.log("uploadedBooks:", uploadedBooks)
+                newBooks = uploadedBooks.filter(book => !userContext.userBooks.some(uBook => uBook.title === book.title))
+
+                $inspect("uploadedBooks:", uploadedBooks)
             } catch (error) {
                 errorMessage = "Error while uploading file."
             }
@@ -64,7 +69,6 @@
             } catch (error: any) {
                 errorMessage = error.message;
             }
-
         } else {
             isConfirmed = false;
         }
@@ -73,18 +77,15 @@
 
 <section>
     <h3 style="font-size: 50px">Take a picture to add new books</h3>
-    {#if uploadedBooks.length === 0}
+    {#if newBooks.length === 0}
         <div class="upload-area">
             <div class="upload-container">
                 {#if errorMessage}
                     <p class="text-center mb-s upload-error">{errorMessage}</p>
                 {/if}
                 {#if isLoading}
-                    <div class="spinner-container">
-                        Loading...
-                        <div class="spinner">
-
-                        </div>
+                    <div class="loading-spinner">
+                        <LoadingSpinner>Analyzing uploaded image...</LoadingSpinner>
                     </div>
                 {:else}
                     <Dropzone
@@ -110,20 +111,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                {#each uploadedBooks as book, i}
+                {#each newBooks as book, i}
                     <tr>
-                        <td>{book.title}</td>
-                        <td>{book.author}</td>
-                        <td>{book.description}</td>
-                        <td>{book.genre}</td>
-                        <td>{book.cover_img ? "Yes" : "No"}</td>
+                        <td>{book?.title}</td>
+                        <td>{book?.author}</td>
+                        <td>{book?.description}</td>
+                        <td>{book?.genre}</td>
+                        <td>{book?.cover_img ? "Yes" : "No"}</td>
                         <td>
                             <button onclick={() => removeBook(i)}>
                                 <Icon icon="streamline:delete-1-solid" width="24" color="red"/>
                             </button>
                         </td>
                     </tr>
-
                 {/each}
                 </tbody>
             </table>
@@ -139,7 +139,7 @@
     {:else}
         <h4>The selected {uploadedBooks.length} books have been added to your library.</h4>
         <div class="mt-m italic">
-            <Button onclick={() => goto("dashboard")}>Go Back To Library</Button>
+            <Button onclick={() => goto("/dashboard")}>Go Back To Library</Button>
         </div>
     {/if}
 </section>
@@ -189,6 +189,14 @@
     .upload-error {
         color: red;
 
+    }
+
+    .loading-spinner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        inset: 0;
+        z-index: 2;
     }
 
     .spinner {

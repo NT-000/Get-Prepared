@@ -1,11 +1,11 @@
 <script lang="ts">
 
-    let {children} = $props();
-    let isLoading = $state(false)
+    const {children} = $props()
+
 </script>
 
 <div class="spinner-container">
-    Loading...
+    {@render children()}
     <div class="spinner">
     </div>
 </div>

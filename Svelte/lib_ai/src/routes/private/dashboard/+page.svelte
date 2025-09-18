@@ -3,10 +3,16 @@
     import Icon from "@iconify/svelte";
     import BookCategory from "$components/BookCategory.svelte";
     import SearchGenre from "$components/SearchGenre.svelte";
+    import LoadingSpinner from "$lib/shared/LoadingSpinner.svelte";
+
+    let {data} = $props();
+
 
     let searchGenre = $state("")
     const userContext = getUserState();
     let isOpen: boolean = $state(true);
+
+    let isLoading = $state(true)
 
     let booksFromFavoriteGenre = $derived(userContext.fetchFavoriteGenre())
 
@@ -30,7 +36,6 @@
             </div>
         </div>
 
-
         <SearchGenre {searchGenre}/>
         <BookCategory booksToDisplay={userContext.userBooks.slice(0,5)} categoryName={"Random books"}/>
 
@@ -43,15 +48,17 @@
                           categoryName={`Your top genre: ${userContext.fetchFavoriteGenre()}`}/>
         {/if}
 
-    {:else}
+
+    {:else if !userContext.userBooks.length}
         <div class="no-books">
-
             <a href="/private/scan-shelf">
-
                 <h4>You currently have zero books in your library, click here to add some.</h4>
                 <Icon icon="solar:add-circle-outline" width="30" height="30"></Icon>
             </a>
         </div>
+
+    {:else}
+        <LoadingSpinner>Loading books...</LoadingSpinner>
     {/if}
 
 </section>

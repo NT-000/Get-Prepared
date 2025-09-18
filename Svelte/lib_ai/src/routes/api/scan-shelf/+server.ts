@@ -16,7 +16,7 @@ export const POST: RequestHandler = async ({request}) => {
 
     const response = await openai.responses.create({
 
-        model: "gpt-5",
+        model: "gpt-4o",
         input: [
             {
                 role: "user",
@@ -30,10 +30,10 @@ export const POST: RequestHandler = async ({request}) => {
                         "description": "A book about human decision-making and the two systems in the brain.",
                         "genre": "Psychology",
                         "yearPublished": 2011,
-                        "isbn":  9780141033570
+                        "isbn":  "9780141033570"
                         }
                         Please also make sure you return an array, even if there is only one book visible on the image.
-                        If spine is rotated, read and normalize.
+                        If the spine of the book is rotated, read and normalize, crop the back of each book if necessary.
                         If book is of another language and available in english, translate keys and values to english - if not available in english, leave it as is.`,
                     },
                     {
@@ -49,44 +49,43 @@ export const POST: RequestHandler = async ({request}) => {
     const booksArrayString = response.output_text.replace(/```json|```/g, "").trim();
     const bookArray = JSON.parse(booksArrayString || "")
 
-    async function complementOpenABookResponse(book: Book) {
+    async function complementOpenAiBookResponse(book: Book) {
 
         let url: string;
 
-        if (book.isbn) {
-            url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}&key=${GOOGLE_BOOKS_API_KEY}`;
-        } else {
-            const qParts = [];
-            if (book.title) qParts.push(`intitle:${book.title}`)
-            if (book.author) qParts.push(`inauthor:${book.author}`)
-            const q = qParts.length ? qParts.join("+") : (book.title ?? "");
 
-            url = `https://www.googleapis.com/books/v1/volumes?q=${q || (book.title ?? "")}&key=${GOOGLE_BOOKS_API_KEY}`;
+        const qParts: string[] = [];
+        if (book.title) qParts.push(`intitle:${book.title}`)
+        if (book.author) qParts.push(`inauthor:${book.author}`)
+        const q = qParts.length ? qParts.join("+") : (book.title ?? "");
 
-            const res = await fetch(url)
-            if (!res.ok) return book;
-            const data = await res.json()
+        url = `https://www.googleapis.com/books/v1/volumes?q=${q || (book.title ?? "")}&key=${GOOGLE_BOOKS_API_KEY}`;
 
-            const item = data?.items?.[0]
-            if (!item.volumeInfo) return book;
+        const res = await fetch(url)
+        if (!res.ok) return book;
+        const data = await res.json()
 
-            return {
-                ...book,
-                title: item.volumeInfo.title || book.title,
-                author: item.volumeInfo.author || book.author,
-                description: item.volumeInfo.description || book.description,
-                genre: book.genre,
-                yearPublished: book.yearPublished ?? (item.volumeInfo.yearPublished.publishedDate ?? null),
-                cover_img: item.volumeInfo.imageLinks?.thumbnail ?? item.volumeInfo.imageLinks.thumbnail
-            }
+        const item = data?.items?.[0]
+        if (!item.volumeInfo) return book;
+
+        return {
+            ...book,
+            title: book?.title || item.volumeInfo.title,
+            author: book?.author || item.volumeInfo.authors[0],
+            description: item.volumeInfo.description || book.description,
+            genre: book?.genre ?? null,
+            yearPublished: book?.yearPublished ?? (item.volumeInfo.yearPublished.publishedDate ?? null),
+            cover_img: item.volumeInfo.imageLinks?.thumbnail ?? (item.volumeInfo.imageLinks.thumbnail ?? null)
         }
+
     }
 
-    const booksEditedFromApi = []
+    const booksEditedFromApi: Book[] = []
 
     for (let book of bookArray) {
         try {
-            booksEditedFromApi.push(await complementOpenABookResponse(book))
+            const updatedBook: Book = await complementOpenAiBookResponse(book)
+            booksEditedFromApi.push(updatedBook ?? book)
             console.log("Book from api:", book)
         } catch (error) {
             booksEditedFromApi.push(book)
@@ -95,6 +94,5 @@ export const POST: RequestHandler = async ({request}) => {
 
     console.log("BookArray, before checking:", bookArray)
     console.log("After check:", booksEditedFromApi)
-
     return json({success: true, booksEditedFromApi});
 }
