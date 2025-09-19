@@ -19,11 +19,14 @@ export interface OpenAiBook {
     genre: string,
 }
 
-export interface EditedOpenAiBookArray {
-    bookTitle: string,
-    author: string,
-    description: string,
-    genre: string,
+export interface BookProfile {
+    id: number,
+    title: string | null,
+    author: string | null,
+    cover_img: string | null,
+    rating: number | null,
+    started_reading: string | null,
+    finished_read: string | null,
 }
 
 export interface Book {
@@ -80,6 +83,24 @@ export class UserState {
         this.userName = userNamesResponse.data.name;
     }
 
+
+    async fetchSearchQueryForUsers(search: string) {
+        if (!this.supabase) {
+            return;
+        }
+        const {
+            data,
+            error
+        } = await this.supabase.from("user_names").select("user_id, name").ilike("name", `%${search}%`);
+        if (error) {
+            console.error(error);
+            return [];
+        }
+
+        console.log("data query usernames", data[0].name);
+
+        return data ?? [];
+    }
 
     fetchBookByGenreSortedByRating(searchGenre: string) {
         return this.userBooks.filter(book => book.genre === searchGenre).toSorted((a, b) => (b.rating ?? 0) - (a.rating ?? 0))

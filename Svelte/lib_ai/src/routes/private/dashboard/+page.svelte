@@ -4,6 +4,7 @@
     import BookCategory from "$components/BookCategory.svelte";
     import SearchGenre from "$components/SearchGenre.svelte";
     import LoadingSpinner from "$lib/shared/LoadingSpinner.svelte";
+    import SearchBarForUsers from "$components/SearchBarForUsers.svelte";
 
     let {data} = $props();
 
@@ -24,6 +25,7 @@
 </script>
 
 <section class="dashboard">
+    <SearchBarForUsers {userContext}/>
     {#if userContext.userBooks?.length && isOpen}
         <div class="dashboard-header mb-m">
             <a href="/private/scan-shelf" class="add-book">
@@ -62,7 +64,6 @@
     {/if}
 
 </section>
-
 <style>
     .dashboard-header {
         display: flex;
