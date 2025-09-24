@@ -44,7 +44,7 @@ export const actions: Actions = {
             return fail(400, returnObject)
         }
 
-        redirect(303, "/private/dashboard")
+        throw redirect(303, "/private/dashboard")
     },
     googleLogin: async ({locals: {supabase}}) => {
 

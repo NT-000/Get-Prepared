@@ -37,6 +37,12 @@ export const actions: Actions = {
         if (confirmPassword !== password) {
             returnObject.errors.push("The passwords don't match.")
         }
+        if (email.length < 10) {
+            returnObject.errors.push("Email address is too short.")
+        }
+        if (!email.includes("@") || !email.includes(".")) {
+            returnObject.errors.push("Email address needs to have an '@' and '.'")
+        }
 
         if (returnObject.errors.length) {
             returnObject.success = false;
