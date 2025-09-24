@@ -17,6 +17,14 @@
         {id: 4, name: "Psychology"},
         {id: 5, name: "Dystopia"},
         {id: 6, name: "Fiction"},
+        {id: 7, name: "Non-Fiction"},
+        {id: 8, name: "Environment"},
+        {id: 9, name: "Environmental Science"},
+        {id: 10, name: "Literary fiction"},
+        {id: 11, name: "Philosophy"},
+        {id: 12, name: "Nature/Science"},
+        {id: 13, name: "Popular science"},
+
         {id: 7, name: "Not read"},
         {id: 8, name: "Currently reading"},
         {id: 9, name: "Finished books"}]
@@ -45,24 +53,27 @@
 
     <button onclick={() => isGenre = !isGenre}>
         {#if isGenre}
-            <span class="closed">Close Categories
-            <span class="icon-wrapper">
-                <Icon class="icon" icon="solar:list-arrow-up-bold"/>
-            </span>
-            </span>
+                <span class="closed">Close Categories
+                <span class="icon-wrapper">
+                    <Icon class="icon" icon="solar:list-arrow-up-bold"/>
+                </span>
+                </span>
         {:else}
 
-            <span class="open">Open Categories
-            <span class="icon-wrapper">
-                <Icon class="icon" icon="solar:list-arrow-down-outline"/>
-            </span>
-            </span>
+                <span class="open">Open Categories
+                <span class="icon-wrapper">
+                    <Icon class="icon" icon="solar:list-arrow-down-outline"/>
+                </span>
+                </span>
         {/if}
     </button>
     {#if isGenre}
         <div class="btn-cat">
             {#each categories as cat}
-                <Button isSelected={selectedCat === cat.id} onclick={() => searchParam(cat)}>{cat.name}</Button>
+                <div>
+                    <Button isDropdown={true} isSelected={selectedCat === cat.id}
+                            onclick={() => searchParam(cat)}>{cat.name}</Button>
+                </div>
             {/each}
         </div>
     {/if}
@@ -83,9 +94,13 @@
 <style>
     .btn-cat {
         display: flex;
+        align-items: baseline;
         object-fit: cover;
-        background: transparent;
+        flex-wrap: wrap;
         width: 70%;
+        gap: 10px;
+        border-radius: 20px;
+
     }
 
     button {

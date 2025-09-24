@@ -44,4 +44,14 @@
 
 <style>
 
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: rgba(0, 154, 253, 0.8);
+        font-weight: bold;
+        opacity: 0.7;
+    }
+
 </style>

@@ -8,6 +8,7 @@
     import ModalConfirm from "$lib/shared/ModalConfirm.svelte";
     import LoadingSpinner from "$lib/shared/LoadingSpinner.svelte";
 
+
     let userContext = getUserState();
     let isLoading = $state(false)
 
@@ -22,7 +23,7 @@
     let isBooksAddedSuccessfully = $state(false)
 
     function removeBook(index: number) {
-        uploadedBooks.splice(index, 1)
+        newBooks.splice(index, 1)
     }
 
     async function handleDrop(e: CustomEvent<any>) {
@@ -198,17 +199,7 @@
         inset: 0;
         z-index: 2;
     }
-
-    .spinner {
-        display: inline-block;
-        animation: spin 1s infinite linear;
-        border-radius: 50%;
-        border: 4px solid rgba(0, 0, 0, 0.2);
-        border-right-color: black;
-        width: 40px;
-        height: 40px;
-        cursor: progress;
-    }
+    
 
     :global(.dropzone-cover) {
         display: flex;
@@ -226,9 +217,6 @@
         cursor: pointer;
     }
 
-    .spinner {
-        display: flex;
-    }
 
     @keyframes spin {
         0% {

@@ -6,8 +6,6 @@
     import LoadingSpinner from "$lib/shared/LoadingSpinner.svelte";
     import SearchBarForUsers from "$components/SearchBarForUsers.svelte";
 
-    let {data} = $props();
-
 
     let searchGenre = $state("")
     const userContext = getUserState();
@@ -54,8 +52,9 @@
     {:else if !userContext.userBooks.length}
         <div class="no-books">
             <a href="/private/scan-shelf">
-                <h4>You currently have zero books in your library, click here to add some.</h4>
-                <Icon icon="solar:add-circle-outline" width="30" height="30"></Icon>
+                <h4>You currently have zero books in your library, click here to add some.
+                </h4>
+
             </a>
         </div>
 

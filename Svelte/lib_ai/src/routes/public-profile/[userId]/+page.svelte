@@ -30,9 +30,11 @@
             <ul>
                 {#if profileBooks.length && profile.user_id !== userContext.user?.id}
                     {#each profileBooks as book}
-                        <li>
-                            <BookCardProfile {book}/>
-                        </li>
+                        {#if book.finished_read}
+                            <li>
+                                <BookCardProfile {book}/>
+                            </li>
+                        {/if}
                     {/each}
                 {/if}
             </ul>

@@ -36,6 +36,10 @@
         {id: 6, name: "Fiction"},
     ];
 
+    async function fetchCategories() {
+        const req = fetch("")
+    }
+
 
     let isEdit = $state(false);
 
@@ -145,7 +149,9 @@
 
 {#snippet bookStatusXDays()}
     {#if !book.finished_read || !finished}
-        {bookStatus}
+        <div class="book-status">   {bookStatus}
+            <Icon icon="famicons:eye" width="40"/>
+        </div>
     {:else}
         <h4 class="book-status-snippet">{bookStatus}
             {#if book.finished_read}
@@ -189,7 +195,9 @@
 
         <div class="book-cover">
             {#if !book.cover_img}
+
                 {@render bookStatusXDays()}
+
                 <Dropzone
                         on:drop={handleDrop}
                         multiple={false} accept="image/*" maxSize={5* 1024 * 1024}
@@ -206,9 +214,11 @@
             {/if}
             <div class="status-book">
                 {#if !finished}
-                    <Button
-                            onclick={() => getDate()}>{book.started_reading || start ? "Mark as read" : "Mark as currently reading"}
-                    </Button>
+                    <div class="btn-status">
+                        <Button
+                                onclick={() => getDate()}>{book.started_reading || start ? "Mark as read" : "Mark as currently reading"}
+                        </Button>
+                    </div>
                 {:else}
                     <p>You Have Finished This Book!</p>
                     <Icon icon="ic:round-celebration" width="40"></Icon>
@@ -221,7 +231,7 @@
         </Button>
 
         {#if !isConfirmed}
-            <Button isWarning={true} onclick={() => isConfirmed = !isConfirmed}>Delete Book From Library
+            <Button isWarning={true} onclick={() => isConfirmed = !isConfirmed}>Delete Book
                 <Icon icon="material-symbols:delete-outline"></Icon>
             </Button>
         {/if}
@@ -243,11 +253,40 @@
 
 <style>
 
+    section {
+        padding: 50px;
+    }
+
+    .btn-status {
+        display: flex;
+        padding: 10px;
+        margin: 50px 20px;
+        position: absolute;
+        justify-content: space-between;
+    }
 
     .book-status-snippet {
         padding: 10px;
         border-bottom: 5px solid #ccc;
         opacity: 0.6;
+    }
+
+    .book-status {
+        position: absolute;
+        right: 5%;
+        top: 20px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        height: 50px;
+        padding: 4px 8px;
+        width: 60%;
+        gap: 15px;
+        background-color: rgb(0, 180, 253, 0.6);
+        opacity: 0.6;
+        border-radius: 10px;
+        color: white;
+        font-weight: bold;
     }
 
     .book-description-edit {
@@ -279,16 +318,16 @@
     .book-cover {
         width: 40%;
         position: absolute;
-        left: 27%;
-        top: 25%;
+        left: 30%;
+        top: 20%;
         justify-content: center;
         align-items: center;
-        height: 600px;
-        max-width: 400px;
+        height: 650px;
+        max-width: 500px;
         margin-left: 200px;
         border: thick solid grey;
         border-radius: 12px;
-        text-align: center;
+
     }
 
     .book-cover img {
@@ -298,6 +337,7 @@
     }
 
     .icon-wrapper {
+
         display: inline-flex;
         padding: 5px;
         font-size: 30px;
