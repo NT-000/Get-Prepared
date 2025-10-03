@@ -20,7 +20,7 @@ forskjellige spilltyper (kort, medium, lang), svare på spørsmål, og kjempe om
 
 **Frontend:**
 
-- `Sveltekit(Svelte 4/5)`
+- `Svelte 4/5`
 - `Vite`
 - `nouislider (slider-komponent for UI)`
 - `Node.js`
