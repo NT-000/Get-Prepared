@@ -2,8 +2,12 @@
 
 	import Module from '../../../components/Module.svelte';
 	import type { CourseProps } from '../../../types/course-tree';
+	import Button from '../../../components/shared/Button.svelte';
+	import AccordianDropdown from '../../../components/shared/AccordianDropdown.svelte';
 
 	let { data } = $props();
+
+	let isOpenCourse = $state(false);
 
 	const courses = $derived((data.courses ?? []) as CourseProps[]);
 	console.log('Dashboard data:', data);
@@ -17,12 +21,16 @@
 		<div class="courses">
 			<div class="course-card">
 				{#each courses as course (course.id)}
-					<div>{course.title}</div>
-					<ul>
-						{#each course.modules as mod (mod.id)}
-							<Module {mod} />
-						{/each}
-					</ul>
+					<Button onclick={() => (isOpenCourse = !isOpenCourse)} isDropdown={true}>{course.title}
+						<AccordianDropdown isOpen={isOpenCourse} />
+					</Button>
+					{#if isOpenCourse}
+						<ul>
+							{#each course.modules as mod (mod.id)}
+								<Module {mod} />
+							{/each}
+						</ul>
+					{/if}
 				{/each}
 			</div>
 		</div>
@@ -36,12 +44,5 @@
         padding: 20px;
     }
 
-    li {
-        font-style: italic;
-        list-style: none;
-        display: flex;
-        width: 300px;
-        padding: 10px;
-    }
 </style>
 

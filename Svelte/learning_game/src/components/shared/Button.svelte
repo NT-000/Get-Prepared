@@ -124,8 +124,19 @@
     }
 
     .btn-dropdown {
-        background-color: transparent;
         border: none;
+        cursor: pointer;
+        background-color: transparent;
+        color: black;
+    }
+
+    .btn-dropdown:hover {
+        background-color: transparent;
+        border-bottom: 5px solid grey;
+        opacity: .7;
+        color: black;
+        border-radius: 10px;
+        cursor: pointer;
     }
 
     .btn-icon:hover {
