@@ -2,3 +2,4 @@
 	let { data } = $props();
 </script>
 
+<h1>Ledertavle</h1>

@@ -4,6 +4,7 @@
 	import type { CourseProps } from '../../../types/course-tree';
 	import Button from '../../../components/shared/Button.svelte';
 	import AccordianDropdown from '../../../components/shared/AccordianDropdown.svelte';
+	import CourseCard from '../../../components/CourseCard.svelte';
 
 	let { data } = $props();
 
@@ -19,20 +20,9 @@
 	<h1>This is the dashboard</h1>
 	<div class="dashboard-container">
 		<div class="courses">
-			<div class="course-card">
-				{#each courses as course (course.id)}
-					<Button onclick={() => (isOpenCourse = !isOpenCourse)} isDropdown={true}>{course.title}
-						<AccordianDropdown isOpen={isOpenCourse} />
-					</Button>
-					{#if isOpenCourse}
-						<ul>
-							{#each course.modules as mod (mod.id)}
-								<Module {mod} />
-							{/each}
-						</ul>
-					{/if}
-				{/each}
-			</div>
+			{#each courses as course (course.id)}
+				<CourseCard {course} session={data.session} />
+			{/each}
 		</div>
 	</div>
 </section>
@@ -42,6 +32,15 @@
         display: block;
         align-items: center;
         padding: 20px;
+    }
+
+    .dashboard-container {
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+        background-color: rgba(135, 134, 134, 0.5);
+        padding: 20px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
 </style>

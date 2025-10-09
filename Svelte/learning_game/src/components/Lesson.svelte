@@ -3,22 +3,28 @@
 	import Button from './shared/Button.svelte';
 	import AccordianDropdown from './shared/AccordianDropdown.svelte';
 
-	const { lesson } = $props<{ lesson: LessonProps }>();
+	const { session, lesson } = $props<{ lesson: LessonProps }>();
+
+	console.log('session course-page:', session);
 
 	let isOpen = $state(false);
+
 
 </script>
 
 <section>
-	<ul>
-		<li>
-			<Button onclick={() =>isOpen = !isOpen} isDropdown={true}>{lesson.order_index}.{lesson.title}</Button>
-			<AccordianDropdown isOpen={isOpen} />
-		</li>
-		{#if isOpen}
-			<div>{lesson.content_json.blocks}</div>
-		{/if}
-	</ul>
+
+
+	<Button onclick={() =>isOpen = !isOpen} isDropdown={true}>
+			<span>{lesson.order_index}.{lesson.title}
+				{#if isOpen && session}
+						<AccordianDropdown isOpen={isOpen} />
+							<div>{lesson.content_json.blocks}</div>
+						{/if}
+				</span>
+	</Button>
+
+
 </section>
 
 <style>

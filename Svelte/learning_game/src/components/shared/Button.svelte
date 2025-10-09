@@ -10,7 +10,8 @@
 		isRate?: boolean,
 		isSelected?: boolean,
 		isIcon?: boolean,
-		isDropdown?: boolean
+		isDropdown?: boolean,
+		ariaLabel?: string,
 	}
 
 	interface ButtonProps extends BasicProps {
@@ -38,6 +39,7 @@
 		isSelected,
 		isIcon,
 		isDropdown,
+		ariaLabel,
 		...props
 	}: ComponentProps = $props();
 
@@ -51,7 +53,7 @@
 	<button {...props} {onclick} class="btn" class:btn-secondary={isSecondary} class:btn-danger={isWarning}
 					class:btn-isMenu={isMenu} class:btn-isRate={isRate}
 					class:btn-isSelected={isSelected} class:btn-icon={isIcon}
-					class:btn-dropdown={isDropdown}>{@render children()}
+					class:btn-dropdown={isDropdown} aria-label={ariaLabel}>{@render children()}
 	</button>
 {/if}
 
@@ -101,6 +103,17 @@
     .btn-isMenu {
         min-width: 150px;
         padding: 8px 20px;
+        background-color: transparent;
+        border: none;
+        color: rgb(14, 14, 14);
+        border-radius: 12px;
+        font-size: 40px;
+    }
+
+    .btn-isMenu:hover {
+        background-color: transparent;
+        font-weight: bold;
+        border-bottom: 2px solid gold;
     }
 
     .btn-isRate {
@@ -124,18 +137,19 @@
     }
 
     .btn-dropdown {
+        display: inline-block;
         border: none;
         cursor: pointer;
-        background-color: transparent;
+        background-color: transparent !important;
         color: black;
     }
 
     .btn-dropdown:hover {
-        background-color: transparent;
-        border-bottom: 5px solid grey;
-        opacity: .7;
+        background-color: transparent !important;
+        border-bottom: 2px solid grey;
+        opacity: 0.7;
         color: black;
-        border-radius: 10px;
+        border-radius: 5px;
         cursor: pointer;
     }
 
