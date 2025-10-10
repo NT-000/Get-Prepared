@@ -11,6 +11,7 @@
 		isSelected?: boolean,
 		isIcon?: boolean,
 		isDropdown?: boolean,
+		isExpanded?: boolean,
 		ariaLabel?: string,
 	}
 
@@ -39,6 +40,7 @@
 		isSelected,
 		isIcon,
 		isDropdown,
+		isExpanded,
 		ariaLabel,
 		...props
 	}: ComponentProps = $props();
@@ -53,7 +55,8 @@
 	<button {...props} {onclick} class="btn" class:btn-secondary={isSecondary} class:btn-danger={isWarning}
 					class:btn-isMenu={isMenu} class:btn-isRate={isRate}
 					class:btn-isSelected={isSelected} class:btn-icon={isIcon}
-					class:btn-dropdown={isDropdown} aria-label={ariaLabel}>{@render children()}
+					class:btn-dropdown={isDropdown} class:btn-expanded={isExpanded}
+					aria-label={ariaLabel}>{@render children()}
 	</button>
 {/if}
 
@@ -81,6 +84,9 @@
         font-style: italic;
         font-weight: bold;
         margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .btn:hover {
@@ -155,6 +161,21 @@
 
     .btn-icon:hover {
         scale: 1.2;
+    }
+
+    .btn img {
+        transition: transform 0.3s ease;
+    }
+
+    .btn-expanded :global(img) {
+        transform: rotate(180deg) !important;
+        width: 10%;
+
+    }
+
+    .btn-expanded {
+        max-height: unset;
+        opacity: 1;
     }
 
 
