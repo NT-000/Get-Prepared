@@ -27,7 +27,20 @@
 
 	{#if isOpen && session}
 		<div class="lesson-content">
-			{lesson.content_json.blocks}
+			{#if lesson.tasks && lesson.tasks.length > 0}
+				<div class="tasks-list">
+					{#each lesson.tasks as task (task.id)}
+						<Button href={`/private/tasks/${task.id}`} isMenu={true}>
+							<span class="task-item">
+								<span class="task-prompt">{task.prompt}</span>
+								<span class="task-points">{task.points} poeng</span>
+							</span>
+						</Button>
+					{/each}
+				</div>
+			{:else}
+				<p>Ingen oppgaver tilgjengelig ennå.</p>
+			{/if}
 		</div>
 	{/if}
 
@@ -36,28 +49,34 @@
 
 <style>
 
-    li {
-        font-size: inherit;
-        font-style: italic;
-        list-style: none;
-        display: flex;
-        width: 400px;
-        text-align: center;
-        margin: 0;
-    }
-
     .lesson-content {
-        font-size: 15px;
-        font-weight: bold;
-        font-style: italic;
-        margin: inherit;
-        padding: inherit;
+        padding: 1rem;
+        margin-left: 2rem;
     }
 
-    img {
-        width: 10%;
-        transition: transform 0.3s ease;
-        display: inline-block;
+    .tasks-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .task-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .task-prompt {
+        flex: 1;
+        text-align: left;
+    }
+
+    .task-points {
+        font-weight: bold;
+        color: #4a5568;
+        margin-left: 1rem;
     }
 
     .button-content {
