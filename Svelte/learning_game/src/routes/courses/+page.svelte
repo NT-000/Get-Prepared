@@ -1,12 +1,11 @@
 <script lang="ts">
 	import CourseCard from '../../components/CourseCard.svelte';
-	import type { Session } from '@supabase/supabase-js';
 
 	let { data } = $props();
 
 	const courses = $derived(data.courses ?? []);
+	const enrolledCourseIds = $derived(data.enrolledCourseIds ?? []);
 
-	const session: Session | undefined = data.session ?? undefined;
 
 	console.log('Courses page data:', data);
 
@@ -19,7 +18,9 @@
 		<div class="courses">
 			<ul>
 				{#each courses as course (course.id)}
-					<CourseCard {course} session={session} />
+
+					<CourseCard {course} session={data.session} isEnrolled={enrolledCourseIds.includes(course.id)} />
+
 				{/each}
 			</ul>
 		</div>

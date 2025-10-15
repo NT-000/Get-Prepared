@@ -13,6 +13,7 @@
 		isDropdown?: boolean,
 		isExpanded?: boolean,
 		ariaLabel?: string,
+		isDisabled?: boolean
 	}
 
 	interface ButtonProps extends BasicProps {
@@ -25,8 +26,7 @@
 		href: string;
 		onclick?: never;
 	}
-
-
+	
 	type ComponentProps = ButtonProps | LinkProps
 
 	let {
@@ -41,6 +41,7 @@
 		isIcon,
 		isDropdown,
 		isExpanded,
+		isDisabled,
 		ariaLabel,
 		...props
 	}: ComponentProps = $props();
@@ -55,7 +56,7 @@
 	<button {...props} {onclick} class="btn" class:btn-secondary={isSecondary} class:btn-danger={isWarning}
 					class:btn-isMenu={isMenu} class:btn-isRate={isRate}
 					class:btn-isSelected={isSelected} class:btn-icon={isIcon}
-					class:btn-dropdown={isDropdown} class:btn-expanded={isExpanded}
+					class:btn-dropdown={isDropdown} class:btn-expanded={isExpanded} disabled={isDisabled}
 					aria-label={ariaLabel}>{@render children()}
 	</button>
 {/if}
