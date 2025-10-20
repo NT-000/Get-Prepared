@@ -1,0 +1,151 @@
+# -----------------------------
+# OS / generelt rot
+# -----------------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+*.stackdump
+
+# Miljø/hemmeligheter
+.env
+.env.*
+!.env.example
+
+# -----------------------------
+# Node / TypeScript / Vite / Svelte / Vue
+# -----------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# Bygg & cache
+dist/
+build/
+.out/
+.vite/
+vite.config.ts.timestamp-*  # i noen oppsett
+.svelte-kit/
+.vercel/
+.netlify/
+.nuxt/
+.nuxt-cache/
+coverage/
+.cache/
+.eslintcache
+
+# SvelteKit adaptor artifacts
+/.output/
+
+# -----------------------------
+# C# / .NET / Rider
+# -----------------------------
+bin/
+obj/
+[Bb]uild/
+[Bb]uilds/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.svclog
+*.vsp
+*.vspx
+*.psess
+*.pidb
+*.mdb
+_TestResults/
+TestResult.xml
+*.ncrunchsolution
+*.ncrunchproject
+*.nupkg
+packages/
+.nuget/
+.project.lock.json
+artifacts/
+*.ide/
+*.opendb
+
+# Rider / JetBrains
+.idea/
+*.iml
+out/
+
+# -----------------------------
+# Python
+# -----------------------------
+# Bytecode / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtuelle miljøer
+venv/
+.venv/
+env/
+ENV/
+
+# Verktøy / pakker
+*.egg-info/
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+pip-log.txt
+
+# Test / lint / type
+.coverage
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# Notebook / data
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+*.pickle
+
+# -----------------------------
+# PHP / Composer
+# -----------------------------
+vendor/
+composer.lock
+
+# -----------------------------
+# Logg-/tempfiler
+# -----------------------------
+*.log
+logs/
+tmp/
+temp/
+
+# -----------------------------
+# IDE / editor
+# -----------------------------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.gradle/
+.settings/
+
+# -----------------------------
+# Bilder/kunstige assets
+# -----------------------------
+*.psd
+*.ai
+*.sketch
+
+# -----------------------------
+# Misc byggeverktøy
+# -----------------------------
+coverage/
+.nyc_output/
+.sass-cache/
+.cache-loader/
+.parcel-cache/
