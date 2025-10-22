@@ -2,6 +2,7 @@
 
 	import type { CourseProps } from '../../../types/course-tree';
 	import CourseCard from '../../../components/CourseCard.svelte';
+	import CourseProgress from '../../../components/CourseProgress.svelte';
 	import { Button } from '$lib';
 
 	let { data } = $props();
@@ -28,7 +29,12 @@
 			</div>
 			<div class="courses">
 				{#each courses as course (course.id)}
-					<CourseCard {course} session={data.session} isEnrolled={enrolledCourseIds.includes(course.id)} />
+					<div class="course-item">
+						<CourseCard {course} session={data.session} isEnrolled={enrolledCourseIds.includes(course.id)} />
+						{#if data.session?.user}
+							<CourseProgress courseId={course.id} userId={data.session.user.id} />
+						{/if}
+					</div>
 				{/each}
 			</div>
 		</div>
@@ -108,7 +114,17 @@
     .courses {
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 30px;
+    }
+
+    .course-item {
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 20px;
+    }
+
+    .course-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
     }
 
     .empty-state {
