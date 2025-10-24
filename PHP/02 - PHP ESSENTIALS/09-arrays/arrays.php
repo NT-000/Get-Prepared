@@ -1,6 +1,6 @@
 <?php
 
-$names = ['Jan', 'John', 'Jane', 'Jenny'];
+$names = ['Jan', 'John', 'Jane', 'Jenny',];
 
 ?>
 
@@ -14,12 +14,26 @@ $names = ['Jan', 'John', 'Jane', 'Jenny'];
     <title>Arrays</title>
 </head>
 <body>
-<?php var_dump(in_array('Jan', $names));
-var_dump($names[0]);
-unset($names[0]);
-var_dump($names[0]);
-var_dump($names[1]); ?>
 
+<pre>
+<?php var_dump(in_array('Jan', $names));
+echo 'First name in array:';
+var_dump($names[0]);
+echo 'Deleted first name in array:';
+unset($names[0]); // key of others in array doesn't change with unset
+echo 'Adds new name $names[0]:';
+$names[0] = 'Anne';
+var_dump($names[0]);
+echo 'Overwrites name [2]';
+$names[2] = 'Bob';
+var_dump($names[2]);
+echo 'Adds new name at end of the array:<br>';
+$names[] = 'Jill';
+var_dump($names);
+?>
+    </pre>
+
+<h2>All names in array:</h2>
 <ul>
     <?php foreach ($names as $name): ?>
         <li><?php echo $name; ?></li>
