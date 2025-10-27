@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Malfatti (Italian Spinach Ricotta Dumplings)</title>
+    <style>
+        :root {
+            --maxw: 900px;
+            --pad: 1rem;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            line-height: 1.6;
+            margin: 0;
+            color: #222;
+            background: #fafafa;
+        }
+
+        header, main {
+            max-width: var(--maxw);
+            min-width: var(--maxw);
+            margin: 0 auto;
+            padding: clamp(1rem, 2vw, 2rem);
+            border-radius: var(--pad);
+        }
+
+        header {
+            padding-top: 2.5rem;
+            background-image: url('https://cms.mateo.kitchen/wp-content/uploads/Screenshot-2024-11-11-at-11.06.38-1280x2191.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 300px;
+        }
+
+        .subtitle {
+            color: #555;
+            margin-top: 0;
+        }
+
+        h1 {
+            margin-bottom: 0.25rem;
+        }
+
+        .subtitle {
+            color: #555;
+            margin-top: 0;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            padding: var(--pad);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 880px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        h2 {
+            margin-top: 0.25rem;
+        }
+
+        ul, ol {
+            margin: 0.5rem 0 0 1.25rem;
+        }
+
+        .meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            color: #444;
+            font-size: 0.95rem;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .badge {
+            background: #f1f5f9;
+            border: 1px solid #e5e7eb;
+            color: #111827;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+        }
+
+        .note {
+            background: #fffaf1;
+            border: 1px solid #fde68a;
+            color: #7c4a00;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        footer {
+            max-width: var(--maxw);
+            margin: 1rem auto 3rem;
+            padding: 0 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .print {
+            text-align: right;
+            margin-bottom: 0.5rem;
+        }
+
+        .print button {
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            border-radius: 999px;
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
+        }
+
+        .print button:hover {
+            background: #f8fafc;
+        }
+
+        @media print {
+            .card, .note {
+                box-shadow: none;
+                border: 1px solid #e5e7eb;
+            }
+
+            .print {
+                display: none;
+            }
+
+            body {
+                background: #fff;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+
+    <div class="print">
+        <button onclick="window.print()">Print</button>
+    </div>
+
+</header>
+<h1>Malfatti (Italian Spinach Ricotta Dumplings)</h1>
+<p class="subtitle">
+    Rustic spinach and ricotta dumplings from Tuscany, known as <em>“malfatti”</em> — meaning “badly formed” — for
+    their charmingly rough shape.
+    Soft, pillowy, and full of flavour, these “naked ravioli” are bound with egg and flour and often served with
+    Napoli tomato sauce or brown butter and sage.
+</p>
+<div class="meta">
+    <span class="badge">Prep: ~25 min</span>
+    <span class="badge">Cook: ~10 min</span>
+    <span class="badge">Yield: 4 servings</span>
+    <span class="badge">Cuisine: Italian (Tuscany)</span>
+</div>
+<main class="grid">
+    <section class="card">
+        <h2>What Are Malfatti?</h2>
+        <p>
+            Malfatti are traditional Italian dumplings made of spinach and ricotta, bound with egg and a little flour,
+            flavoured with parmesan and basil.
+            The name means “badly formed”, referring to their rustic, uneven shape.
+            In some regions, they’re called <em>gnudi</em> (“naked”) because they resemble ravioli without the pasta
+            wrapper.
+        </p>
+        <p>
+            These tender dumplings are usually served with a <strong>tomato Napoli sauce</strong> or sometimes with
+            <strong>brown butter and sage</strong>.
+        </p>
+    </section>
+
+    <section class="card">
+        <h2>Ingredients</h2>
+        <ul>
+            <li><strong>Ricotta</strong> (dry and crumbly is best) – the star ingredient. Avoid creamy ricotta; drain it
+                if too wet.
+            </li>
+            <li><strong>Spinach</strong> – fresh or thawed frozen, finely chopped and well-drained.</li>
+            <li><strong>Garlic</strong> &amp; <strong>eschalot</strong> (shallot) – for aromatic sweetness. Substitute
+                with ½ a red onion if needed.
+            </li>
+            <li><strong>Parmesan</strong> – for saltiness, richness, and structure.</li>
+            <li><strong>Flour</strong> – about ½ cup, just enough to bind the mixture.</li>
+            <li><strong>Egg</strong> – 1 whole + 1 yolk to help the dumplings hold together and add richness.</li>
+            <li><strong>Basil</strong> – a handful of fresh leaves for fragrance (skip if unavailable; dried basil lacks
+                flavour).
+            </li>
+            <li><strong>Salt &amp; Pepper</strong> – to season to taste.</li>
+        </ul>
+        <p class="note"><strong>Tip:</strong> If the ricotta mixture is too wet to shape, add a touch more flour until
+            just firm enough to form dumplings.</p>
+    </section>
+
+    <section class="card">
+        <h2>Instructions</h2>
+        <ol>
+            <li><strong>Drain ricotta.</strong> Place in a sieve or wrap in a clean towel and let drain at least 30
+                minutes (longer if very wet).
+            </li>
+            <li><strong>Sauté aromatics.</strong> In a pan with olive oil, cook <strong>garlic</strong> and <strong>eschalot</strong>
+                until translucent. Let cool.
+            </li>
+            <li><strong>Mix dumpling dough.</strong> In a bowl, combine <strong>ricotta</strong>,
+                <strong>spinach</strong>, cooled aromatics, <strong>Parmesan</strong>, <strong>basil</strong>, <strong>egg</strong>
+                and <strong>yolk</strong>, and <strong>flour</strong>. Season with salt and pepper. The mixture should
+                be soft but shapeable.
+            </li>
+            <li><strong>Shape.</strong> Using floured hands or spoons, form small ovals or balls (about 1½ inches).
+                Place on a floured tray.
+            </li>
+            <li><strong>Cook.</strong> Bring salted water to a gentle simmer (not a rolling boil). Cook in batches until
+                dumplings float, about 2–3 minutes.
+            </li>
+            <li><strong>Serve.</strong> Gently lift out with a slotted spoon. Serve with <strong>Napoli sauce</strong>
+                or <strong>browned butter and sage</strong>, topped with more Parmesan.
+            </li>
+        </ol>
+    </section>
+
+    <section class="card">
+        <h2>Extra Tips</h2>
+        <ul>
+            <li>If ricotta is spreadable like butter, it’s too wet — drain before using.</li>
+            <li>You can freeze shaped raw Malfatti on a tray, then store in freezer bags. Cook from frozen.</li>
+            <li>Do not overmix; handle gently to keep them light.</li>
+            <li>They pair beautifully with a crisp white wine or light red.</li>
+        </ul>
+    </section>
+</main>
+
+<footer>
+    <em>Note:</em> Malfatti are “imperfect” by design — rustic, soft, and comforting. Their charm lies in their
+    simplicity.
+</footer>
+
+</body>
+</html>

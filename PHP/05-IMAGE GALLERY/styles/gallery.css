@@ -1,0 +1,28 @@
+main {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+}
+
+main img {
+    display: block;
+    border-radius: 20px;
+}
+
+article {
+
+}
+
+p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    filter: brightness(150%);
+}

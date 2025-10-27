@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Creamy Chicken Enchiladas</title>
+    <style>
+        :root {
+            --maxw: 900px;
+            --pad: 1rem;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            line-height: 1.6;
+            margin: 0;
+            color: #222;
+            background: #fafafa;
+        }
+
+        header, main {
+            max-width: var(--maxw);
+            min-width: var(--maxw);
+            margin: 0 auto;
+            padding: clamp(1rem, 2vw, 2rem);
+        }
+
+        header {
+            padding: 2.5rem;
+            background-image: url('https://www.allrecipes.com/thmb/PCGdN1YkNgXHVi6XTBztpCvwOWg=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/83549-angelas-awesome-enchiladas-ddmfs-4x3-0894-dd127d7b2112467cbfc3f1a83c9beab3.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 600px;
+            border-radius: var(--pad);
+        }
+
+        .subtitle {
+            color: #555;
+            margin-top: 0;
+            filter: brightness(120%) !important;
+        }
+
+        h1 {
+            margin-bottom: 0.25rem;
+        }
+
+
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            padding: var(--pad);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 880px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        h2 {
+            margin-top: 0.25rem;
+        }
+
+        ul, ol {
+            margin: 0.5rem 0 0 1.25rem;
+        }
+
+        .meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            color: #444;
+            font-size: 0.95rem;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .badge {
+            background: #f1f5f9;
+            border: 1px solid #e5e7eb;
+            color: #111827;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+        }
+
+        .note {
+            background: #fffaf1;
+            border: 1px solid #fde68a;
+            color: #7c4a00;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        footer {
+            max-width: var(--maxw);
+            margin: 1rem auto 3rem;
+            padding: 0 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .print {
+            text-align: right;
+            margin-bottom: 0.5rem;
+        }
+
+        .print button {
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            border-radius: 999px;
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
+        }
+
+        .print button:hover {
+            background: #f8fafc;
+        }
+
+        @media print {
+            .card, .note {
+                box-shadow: none;
+                border: 1px solid #e5e7eb;
+            }
+
+            .print {
+                display: none;
+            }
+
+            body {
+                background: #fff;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="print">
+        <button onclick="window.print()">Print</button>
+    </div>
+</header>
+<h1>Creamy Chicken Enchiladas</h1>
+<p class="subtitle">Easy tortillas stuffed with a savory, mildly spiced chicken & cheese filling. The secret’s in
+    the seasonings! Top with sour cream and serve with Mexican rice.</p>
+<div class="meta">
+    <span class="badge">Serves: 5 (one 12&quot; tortilla each)</span>
+    <span class="badge">Prep: ~20 min</span>
+    <span class="badge">Cook: ~25 min</span>
+    <span class="badge">Oven: 350°F / 175°C</span>
+</div>
+<main class="grid">
+    <section class="card">
+        <h2>Ingredients</h2>
+        <ul>
+            <li>2 pounds skinless, boneless chicken breasts, cut into chunks</li>
+            <li>1 ¼ cups sour cream</li>
+            <li>1 (10.5 ounce) can condensed cream of chicken soup</li>
+            <li>¼ teaspoon chili powder</li>
+            <li>1 tablespoon butter</li>
+            <li>1 small onion, chopped</li>
+            <li>1 cup water</li>
+            <li>1 bunch green onions, chopped, <em>divided</em></li>
+            <li>1 (4 ounce) can chopped green chiles, drained</li>
+            <li>1 (1.25 ounce) package mild taco seasoning mix</li>
+            <li>1 teaspoon lime juice</li>
+            <li>½ teaspoon onion powder</li>
+            <li>½ teaspoon garlic powder</li>
+            <li>5 (12-inch) flour tortillas</li>
+            <li>3 cups shredded Cheddar cheese</li>
+            <li>1 (10 ounce) can enchilada sauce</li>
+            <li>1 (6 ounce) can sliced black olives, drained</li>
+        </ul>
+        <p class="note"><strong>Tip:</strong> Reserve some green onions for garnish. If you like extra sauce, serve with
+            a little more sour cream on the side.</p>
+    </section>
+
+    <section class="card">
+        <h2>Instructions</h2>
+        <ol>
+            <li><strong>Preheat.</strong> Heat oven to <strong>350°F / 175°C</strong>. Lightly grease a 9&times;13 inch
+                (23&times;33 cm) baking dish.
+            </li>
+            <li><strong>Cook the chicken.</strong> In a large skillet over medium heat, melt <strong>butter</strong>.
+                Sauté the <strong>chopped onion</strong> 2–3 min until softened. Add the <strong>chicken chunks</strong>;
+                cook until no longer pink.
+            </li>
+            <li><strong>Season & simmer.</strong> Stir in the <strong>taco seasoning</strong> and <strong>water</strong>.
+                Simmer 2–3 min to thicken. Stir in the <strong>green chiles</strong> and about <strong>half of the green
+                    onions</strong>. Remove from heat.
+            </li>
+            <li><strong>Make the creamy sauce.</strong> In a bowl, whisk together <strong>sour cream</strong>, <strong>cream
+                of chicken soup</strong>, <strong>chili powder</strong>, <strong>onion powder</strong>, <strong>garlic
+                powder</strong>, and <strong>lime juice</strong> until smooth.
+            </li>
+            <li><strong>Moisten the filling (optional but tasty).</strong> Fold about <strong>½ cup</strong> of the
+                creamy sauce into the chicken mixture to make it extra luscious.
+            </li>
+            <li><strong>Assemble.</strong> Warm the <strong>tortillas</strong> briefly so they’re pliable. Divide the
+                chicken mixture among the tortillas; add about <strong>2 cups</strong> of the <strong>Cheddar</strong>
+                (leaving 1 cup for topping). Roll up and place seam-side down in the baking dish.
+            </li>
+            <li><strong>Sauce & top.</strong> Pour the <strong>enchilada sauce</strong> evenly over the rolls, then
+                spoon the remaining creamy sauce on top. Sprinkle with the remaining <strong>Cheddar</strong> and the
+                <strong>black olives</strong>.
+            </li>
+            <li><strong>Bake.</strong> Bake for <strong>20–25 minutes</strong> until bubbly and heated through. Rest 5
+                minutes. Garnish with remaining <strong>green onions</strong>. Serve with Mexican rice and a dollop of
+                sour cream, if you like.
+            </li>
+        </ol>
+    </section>
+</main>
+
+<footer>
+    <em>Note:</em> Quantities are exactly as provided. Baking temperature/time are standard for enchiladas; adjust to
+    your oven.
+</footer>
+
+
+</body>
+</html>

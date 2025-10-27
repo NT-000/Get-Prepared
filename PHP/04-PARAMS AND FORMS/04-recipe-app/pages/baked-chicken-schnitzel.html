@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Baked Chicken Schnitzel</title>
+    <style>
+        :root {
+            --maxw: 900px;
+            --pad: 1rem;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            line-height: 1.6;
+            margin: 0;
+            color: #222;
+            background: #fafafa;
+        }
+
+        header, main {
+            max-width: var(--maxw);
+            min-width: var(--maxw);
+            margin: 0 auto;
+            padding: clamp(1rem, 2vw, 2rem);
+        }
+
+        header {
+            padding-top: 2.5rem;
+            background-image: url('https://www.allrecipes.com/thmb/vf4j6o7epmnxkjeHkmex_Y4qHp0=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/5349279_Baked-Chicken-Schnitzel-4x3-993610aa37f447319ef41d162952f841.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 300px;
+        }
+
+        .subtitle {
+            color: #555;
+            margin-top: 0;
+            filter: brightness(120%) !important;
+        }
+
+        h1 {
+            margin-bottom: 0.25rem;
+        }
+
+
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            padding: var(--pad);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 880px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        h2 {
+            margin-top: 0.25rem;
+        }
+
+        ul, ol {
+            margin: 0.5rem 0 0 1.25rem;
+        }
+
+        .meta {
+            display: block;
+            position: page;
+            gap: 1rem;
+            flex-wrap: wrap;
+            color: #444;
+            font-size: 0.95rem;
+            margin: 0.5rem 0 1rem;
+            bottom: 0;
+        }
+
+        .badge {
+            background: #f1f5f9;
+            border: 1px solid #e5e7eb;
+            color: #111827;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+        }
+
+        .note {
+            background: #fffaf1;
+            border: 1px solid #fde68a;
+            color: #7c4a00;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        footer {
+            max-width: var(--maxw);
+            margin: 1rem auto 3rem;
+            padding: 0 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .print {
+            text-align: right;
+            margin-bottom: 0.5rem;
+        }
+
+        .print button {
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            border-radius: 999px;
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
+        }
+
+        .print button:hover {
+            background: #f8fafc;
+        }
+
+        @media print {
+            .card, .note {
+                box-shadow: none;
+                border: 1px solid #e5e7eb;
+            }
+
+            .print {
+                display: none;
+            }
+
+            body {
+                background: #fff;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="print">
+        <button onclick="window.print()">Print</button>
+    </div>
+
+</header>
+<h1>Baked Chicken Schnitzel</h1>
+<p class="subtitle">
+    Oven-baked chicken schnitzel that’s golden and crisp outside, tender and juicy inside. Less oil, easier cleanup.
+    Serve with lemon wedges and a German-style potato salad.
+</p>
+<div class="meta">
+    <span class="badge">Yield: ~12 schnitzels (serves 6–8)</span>
+    <span class="badge">Prep: ~15 min</span>
+    <span class="badge">Bake: ~18–22 min</span>
+    <span class="badge">Oven: 425°F / 220°C</span>
+</div>
+<main class="grid">
+    <section class="card">
+        <h2>Ingredients</h2>
+        <ul>
+            <li>1 tablespoon olive oil, or as desired</li>
+            <li>6 chicken breasts, cut in half lengthwise (butterflied)</li>
+            <li>Salt and ground black pepper, to taste</li>
+            <li>¾ cup all-purpose flour</li>
+            <li>1 tablespoon ground paprika</li>
+            <li>2 large eggs, beaten</li>
+            <li>2 cups seasoned bread crumbs</li>
+            <li>1 large lemon, zested</li>
+        </ul>
+        <p class="note"><strong>Tip:</strong> Pat chicken dry for extra-crispy crumbs. For even browning, bake on a wire
+            rack set over the sheet pan.</p>
+    </section>
+
+    <section class="card">
+        <h2>Instructions</h2>
+        <ol>
+            <li><strong>Preheat & prep pan.</strong> Heat oven to <strong>425°F / 220°C</strong>. Brush a rimmed baking
+                sheet (or a rack set over it) with <strong>olive oil</strong>.
+            </li>
+            <li><strong>Season chicken.</strong> Pat the butterflied chicken dry. Season both sides with
+                <strong>salt</strong> and <strong>pepper</strong>.
+            </li>
+            <li><strong>Set up breading station.</strong>
+                <ul>
+                    <li>Shallow bowl 1: <strong>flour</strong> + <strong>paprika</strong> (whisk to combine).</li>
+                    <li>Shallow bowl 2: <strong>beaten eggs</strong>.</li>
+                    <li>Shallow bowl 3: <strong>seasoned bread crumbs</strong> mixed with the <strong>lemon
+                        zest</strong>.
+                    </li>
+                </ul>
+            </li>
+            <li><strong>Bread chicken.</strong> Dredge each piece in flour (shake off excess), dip in egg, then press
+                into bread crumbs to coat thoroughly. Let rest 5 minutes so the coating adheres.
+            </li>
+            <li><strong>Arrange & oil.</strong> Place schnitzels on the prepared sheet (or rack). Drizzle or lightly
+                brush tops with a little more <strong>olive oil</strong>.
+            </li>
+            <li><strong>Bake.</strong> Bake for <strong>10–12 minutes</strong>, then flip and bake another <strong>8–10
+                minutes</strong>, until golden and the thickest part reaches <strong>165°F / 74°C</strong>.
+            </li>
+            <li><strong>Optional crunch boost.</strong> For deeper color, switch to <em>broil/grill</em> for 1–2 minutes
+                at the end—watch closely.
+            </li>
+            <li><strong>Serve.</strong> Rest 3 minutes. Serve with <strong>lemon wedges</strong> and German-style potato
+                salad.
+            </li>
+        </ol>
+    </section>
+</main>
+
+<footer>
+    <em>Note:</em> Time may vary with cutlet thickness and oven. Aim for safe internal temp of 165°F / 74°C.
+</footer>
+
+</body>
+</html>
