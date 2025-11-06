@@ -3,4 +3,3 @@
     <x-bottom-banner></x-bottom-banner>
 </x-layout>
 
-
