@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Job;
@@ -21,6 +22,22 @@ class JobController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+        Job::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+        ]);
+        return redirect()->route('jobs.index');
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create(): View
@@ -29,22 +46,11 @@ class JobController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): string
-    {
-        $title = $request->input('title');
-        $info = $request->input('info');
-
-        return "Job: $title - Info: $info";
-    }
-
-    /**
      * Display the specified resource.
      */
-    public function show(string $id): string
+    public function show(Job $job): View
     {
-        return "Showing job $id";
+        return view('jobs.show', compact('job'));
     }
 
     /**

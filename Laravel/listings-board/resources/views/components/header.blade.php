@@ -1,8 +1,9 @@
 <header class="bg-blue-900 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
-        <h1>
+        <h1 class="text-4xl">
             <a href="{{url('/')}}">
-                Workland
+                <i class="fa-solid fa-person-walking fa-lg" style="color: #ffffff;"></i>Workland<i
+                    class="fa-solid fa-briefcase fa-lg" style="color: #ffffff;"></i>
             </a>
         </h1>
         <nav class="hidden md:flex items-center space-x-4">
