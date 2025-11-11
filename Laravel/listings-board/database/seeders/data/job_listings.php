@@ -18,7 +18,7 @@ return [
         'contact_website' => 'https://loopmarket.no/careers',
         'company_name' => 'Loop Market AS',
         'company_description' => 'Nordic marketplace enabling circular economy.',
-        'company_logo' => 'https://img.example.com/logos/loop.png',
+        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
 
     ],
     [
@@ -39,7 +39,7 @@ return [
         'contact_website' => 'https://infralab.no/jobs',
         'company_name' => 'InfraLab',
         'company_description' => 'Internal tools for infrastructure operations.',
-        'company_logo' => 'https://img.example.com/logos/infralab.png',
+        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
 
     ],
     [
@@ -60,7 +60,7 @@ return [
         'contact_website' => 'https://devpress.io/careers',
         'company_name' => 'DevPress',
         'company_description' => 'Developer content and documentation studio.',
-        'company_logo' => 'https://img.example.com/logos/devpress.png',
+        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
 
     ],
     [
@@ -81,7 +81,7 @@ return [
         'contact_website' => 'https://northapps.no/jobs',
         'company_name' => 'NorthApps',
         'company_description' => 'Building robust digital services for energy.',
-        'company_logo' => 'https://img.example.com/logos/northapps.png',
+        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
 
     ],
     [
@@ -102,7 +102,7 @@ return [
         'contact_website' => 'https://codetogether.org/volunteer',
         'company_name' => 'CodeTogether',
         'company_description' => 'Grassroots developer community.',
-        'company_logo' => 'https://img.example.com/logos/codetogether.png',
+        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
 
     ],
     [
@@ -123,7 +123,7 @@ return [
         'contact_website' => 'https://finpath.io/careers',
         'company_name' => 'FinPath',
         'company_description' => 'Payment infrastructure for SMEs.',
-        'company_logo' => 'https://img.example.com/logos/finpath.png',
+        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
 
     ],
     [
@@ -144,7 +144,7 @@ return [
         'contact_website' => 'https://insightly.ai/jobs',
         'company_name' => 'Insightly AI',
         'company_description' => 'Real-time product analytics.',
-        'company_logo' => 'https://img.example.com/logos/insightly.png',
+        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
 
     ],
     [
@@ -165,7 +165,7 @@ return [
         'contact_website' => 'https://cloudforge.no/careers',
         'company_name' => 'CloudForge',
         'company_description' => 'Managed cloud for startups.',
-        'company_logo' => 'https://img.example.com/logos/cloudforge.png',
+        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
 
     ],
     [
@@ -186,7 +186,7 @@ return [
         'contact_website' => 'https://softwave.no/jobs',
         'company_name' => 'SoftWave',
         'company_description' => 'SMB SaaS suite for operations.',
-        'company_logo' => 'https://img.example.com/logos/softwave.png',
+        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
 
     ],
     [
@@ -207,7 +207,7 @@ return [
         'contact_website' => 'https://northbeam.no/careers',
         'company_name' => 'NorthBeam',
         'company_description' => 'Data platform for logistics.',
-        'company_logo' => 'https://img.example.com/logos/northbeam.png',
+        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
 
     ],
     [
@@ -228,6 +228,6 @@ return [
         'contact_website' => 'https://aurora-consult.no/jobs',
         'company_name' => 'Aurora Consult',
         'company_description' => 'Boutique consultancy.',
-        'company_logo' => 'https://img.example.com/logos/aurora.png',
+        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
     ],
 ];
