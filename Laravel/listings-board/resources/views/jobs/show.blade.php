@@ -2,9 +2,9 @@
 
 <x-layout>
     <section>
-        <div class="text-black brightness-200 rounded-lg shadow-md bg-white p-4">
+        <div class="text-black rounded-lg shadow-md bg-white p-4">
             <div class="flex items-center space-between gap-4">
-                <img src="{{$job->company_logo}}" alt="{{$job->company_name}} logo">
+                <img src="{{asset($job->company_logo)}}" alt="{{$job->company_name}} logo" class="w-24 h-24">
             </div>
 
             <div>
@@ -39,24 +39,30 @@
                     <span>{{$job->tags}}</span>
                 </li>
             </ul>
-            <strong>Requirements:</strong>
-            <p class="container flex bg-gray-500 p-2 rounded-2xl">
+
+            <strong>Requirements</strong>
+            <ul class="bg-gray-100 p-4 rounded mb-2">
                 @php
-                    $requirements = explode('-', $job->requirements)
+                    $requirements = explode('-', $job->requirements);
                 @endphp
                 @forelse($requirements as $req)
-                    {{$req}}<br>
+                    <li class="mb-1">» {{trim($req)}}</li>
                 @empty
-                    No requirements listed.
+                    <li>No requirements listed.</li>
                 @endforelse
-            </p>
+            </ul>
             <div class="mb-2">
-                <strong>Benefits:</strong>
-                {{$job->benefits}}
-            </div>
-            <h2 class="font-semibold">Contact info:</h2>
-            <ul>
+                <strong>Benefits</strong>
+                @php $benefits = explode(',', $job->benefits) @endphp
 
+                @forelse($benefits as $benefit)
+                    <p>» {{$benefit}}</p>
+                @empty
+                @endforelse
+            </div>
+
+            <ul class="bg-gray-100 p-2 rounded">
+                <h2 class="font-semibold">Contact info:</h2>
                 @if($job->contact_website)
                     <li>
                         <p><strong>Website:</strong>{{$job->contact_website}}</p>

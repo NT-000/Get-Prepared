@@ -7,7 +7,7 @@ return [
         'tags' => 'SvelteKit,Laravel,TypeScript,PostgreSQL,AWS',
         'job_type' => 'Full-time',
         'remote' => true,
-        'requirements' => "- 3+ years with modern JS/TS\n- Solid Laravel/Eloquent experience\n- Familiar with testing and CI/CD",
+        'requirements' => "3+ years with modern JS/TS\n- Solid Laravel/Eloquent experience\n- Familiar with testing and CI/CD",
         'benefits' => 'Flexible hours,Home office budget,Learning stipend,Stock options',
         'city' => 'Oslo',
         'country' => 'Norway',
@@ -18,7 +18,7 @@ return [
         'contact_website' => 'https://loopmarket.no/careers',
         'company_name' => 'Loop Market AS',
         'company_description' => 'Nordic marketplace enabling circular economy.',
-        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
+        'company_logo' => 'images/logos/loopMarket.png',
 
     ],
     [
@@ -28,7 +28,7 @@ return [
         'tags' => 'PHP,Laravel,MySQL,Git',
         'job_type' => 'Full-time',
         'remote' => false,
-        'requirements' => "- Basic OOP PHP knowledge\n- Familiar with Laravel routing, migrations and Blade\n- Willingness to learn and pair program",
+        'requirements' => "Basic OOP PHP knowledge\n- Familiar with Laravel routing, migrations and Blade\n- Willingness to learn and pair program",
         'benefits' => 'Mentorship,Free lunch,Pension plan',
         'city' => 'Trondheim',
         'country' => 'Norway',
@@ -39,7 +39,7 @@ return [
         'contact_website' => 'https://infralab.no/jobs',
         'company_name' => 'InfraLab',
         'company_description' => 'Internal tools for infrastructure operations.',
-        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
+        'company_logo' => 'images/logos/infraLab.png',
 
     ],
     [
@@ -49,7 +49,7 @@ return [
         'tags' => 'Editing,Markdown,Docs,APIs,SEO',
         'job_type' => 'Part-time',
         'remote' => true,
-        'requirements' => "- Excellent written English\n- Comfortable editing code snippets\n- Basic Git workflow",
+        'requirements' => "Excellent written English\n- Comfortable editing code snippets\n- Basic Git workflow",
         'benefits' => 'Remote first,Equipment stipend',
         'city' => 'Bergen',
         'country' => 'Norway',
@@ -60,7 +60,7 @@ return [
         'contact_website' => 'https://devpress.io/careers',
         'company_name' => 'DevPress',
         'company_description' => 'Developer content and documentation studio.',
-        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
+        'company_logo' => 'images/logos/devPress.png',
 
     ],
     [
@@ -70,7 +70,7 @@ return [
         'tags' => 'QA,Cypress,Playwright,REST,Mobile',
         'job_type' => 'Temporary',
         'remote' => false,
-        'requirements' => "- Experience with E2E tools (Cypress/Playwright)\n- Test planning and reporting\n- API testing fundamentals",
+        'requirements' => "Experience with E2E tools (Cypress/Playwright)\n- Test planning and reporting\n- API testing fundamentals",
         'benefits' => 'Gym membership,Travel support',
         'city' => 'Stavanger',
         'country' => 'Norway',
@@ -81,7 +81,7 @@ return [
         'contact_website' => 'https://northapps.no/jobs',
         'company_name' => 'NorthApps',
         'company_description' => 'Building robust digital services for energy.',
-        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
+        'company_logo' => 'images/logos/northApps.png',
 
     ],
     [
@@ -91,7 +91,7 @@ return [
         'tags' => 'Mentoring,JavaScript,HTML,CSS,Community',
         'job_type' => 'Voluntary',
         'remote' => true,
-        'requirements' => "- Patience and clear communication\n- Comfortable explaining JS basics\n- 2–3 hours per week commitment",
+        'requirements' => "Patience and clear communication\n- Comfortable explaining JS basics\n- 2–3 hours per week commitment",
         'benefits' => 'Network,Experience,Certificate',
         'city' => 'Remote',
         'country' => 'Norway',
@@ -102,7 +102,7 @@ return [
         'contact_website' => 'https://codetogether.org/volunteer',
         'company_name' => 'CodeTogether',
         'company_description' => 'Grassroots developer community.',
-        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
+        'company_logo' => 'images/logos/codeTogether.png',
 
     ],
     [
@@ -112,7 +112,7 @@ return [
         'tags' => 'Go,PostgreSQL,GRPC,Kafka,Docker',
         'job_type' => 'Full-time',
         'remote' => true,
-        'requirements' => "- Production Go experience\n- SQL and data modeling\n- Containers and CI pipelines",
+        'requirements' => "Production Go experience\n- SQL and data modeling\n- Containers and CI pipelines",
         'benefits' => 'Remote stipend,Private health insurance,Stock options',
         'city' => 'Oslo',
         'country' => 'Norway',
@@ -123,7 +123,7 @@ return [
         'contact_website' => 'https://finpath.io/careers',
         'company_name' => 'FinPath',
         'company_description' => 'Payment infrastructure for SMEs.',
-        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
+        'company_logo' => 'images/logos/finPath.png',
 
     ],
     [
@@ -133,7 +133,7 @@ return [
         'tags' => 'React,TypeScript,Vite,Charts,UX',
         'job_type' => 'Full-time',
         'remote' => false,
-        'requirements' => "- Strong React/TS\n- State management and testing\n- Accessibility best practices",
+        'requirements' => "Strong React/TS\n- State management and testing\n- Accessibility best practices",
         'benefits' => 'Conference budget,Hybrid work,Pension',
         'city' => 'Oslo',
         'country' => 'Norway',
@@ -144,7 +144,7 @@ return [
         'contact_website' => 'https://insightly.ai/jobs',
         'company_name' => 'Insightly AI',
         'company_description' => 'Real-time product analytics.',
-        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
+        'company_logo' => 'images/logos/insightlyAi.png',
 
     ],
     [
@@ -154,7 +154,7 @@ return [
         'tags' => 'Kubernetes,Terraform,GitHub Actions,Monitoring',
         'job_type' => 'Full-time',
         'remote' => true,
-        'requirements' => "- Kubernetes and IaC experience\n- Observability (Prometheus/Grafana)\n- Security-minded automation",
+        'requirements' => "Kubernetes and IaC experience\n- Observability (Prometheus/Grafana)\n- Security-minded automation",
         'benefits' => 'Learning budget,Home office gear,Bonus',
         'city' => 'Remote',
         'country' => 'Norway',
@@ -165,7 +165,7 @@ return [
         'contact_website' => 'https://cloudforge.no/careers',
         'company_name' => 'CloudForge',
         'company_description' => 'Managed cloud for startups.',
-        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
+        'company_logo' => 'images/logos/cloudForge.png',
 
     ],
     [
@@ -175,7 +175,7 @@ return [
         'tags' => 'Support,SaaS,Zendesk,Onboarding',
         'job_type' => 'Full-time',
         'remote' => false,
-        'requirements' => "- Clear communication\n- Troubleshooting mindset\n- Comfort with CRMs and ticketing tools",
+        'requirements' => "Clear communication\n- Troubleshooting mindset\n- Comfort with CRMs and ticketing tools",
         'benefits' => 'Paid phone,Health insurance,Lunch card',
         'city' => 'Kristiansand',
         'country' => 'Norway',
@@ -186,7 +186,7 @@ return [
         'contact_website' => 'https://softwave.no/jobs',
         'company_name' => 'SoftWave',
         'company_description' => 'SMB SaaS suite for operations.',
-        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
+        'company_logo' => 'images/logos/softWave.png',
 
     ],
     [
@@ -196,7 +196,7 @@ return [
         'tags' => 'SQL,DBT,PowerBI,Statistics,Python',
         'job_type' => 'Full-time',
         'remote' => true,
-        'requirements' => "- Strong SQL\n- Dashboarding experience\n- Basic Python for analysis",
+        'requirements' => "Strong SQL\n- Dashboarding experience\n- Basic Python for analysis",
         'benefits' => 'Remote work,Conference budget,Pension',
         'city' => 'Remote',
         'country' => 'Norway',
@@ -207,7 +207,7 @@ return [
         'contact_website' => 'https://northbeam.no/careers',
         'company_name' => 'NorthBeam',
         'company_description' => 'Data platform for logistics.',
-        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
+        'company_logo' => 'images/logos/northBeam.png',
 
     ],
     [
@@ -217,7 +217,7 @@ return [
         'tags' => 'Administration,Office,Invoices,Travel',
         'job_type' => 'Part-time',
         'remote' => false,
-        'requirements' => "- Organized and service-minded\n- Basic Excel/Sheets skills\n- Norwegian and English fluency",
+        'requirements' => "Organized and service-minded\n- Basic Excel/Sheets skills\n- Norwegian and English fluency",
         'benefits' => 'Lunch,Great location',
         'city' => 'Oslo',
         'country' => 'Norway',
@@ -228,6 +228,6 @@ return [
         'contact_website' => 'https://aurora-consult.no/jobs',
         'company_name' => 'Aurora Consult',
         'company_description' => 'Boutique consultancy.',
-        'company_logo' => 'https://placehold.co/200x200/0a0a0a/0a0a0a.png',
+        'company_logo' => 'images/logos/auroraConsult.png',
     ],
 ];

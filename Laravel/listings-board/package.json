@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^7.1.0",
-        "fortawesome": "^0.0.1-security"
+        "fortawesome": "^0.0.1-security",
+        "php": "^1.1.0"
     }
 }
