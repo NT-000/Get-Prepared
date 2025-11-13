@@ -42,7 +42,8 @@ class JobController extends Controller
      */
     public function create(): View
     {
-        return view('jobs.create');
+        $options = ['Full-time', 'Part-time', 'Voluntary', 'Temporary'];
+        return view('jobs.create', compact('options'));
     }
 
     /**
