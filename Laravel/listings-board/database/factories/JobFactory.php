@@ -37,7 +37,7 @@ class JobFactory extends Factory
             'company_name' => $this->faker->company(),
             'company_description' => $this->faker->paragraphs(2, true),
             'company_logo' => $this->faker->imageUrl(100, 100, 'business', true, 'logo'),
-            'contact_website' => $this->faker->url(),
+            'company_website' => $this->faker->url(),
 
         ];
     }

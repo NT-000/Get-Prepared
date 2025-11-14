@@ -29,12 +29,33 @@ class JobController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'salary' => 'required|integer',
+            'tags' => 'nullable|string',
+            'job_type' => 'required|string',
+            'remote' => 'required',
+            'requirements' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'address' => 'nullable|string',
+            'city' => 'required|string',
+            'zipcode' => 'nullable|string|max:10',
+            'country' => 'required|string',
+            'contact_email' => 'required|email',
+            'contact_phone' => 'nullable|string|min:8|max:20',
+            'company_name' => 'required|string',
+            'company_description' => 'nullable|string',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'company_website' => 'nullable|url',
         ]);
-        Job::create([
-            'title' => $validated['title'],
-            'description' => $validated['description'],
-        ]);
-        return redirect()->route('jobs.index');
+
+        $validated['remote'] = (bool)(int)$validated['remote'];
+
+        if ($request->hasFile('company_logo')) {
+            $validated['company_logo'] = $request->file('company_logo')->store('logos', 'public');
+        }
+
+        $validated['user_id'] = 1;
+        Job::create($validated);
+        return redirect()->route('jobs.index')->with('success', 'Job created successfully.');
     }
 
     /**

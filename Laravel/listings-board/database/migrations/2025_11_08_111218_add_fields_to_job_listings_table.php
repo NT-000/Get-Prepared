@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->string('zipcode')->nullable();
             $table->string('contact_email');
             $table->string('contact_phone')->nullable();
-            $table->string('contact_website')->nullable();
+            $table->string('company_website')->nullable();
             $table->string('company_name');
             $table->text('company_description')->nullable();
             $table->string('company_logo')->nullable();
@@ -44,10 +44,10 @@ return new class extends Migration {
 
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
-            
+
             $table->dropColumn(['salary', 'tags', 'job_type', 'remote', 'requirements',
                 'benefits', 'city', 'country', 'address', 'zipcode', 'contact_email', 'contact_phone',
-                'contact_website', 'company_name', 'company_description', 'company_logo']);
+                'company_website', 'company_name', 'company_description', 'company_logo']);
         });
     }
 };

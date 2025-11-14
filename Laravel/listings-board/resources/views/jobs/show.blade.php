@@ -28,10 +28,10 @@
                 </div>
                 <ul class=" absolute align-middle justify-center top-0 left-1/3 bg-gray-100 p-2 rounded">
                     <h2 class="relative pl-3 text-lg font-semibold text-slate-900">Contact info</h2>
-                    @if($job->contact_website)
+                    @if($job->company_website)
                         <li class="hover:brightness-125 no-underline text-blue-400">
                             <i class="fa-solid fa-globe text-blue-500 mr-2"></i>
-                            <a href="{{$job->contact_website}}">Visit Company Website</a>
+                            <a href="{{$job->company_website}}">Visit Company Website</a>
                         </li>
                     @endif
 
@@ -47,7 +47,7 @@
                         <a href="mailto:{{$job->contact_email}}">Apply for job</a>
                     </li>
 
-                    
+
                     <li class="">
                         <i class="fa-solid fa-coins text-blue-500 mr-2"></i>
                         @if($isConverted)
