@@ -1,4 +1,4 @@
-@props(['jobOptions' => ['Yes', 'No'], 'name' => '', 'label' => ''])
+@props(['jobOptions' => ['[0]' => 'Yes', '[1]' => 'No'], 'name' => '', 'label' => ''])
 
 <label class="block text-gray-700" for="{{$name}}">{{$label}}</label>
 <div class="mb-4">

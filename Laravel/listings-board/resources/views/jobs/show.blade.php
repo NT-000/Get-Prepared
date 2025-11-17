@@ -22,9 +22,15 @@
 
 
             <div class="relative flex-wrap items-center space-between gap-4">
+
+                <x-nav-link :url="route('jobs.edit', $job->id)" class="absolute top-0 right-0">
+                    Edit
+                </x-nav-link>
                 <div class="h-50 w-50">
-                    <img src="{{asset($job->company_logo)}}" alt="{{$job->company_name}} logo"
-                         class="rounded-2xl w-80 h-45 bg-transparent my-3">
+                    @if($job->company_logo)
+                        <img src="{{asset($job->company_logo)}}" alt="{{$job->company_name}} logo"
+                             class="rounded-2xl w-80 h-45 bg-transparent my-3">
+                    @endif
                 </div>
                 <ul class=" absolute align-middle justify-center top-0 left-1/3 bg-gray-100 p-2 rounded">
                     <h2 class="relative pl-3 text-lg font-semibold text-slate-900">Contact info</h2>
@@ -47,15 +53,7 @@
                         <a href="mailto:{{$job->contact_email}}">Apply for job</a>
                     </li>
 
-
-                    <li class="">
-                        <i class="fa-solid fa-coins text-blue-500 mr-2"></i>
-                        @if($isConverted)
-                            ${{number_format($job->salary/10.12)}}
-                        @else
-                            {{$job->salary}} kr
-                        @endif
-                    </li>
+                    <x-currency-converter :job="$job"/>
 
                     <li class="mb-2">
                         @if($job->address)
@@ -87,29 +85,32 @@
 
                 </ul>
             </div>
-            <ul class="bg-gray-100 p-4 rounded mb-2">
-                <strong class="relative pl-3 text-lg font-semibold text-slate-900">Requirements</strong>
-                @php
-                    $requirements = explode('-', $job->requirements);
-                @endphp
-                @forelse($requirements as $req)
-                    <li class="mb-1"><i class="fa-solid fa-circle-check text-blue-500 mr-2"></i>{{trim($req)}}</li>
-                @empty
-                    <li>No requirements listed.</li>
-                @endforelse
-            </ul>
+            @if($job->requirements)
+                <ul class="bg-gray-100 p-4 rounded mb-2">
+                    <strong class="relative pl-3 text-lg font-semibold text-slate-900">Requirements</strong>
+                    @php
+                        $requirements = explode('-', $job->requirements);
+                    @endphp
+                    @forelse($requirements as $req)
+                        <li class="mb-1"><i class="fa-solid fa-circle-check text-blue-500 mr-2"></i>{{trim($req)}}</li>
+                    @empty
+                        <li>No requirements listed.</li>
+                    @endforelse
+                </ul>
+            @endif
 
-            <div class="bg-gray-100 p-4 rounded mb-2">
-                <strong class="relative pl-3 text-lg font-semibold text-slate-900 mb-2">Benefits</strong>
-                @php $benefits = explode(',', $job->benefits); @endphp
+            @if($job->benefits)
+                <div class="bg-gray-100 p-4 rounded mb-2">
+                    <strong class="relative pl-3 text-lg font-semibold text-slate-900 mb-2">Benefits</strong>
+                    @php $benefits = explode(',', $job->benefits); @endphp
 
-                @forelse($benefits as $benefit)
-                    <p><i class="fa-solid fa-hand-point-right text-green-500"></i> {{$benefit}}</p>
-                @empty
-                    <p>No Benefits Listed.</p>
-                @endforelse
-            </div>
-
+                    @forelse($benefits as $benefit)
+                        <p><i class="fa-solid fa-hand-point-right text-green-500"></i> {{$benefit}}</p>
+                    @empty
+                        <p>No Benefits Listed.</p>
+                    @endforelse
+                </div>
+            @endif
         </div>
     </section>
 </x-layout>

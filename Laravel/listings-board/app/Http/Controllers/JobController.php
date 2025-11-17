@@ -26,6 +26,8 @@ class JobController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+//        dd($request->file('company_logo'));
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -78,9 +80,10 @@ class JobController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): string
+    public function edit(Job $job): View
     {
-        return "Editing job $id";
+        $options = ['Full-time', 'Part-time', 'Voluntary', 'Temporary'];
+        return view('jobs.edit', compact('job', 'options'));
     }
 
     /**

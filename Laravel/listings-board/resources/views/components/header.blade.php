@@ -1,4 +1,4 @@
-<header class="bg-blue-900 text-white p-4">
+<header class="bg-blue-900 text-white p-4" x-data="{open: false}">
     <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-4xl">
             <a href="{{url('/')}}">
@@ -28,8 +28,13 @@
                 Create Job
             </x-button-link>
         </nav>
-        <button class="text-white flex items-center">
+        <button @click="open = !open" class="text-white flex items-center">
             <i class="fa fa-bars text-2xl" style="color: #ffffff"></i>
         </button>
     </div>
+
+    <ul x-show="open" @click.away="open = false">
+        <li>1.test</li>
+        <li>2.test</li>
+    </ul>
 </header>

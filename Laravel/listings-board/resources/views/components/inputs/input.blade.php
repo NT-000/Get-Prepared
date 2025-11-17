@@ -4,7 +4,7 @@
     'placeholder' => 'Enter text',
     'req' => false,
     'key' => '',
-    'val' => '',
+    'value' => '',
     'label' => '',
     'isTextarea' => false
     ])
@@ -20,7 +20,7 @@
             name="{{$name}}"
             class="w-full px-4 py-2 rounded focus:outline-none {{ $errors->has($name) ? 'border-2 border-red-500' : 'border border-gray-300' }}"
             placeholder="{{$placeholder}}"
-        >{{old($val)}}</textarea>
+        >{{old($name, $value)}}</textarea>
         @error($name)
         <p class="text-red-600 mt-2 text-sm">{{$message}}</p>
         @enderror
@@ -35,7 +35,7 @@
             name="{{$name}}"
             placeholder="{{$placeholder}}"
             {{$req ? 'required' : ''}}
-            value="{{old($val)}}"
+            value="{{old($name, $value)}}"
         />
         @error($name)
         <p class="text-red-600 mt-2 text-sm">{{$message}}</p>
