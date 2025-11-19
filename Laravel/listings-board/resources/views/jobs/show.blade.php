@@ -2,6 +2,7 @@
 
 <x-layout>
 
+    <div></div>
     @php
         if (!empty($job)) {
             $address = $job->address . ', ' . $job->zipcode . ' ' . $job->city . ', ' . $job->country;
@@ -9,6 +10,20 @@
         }
     @endphp
     <section>
+        <div class="fixed top-36 right-100 p-2">
+            <x-button-link bgClass="bg-blue-500" hoverClass="hover:bg-blue-600" textClass="text-white"
+                           :url="route('jobs.edit', $job->id)">Edit job
+            </x-button-link>
+            <form method="POST" action="{{route('jobs.destroy', $job->id)}}"
+                  onsubmit="return confirm('Are you sure you want to delete listing?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white rounded">
+                    Delete
+                </button>
+            </form>
+        </div>
+
         <div class="text-black rounded-lg shadow-md bg-white p-4">
             <div>
                 <h1 class="text-2xl font-bold">{{$job->company_name}}</h1>
@@ -23,17 +38,15 @@
 
             <div class="relative flex-wrap items-center space-between gap-4">
 
-                <x-nav-link :url="route('jobs.edit', $job->id)" class="absolute top-0 right-0">
-                    Edit
-                </x-nav-link>
                 <div class="h-50 w-50">
                     @if($job->company_logo)
                         <img src="{{asset($job->company_logo)}}" alt="{{$job->company_name}} logo"
                              class="rounded-2xl w-80 h-45 bg-transparent my-3">
                     @endif
+
                 </div>
-                <ul class=" absolute align-middle justify-center top-0 left-1/3 bg-gray-100 p-2 rounded">
-                    <h2 class="relative pl-3 text-lg font-semibold text-slate-900">Contact info</h2>
+                <ul class="absolute align-middle justify-center top-0 left-1/3 bg-gray-100 p-2 rounded">
+                    <h2 class="relative pl-3 text-lg font-semibold text-slate-900">Contact info </h2>
                     @if($job->company_website)
                         <li class="hover:brightness-125 no-underline text-blue-400">
                             <i class="fa-solid fa-globe text-blue-500 mr-2"></i>
@@ -66,8 +79,8 @@
                                 </a>
                                 <span
                                     class="text-xs {{$job->remote ? 'bg-red-500' : 'bg-blue-500'}} text-white rounded-full px-4 ml-2">
-                    {{$job->remote ? 'Remote' : 'On-Site'}}
-                </span>
+                                    {{$job->remote ? 'Remote' : 'On-Site'}}
+                                </span>
                                 @if($job->job_type === 'Full-time')
                                     <span
                                         class="text-xs bg-green-700 text-white rounded-full px-4 ml-2">{{$job->job_type}}</span>
@@ -100,7 +113,7 @@
             @endif
 
             @if($job->benefits)
-                <div class="bg-gray-100 p-4 rounded mb-2">
+                <div class="relative bg-gray-100 p-4 rounded mb-2">
                     <strong class="relative pl-3 text-lg font-semibold text-slate-900 mb-2">Benefits</strong>
                     @php $benefits = explode(',', $job->benefits); @endphp
 
