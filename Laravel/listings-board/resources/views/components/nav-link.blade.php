@@ -1,7 +1,7 @@
-@props(['url' => '/','active' => false, 'icon' => null, 'isJobListing' => false, 'display' => ''])
+@props(['url' => '/','active' => false, 'icon' => null, 'isJobListing' => false, 'display' => '', 'textColor' => ''])
 
 <a {{$attributes}} href="{{url($url)}}"
-   class="{{$display}} {{$isJobListing ? 'no-underline' : ''}} {{$isJobListing ? '' : 'hover:underline'}} py-2 {{$active ? 'text-yellow-500 font-bold' : ''}}">
+   class="{{$textColor}} {{$display}} {{$isJobListing ? 'no-underline' : ''}} {{$isJobListing ? '' : 'hover:underline'}} py-2 {{$active ? 'text-yellow-500 font-bold' : ''}}">
     @if($icon)
         <i class="fa fa-{{$icon}} mr-1"></i>
     @endif

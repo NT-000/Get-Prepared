@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Models\Job;
 use Illuminate\Support\Facades\Storage;
@@ -11,9 +12,8 @@ use Illuminate\Support\Facades\Storage;
 // php artisan make:controller JobController --resource, auto creates crud-functions
 class JobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // show all jobs
+    // GET /jobs
     public function index(): View
     {
         $title = 'Available Jobs';
@@ -22,26 +22,24 @@ class JobController extends Controller
         return view('jobs.index', compact('title', 'jobs')); // ->with('title', $title);
     }
 
-    /**
-     * Display the specified resource.
-     */
+
+    // show one single job
+    // GET jobs/{$id}
     public function show(Job $job): View
     {
         return view('jobs.show', compact('job'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    //edit single
+    //GET /jobs/{$id}/edit
     public function edit(Job $job): View
     {
         $options = ['Full-time', 'Part-time', 'Voluntary', 'Temporary'];
         return view('jobs.edit', compact('job', 'options'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    //update job listing
+    // PUT /jobs/{$id}
     public function update(Request $request, Job $job): RedirectResponse
     {
 
@@ -90,9 +88,8 @@ class JobController extends Controller
         return $validated;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // save job to db
+    // POST /jobs
     public function store(Request $request): RedirectResponse
     {
 //        dd($request->file('company_logo'));
@@ -103,23 +100,21 @@ class JobController extends Controller
             $validated['company_logo'] = $request->file('company_logo')->store('logos', 'public');
         }
 
-        $validated['user_id'] = 1;
+        $validated['user_id'] = Auth::user()->id;
         Job::create($validated);
         return redirect()->route('jobs.index')->with('success', 'Job created successfully.');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // show create job form
+    // GET jobs/create
     public function create(): View
     {
         $options = ['Full-time', 'Part-time', 'Voluntary', 'Temporary'];
         return view('jobs.create', compact('options'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    //delete single job
+    // DELETE /jobs/{$id}
     public function destroy(Job $job): RedirectResponse
     {
         if (!empty($job->company_logo)) {

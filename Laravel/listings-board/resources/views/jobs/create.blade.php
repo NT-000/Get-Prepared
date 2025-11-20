@@ -24,7 +24,6 @@
                 label="Job Title"
                 name="title"
                 placeholder="Enter job title"
-                value="title"
             />
 
             <x-inputs.input
@@ -32,7 +31,6 @@
                 label="Job Description"
                 name="description"
                 placeholder="Enter job description"
-                value="description"
             />
 
             <x-inputs.input
@@ -40,7 +38,6 @@
                 label="Salary"
                 name="salary"
                 placeholder="Enter annual salary"
-                value="salary"
             />
 
             <x-inputs.input
@@ -48,7 +45,6 @@
                 label="Requirements"
                 name="requirements"
                 placeholder="Bachelor's degree in Computer Science"
-                value="requirements"
             />
 
             <x-inputs.input
@@ -56,7 +52,6 @@
                 label="Benefits"
                 name="benefits"
                 placeholder="Enter employee benefits."
-                value="benefits"
             />
 
             <x-inputs.input
@@ -64,7 +59,6 @@
                 label="Tags"
                 name="tags"
                 placeholder="Type in tags separate each tag with a comma"
-                value="tags"
             />
 
             <div class="mb-4">
@@ -80,7 +74,6 @@
                 label="Address"
                 name="address"
                 placeholder="Enter street address"
-                value="address"
             />
 
             <x-inputs.input
@@ -88,7 +81,7 @@
                 label="City"
                 name="city"
                 placeholder="Enter name of city"
-                value="city"
+
             />
 
             <x-inputs.input
@@ -96,7 +89,7 @@
                 label="Country"
                 name="country"
                 placeholder="Enter country"
-                value="country"
+
             />
 
             <x-inputs.input
@@ -104,7 +97,7 @@
                 label="ZIP Code"
                 name="zipcode"
                 placeholder="Enter ZIP code"
-                value="zipcode"
+                value=""
             />
 
             <h2 class="text-2xl font-bold mb-6 text-center text-gray-500">
@@ -115,14 +108,13 @@
                 type="text"
                 label="Company name"
                 name="company_name"
-                value="company_name"
+
             />
 
             <x-inputs.input
                 type="text"
                 label="Company description"
                 name="company_description"
-                value="company_description"
             />
 
             <x-inputs.input
@@ -130,7 +122,6 @@
                 type="url"
                 name="company_website"
                 placeholder="Enter website"
-                value="company_website"
             />
 
             <x-inputs.input
@@ -138,7 +129,6 @@
                 type="number"
                 name="contact_phone"
                 placeholder="Enter phone-number"
-                value="contact_phone"
             />
 
             <x-inputs.input
@@ -146,7 +136,6 @@
                 type="email"
                 name="contact_email"
                 placeholder="Email"
-                value="contact_email"
             />
 
             <x-inputs.input

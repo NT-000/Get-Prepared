@@ -9,21 +9,28 @@
             $mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($address);
         }
     @endphp
-    <section>
-        <div class="fixed top-36 right-100 p-2">
-            <x-button-link bgClass="bg-blue-500" hoverClass="hover:bg-blue-600" textClass="text-white"
-                           :url="route('jobs.edit', $job->id)">Edit job
-            </x-button-link>
-            <form method="POST" action="{{route('jobs.destroy', $job->id)}}"
-                  onsubmit="return confirm('Are you sure you want to delete listing?')">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white rounded">
-                    Delete
-                </button>
-            </form>
-        </div>
+    <section class="md:max-w-2/3">
 
+        @auth
+            @if(auth()->user()->id == $job->user_id)
+                <div class="fixed top-2/5 right-2/5 p-2 gap-4 z-10">
+                    <x-button-link bgClass="bg-blue-500" hoverClass="hover:bg-blue-600" textClass="text-white"
+                                   :url="route('jobs.edit', $job->id)">Edit job
+                    </x-button-link>
+
+                    <form method="POST" class="mt-4" action="{{route('jobs.destroy', $job->id)}}"
+                          onsubmit="return confirm('Are you sure you want to delete listing?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                                class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-2 rounded-md cursor-pointer">
+                            Delete
+                        </button>
+                    </form>
+
+                </div>
+            @endif
+        @endauth
         <div class="text-black rounded-lg shadow-md bg-white p-4">
             <div>
                 <h1 class="text-2xl font-bold">{{$job->company_name}}</h1>
