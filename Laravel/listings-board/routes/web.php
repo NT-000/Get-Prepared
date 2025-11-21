@@ -16,6 +16,7 @@ Route::resource('jobs', JobController::class)->middleware('auth')->only(['create
 Route::resource('jobs', JobController::class)->except(['create', 'edit', 'update', 'destroy']);
 
 Route::resource('dashboard', DashboardController::class);
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
 
 Route::middleware('guest')->group(function () {
 

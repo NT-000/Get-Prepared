@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
+        $user = auth()->user();
+        $userJobs = Job::where('user_id', $user->id)->get();
 
-        return view('dashboard.index');
+        return view('dashboard.index', compact('user', 'userJobs'));
     }
 
     /**

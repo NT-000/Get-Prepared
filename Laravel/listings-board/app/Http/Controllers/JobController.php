@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use App\Models\Job;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Models\Job;
 
 // php artisan make:controller JobController --resource, auto creates crud-functions
 class JobController extends Controller
 {
+
+    use AuthorizesRequests;
+
     // show all jobs
     // GET /jobs
     public function index(): View
@@ -34,6 +39,8 @@ class JobController extends Controller
     //GET /jobs/{$id}/edit
     public function edit(Job $job): View
     {
+        //check igf user is authorized
+        $this->authorize('update', $job);
         $options = ['Full-time', 'Part-time', 'Voluntary', 'Temporary'];
         return view('jobs.edit', compact('job', 'options'));
     }
@@ -42,6 +49,8 @@ class JobController extends Controller
     // PUT /jobs/{$id}
     public function update(Request $request, Job $job): RedirectResponse
     {
+        //check igf user is authorized
+        $this->authorize('update', $job);
 
 //        dd($request->file('company_logo'));
 
@@ -117,6 +126,8 @@ class JobController extends Controller
     // DELETE /jobs/{$id}
     public function destroy(Job $job): RedirectResponse
     {
+        //check igf user is authorized
+        $this->authorize('delete', $job);
         if (!empty($job->company_logo)) {
             Storage::delete('public/logos' . $job->company_logo);
         }
