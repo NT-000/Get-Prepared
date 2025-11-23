@@ -27,7 +27,7 @@
     </div>
 
 @else
-    <label class="block text-gray-700" for="{{$name}}">{{$label}}</label>
+    <label class="block italic text-gray-700" for="{{$name}}">{{$label}}</label>
     <div class="mb-4">
         <input
             class="w-full px-4 py-2 rounded focus:outline-none {{ $errors->has($name) ? 'border-2 border-red-500' : 'border border-gray-300' }}"

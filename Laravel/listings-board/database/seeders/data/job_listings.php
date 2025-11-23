@@ -18,7 +18,7 @@ return [
         'company_website' => 'https://loopmarket.no/careers',
         'company_name' => 'Loop Market AS',
         'company_description' => 'Nordic marketplace enabling circular economy.',
-        'company_logo' => 'storage/logos/loopMarket.png',
+        'company_logo' => 'logos/loopMarket.png',
 
     ],
     [
@@ -39,7 +39,7 @@ return [
         'company_website' => 'https://infralab.no/jobs',
         'company_name' => 'InfraLab',
         'company_description' => 'Internal tools for infrastructure operations.',
-        'company_logo' => 'storage/logos/infraLab.png',
+        'company_logo' => 'logos/infraLab.png',
 
     ],
     [
@@ -60,7 +60,7 @@ return [
         'company_website' => 'https://devpress.io/careers',
         'company_name' => 'DevPress',
         'company_description' => 'Developer content and documentation studio.',
-        'company_logo' => 'storage/logos/devPress.png',
+        'company_logo' => 'logos/devPress.png',
 
     ],
     [
@@ -81,7 +81,7 @@ return [
         'company_website' => 'https://northapps.no/jobs',
         'company_name' => 'NorthApps',
         'company_description' => 'Building robust digital services for energy.',
-        'company_logo' => 'storage/logos/northApps.png',
+        'company_logo' => 'logos/northApps.png',
 
     ],
     [
@@ -102,7 +102,7 @@ return [
         'company_website' => 'https://codetogether.org/volunteer',
         'company_name' => 'CodeTogether',
         'company_description' => 'Grassroots developer community.',
-        'company_logo' => 'storage/logos/codeTogether.png',
+        'company_logo' => 'logos/codeTogether.png',
 
     ],
     [
@@ -123,7 +123,7 @@ return [
         'company_website' => 'https://finpath.io/careers',
         'company_name' => 'FinPath',
         'company_description' => 'Payment infrastructure for SMEs.',
-        'company_logo' => 'storage/logos/finPath.png',
+        'company_logo' => 'logos/finPath.png',
 
     ],
     [
@@ -144,7 +144,7 @@ return [
         'company_website' => 'https://insightly.ai/jobs',
         'company_name' => 'Insightly AI',
         'company_description' => 'Real-time product analytics.',
-        'company_logo' => 'storage/logos/insightlyAi.png',
+        'company_logo' => 'logos/insightlyAi.png',
 
     ],
     [
@@ -165,7 +165,7 @@ return [
         'company_website' => 'https://cloudforge.no/careers',
         'company_name' => 'CloudForge',
         'company_description' => 'Managed cloud for startups.',
-        'company_logo' => 'storage/logos/cloudForge.png',
+        'company_logo' => 'logos/cloudForge.png',
 
     ],
     [
@@ -186,7 +186,7 @@ return [
         'company_website' => 'https://softwave.no/jobs',
         'company_name' => 'SoftWave',
         'company_description' => 'SMB SaaS suite for operations.',
-        'company_logo' => 'storage/logos/softWave.png',
+        'company_logo' => 'logos/softWave.png',
 
     ],
     [
@@ -207,7 +207,7 @@ return [
         'company_website' => 'https://northbeam.no/careers',
         'company_name' => 'NorthBeam',
         'company_description' => 'Data platform for logistics.',
-        'company_logo' => 'storage/logos/northBeam.png',
+        'company_logo' => 'logos/northBeam.png',
 
     ],
     [
@@ -228,7 +228,7 @@ return [
         'company_website' => 'https://aurora-consult.no/jobs',
         'company_name' => 'Aurora Consult',
         'company_description' => 'Boutique consultancy.',
-        'company_logo' => 'storage/logos/auroraConsult.png',
+        'company_logo' => 'logos/auroraConsult.png',
     ],
     [
         'title' => 'Full-stack Developer (SvelteKit + Node)',
@@ -248,7 +248,7 @@ return [
         'company_website' => 'https://bluepeak.digital/careers',
         'company_name' => 'BluePeak Digital',
         'company_description' => 'Product studio focused on modern web apps.',
-        'company_logo' => 'storage/logos/bluePeakDigital.png',
+        'company_logo' => 'logos/bluePeakDigital.png',
     ],
     [
         'title' => 'Mid-level Laravel Developer',
@@ -268,7 +268,7 @@ return [
         'company_website' => 'https://greengrid.no/jobs',
         'company_name' => 'GreenGrid Solutions',
         'company_description' => 'SaaS platform for energy and facilities management.',
-        'company_logo' => 'storage/logos/greenGridSolutions.png',
+        'company_logo' => 'logos/greenGridSolutions.png',
     ],
     [
         'title' => 'Senior Mobile Developer (Flutter)',
@@ -288,7 +288,7 @@ return [
         'company_website' => 'https://redwave.app/careers',
         'company_name' => 'RedWave Apps',
         'company_description' => 'Mobile-first company building consumer apps.',
-        'company_logo' => 'storage/logos/redWaveApps.png',
+        'company_logo' => 'logos/redWaveApps.png',
     ],
     [
         'title' => 'Temporary Data Engineer (6 months)',
@@ -308,7 +308,7 @@ return [
         'company_website' => 'https://silverstream.no/careers',
         'company_name' => 'SilverStream Analytics',
         'company_description' => 'Analytics consultancy for maritime and logistics.',
-        'company_logo' => 'storage/logos/silverStreamAnalytics.png',
+        'company_logo' => 'logos/silverStreamAnalytics.png',
     ],
     [
         'title' => 'Voluntary Open Source Contributor Coordinator',
@@ -328,6 +328,6 @@ return [
         'company_website' => 'https://purplepixel.org/volunteer',
         'company_name' => 'PurplePixel Foundation',
         'company_description' => 'Non-profit supporting open source tools.',
-        'company_logo' => 'storage/logos/purplePixelFoundation.png',
+        'company_logo' => 'logos/purplePixelFoundation.png',
     ],
 ];

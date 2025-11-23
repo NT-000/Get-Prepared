@@ -1,4 +1,4 @@
-@props(['user'])
+@props(['user' => auth()->user()])
 
 
 <header class="bg-blue-900 text-white p-4" x-data="{open: false}">
@@ -16,7 +16,7 @@
             </x-nav-link>
 
             @auth
-                <x-nav-link url="jobs/saved" :active="request()->is('jobs/saved')">
+                <x-nav-link url="/saved" :active="request()->is('saved')">
                     Saved Jobs
                 </x-nav-link>
 
@@ -34,6 +34,12 @@
                     Create Job
                 </x-button-link>
 
+                <div class="flex items-center space-x-3">
+                    <p>Logged in, {{$user->name}}</p>
+                    <img class="rounded-full border border-white w-14"
+                         src="{{$user->avatar ? asset($user->avatar) : 'avatars/def_avatar.jpg'}}"/>
+                </div>
+
             @else
                 <x-nav-link url="/login" :active="request()->is('login')">
                     Login
@@ -42,7 +48,6 @@
                     Register
                 </x-nav-link>
             @endauth
-
         </nav>
         <button @click="open = !open" class="text-white flex items-center">
             <i class="fa fa-bars text-2xl" style="color: #ffffff"></i>

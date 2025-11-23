@@ -22,7 +22,7 @@ class JobController extends Controller
     public function index(): View
     {
         $title = 'Available Jobs';
-        $jobs = Job::all();
+        $jobs = Job::paginate(8); //Job::all();
 
         return view('jobs.index', compact('title', 'jobs')); // ->with('title', $title);
     }

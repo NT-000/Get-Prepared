@@ -5,7 +5,8 @@
          class="items-center space-between gap-4 rounded-2xl hover:brightness-95 shadow p-4 h-full bg-white">
         <div class="flex items-start gap-3">
             @if($job->company_logo)
-                <img src="{{asset($job->company_logo)}}" alt="{{$job->company_name}} logo" class="rounded w-12 h-12">
+                <img src="{{asset('storage/' . $job->company_logo)}}" alt="{{$job->company_name}} logo"
+                     class="rounded w-24 h-24">
             @endif
             <div>
 
