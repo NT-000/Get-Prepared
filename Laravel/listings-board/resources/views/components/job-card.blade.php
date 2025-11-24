@@ -1,4 +1,4 @@
-@props(['job', 'isConverted' => false])
+@props(['job', 'isConverted' => false, 'showApplicants' => false])
 
 <article class="h-full">
     <div title="Click for more details"
@@ -41,6 +41,18 @@
                 </li>
             @endif
         </ul>
-
+        @if($showApplicants)
+            <div class="mt-4 bg-gray-50 p-4 rounded">
+                <p class="text-sm text-gray-700 mb-2">
+                    <i class="fa-solid fa-users mr-2"></i>
+                    <strong>{{$job->applicants->count()}}</strong> {{$job->applicants->count() === 1 ? 'applicant' : 'applicants'}}
+                </p>
+                <a href="{{route('jobs.applicants.index', $job)}}"
+                   class="inline-block text-blue-500 hover:text-blue-700 font-medium"
+                >
+                    View Applicants <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+        @endif
     </div>
 </article>

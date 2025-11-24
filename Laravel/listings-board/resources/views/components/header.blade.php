@@ -54,7 +54,7 @@
         </button>
     </div>
 
-    <ul x-show="open" @click.away="open = false">
+    <ul x-cloak x-show="open" @click.away="open = false">
         <li>1.test</li>
         <li>2.test</li>
     </ul>

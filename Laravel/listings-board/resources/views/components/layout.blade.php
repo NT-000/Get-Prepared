@@ -11,7 +11,17 @@
 </head>
 <body class="bg-gray-100">
 <x-header/>
+@guest
+    <div x-data="{ show: true }"
+         x-init="setTimeout(() => show = false, 5000)"
+         x-show="show">
+        <div class="text-center bg-yellow-500 font-bold"><i class="fas fa-info-circle mr-2"></i>You are not
+            logged in
+        </div>
+    </div>
+@endguest
 @if(request()->is('/'))
+
     <x-hero title="Find a job"/>
     <x-top-banner/>
 

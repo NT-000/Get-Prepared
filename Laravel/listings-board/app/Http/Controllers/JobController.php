@@ -10,6 +10,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\Job;
+use App\Models\Applicant;
 
 // php artisan make:controller JobController --resource, auto creates crud-functions
 class JobController extends Controller
@@ -22,7 +23,7 @@ class JobController extends Controller
     public function index(): View
     {
         $title = 'Available Jobs';
-        $jobs = Job::paginate(8); //Job::all();
+        $jobs = Job::latest()->paginate(8); //Job::all();
 
         return view('jobs.index', compact('title', 'jobs')); // ->with('title', $title);
     }
@@ -32,7 +33,14 @@ class JobController extends Controller
     // GET jobs/{$id}
     public function show(Job $job): View
     {
-        return view('jobs.show', compact('job'));
+        $hasApplied = false;
+        if (auth()->check()) {
+            $hasApplied = Applicant::where('job_id', $job->id)
+                ->where('user_id', auth()->id())
+                ->exists();
+        }
+
+        return view('jobs.show', compact('job', 'hasApplied'));
     }
 
     //edit single

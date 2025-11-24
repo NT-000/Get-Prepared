@@ -1,15 +1,28 @@
 <x-layout title="Jobs">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Browse Jobs</h1>
+        <p class="text-gray-600">
+            <i class="fa-solid fa-briefcase mr-2"></i>
+            <strong>{{$jobs->total()}}</strong> {{$jobs->total() === 1 ? 'job' : 'jobs'}} available
+        </p>
+    </div>
 
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div class="grid gap-4 grid-cols-1 md:grid-cols-3 xl:grid-cols-4">
         @forelse($jobs as $job)
-            <x-nav-link url="/jobs/{{$job->id}}" :isJobListing="true" display="block h-full">
-                <x-job-card :job="$job" display="block"/>
-            </x-nav-link>
+            <a href="{{route('jobs.show', $job)}}" class="block h-full no-underline">
+                <x-job-card :job="$job"/>
+            </a>
         @empty
-            <p>There's no jobs available.</p>
+            <div class="col-span-full bg-white rounded-lg shadow-md p-12 text-center">
+                <i class="fa-solid fa-briefcase-blank text-gray-300 text-5xl mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">No Jobs Available</h3>
+                <p class="text-gray-500">Check back later for new opportunities.</p>
+            </div>
         @endforelse
     </div>
 
-    {{$jobs->links()}}
+    <div class="mt-8">
+        {{$jobs->links()}}
+    </div>
 </x-layout>
 
