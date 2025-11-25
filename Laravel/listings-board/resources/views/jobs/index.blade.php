@@ -1,4 +1,7 @@
 <x-layout title="Jobs">
+    <div class="bg-blue-900 h-25 -px-4 mb-4 flex justify-center items-center rounded">
+        <x-search/>
+    </div>
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-800 mb-2">Browse Jobs</h1>
         <p class="text-gray-600">
