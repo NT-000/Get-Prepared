@@ -37,7 +37,7 @@
 
             <div class="text-black rounded-lg shadow-md bg-white p-6">
                 <div class="mb-4">
-                    <h1 class="text-2xl font-bold">{{$job->company_name}}</h1>
+                    <div><h1 class="text-2xl font-bold">{{$job->company_name}}</h1></div>
                     <h2 class="text-xl font-semibold">{{$job->title}}</h2>
                 </div>
 
@@ -202,26 +202,11 @@
 
                     @if($job->address)
                         <li>
-                            <i class="fa-solid fa-location-dot text-blue-500 mr-2"></i>
-                            <a href="{{ $mapsUrl }}" target="_blank" class="hover:brightness-125 text-blue-400">
-                                {{ $address }}
-                            </a>
-                            <div class="mt-2 space-x-2">
-                                <span
-                                    class="text-xs {{$job->remote ? 'bg-red-500' : 'bg-blue-500'}} text-white rounded-full px-3 py-1">
-                                    {{$job->remote ? 'Remote' : 'On-Site'}}
-                                </span>
-                                @if($job->job_type === 'Full-time')
-                                    <span
-                                        class="text-xs bg-green-700 text-white rounded-full px-3 py-1">{{$job->job_type}}</span>
-                                @elseif($job->job_type === 'Part-time')
-                                    <span
-                                        class="text-xs bg-yellow-500 text-white rounded-full px-3 py-1">{{$job->job_type}}</span>
-                                @else
-                                    <span
-                                        class="text-xs bg-blue-700 text-white rounded-full px-3 py-1">{{$job->job_type}}</span>
-                                @endif
-                            </div>
+                            <x-map :job="$job" :coordinates="$coordinates"/>
+                            <p>
+                                <i class="fa-solid fa-location-dot text-blue-500"></i>
+                                {{($address}}
+                            </p>
                         </li>
                     @endif
 
@@ -259,5 +244,7 @@
                 </ul>
             </div>
         </aside>
+
     </div>
+
 </x-layout>

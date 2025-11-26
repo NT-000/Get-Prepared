@@ -11,6 +11,7 @@ use App\Http\Middleware\LogRequest;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\GeocodeController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -42,5 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
+Route::get('/geocode', [GeocodeController::class, 'geocode'])->name('geocode');
 
 
