@@ -1,12 +1,6 @@
 @props(['isConverted' => true])
 
 <x-layout>
-    @php
-        if (!empty($job)) {
-            $address = $job->address . ', ' . $job->zipcode . ' ' . $job->city . ', ' . $job->country;
-            $mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($address);
-        }
-    @endphp
 
     <div class="flex flex-col lg:flex-row gap-6">
         <section x-data="{isOpen: true}" class="relative flex-1">
@@ -76,7 +70,14 @@
                 @endif
 
                 @auth
-                    <div x-data="{open: false}">
+                    <div x-data="{
+                        open: false,
+                        countryCode: '+47',
+                        phoneNumber: '',
+                        get fullPhone() {
+                            return this.countryCode + this.phoneNumber;
+                        }
+                    }">
                         @if(auth()->user()->id == $job->user_id)
                             <p class="text-center text-gray-600 bg-gray-100 p-3 rounded">
                                 <i class="fa-solid fa-circle-info text-blue-500 mr-2"></i>
@@ -98,9 +99,20 @@
 
                         <div x-cloak x-show="open"
                              class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-                            <div @click.away="open = false" class="bg-white p-6 rounded-lg max-w-md">
+                            <div @click.away="open = false"
+                                 class="bg-white p-6 rounded-lg max-w-md max-h-[90vh] overflow-y-auto">
                                 <h3 class="text-xl font-bold mb-4">Apply for {{$job->title}}</h3>
-                                <p>Application form here</p>
+
+                                @if($errors->any())
+                                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                                        <ul class="list-disc list-inside">
+                                            @foreach($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <form method="POST" action="{{route('jobs.applicants.store', $job->id)}}"
                                       enctype="multipart/form-data">
                                     @csrf
@@ -110,6 +122,7 @@
                                         label="Full name"
                                         name="full_name"
                                         placeholder="Please enter your full name"
+                                        value="{{auth()->user()->name}}"
                                         :req="true"
                                     />
 
@@ -118,14 +131,38 @@
                                         label="Email"
                                         name="contact_email"
                                         placeholder="Please enter your email"
+                                        value="{{auth()->user()->email}}"
                                         :req="true"
                                     />
 
-                                    <div>
-                                        <label>Phone</label>
-                                        <input type="tel" name="contact_phone" pattern="+[0-9]{2}[0-9]{8}"
-                                               placeholder="+4769273456">
+                                    <div class="mb-4">
+                                        <label class="block text-gray-700 font-semibold mb-2">Phone</label>
+
+                                        <div class="flex gap-2">
+                                            <select x-model="countryCode"
+                                                    class="px-3 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                @foreach($landcodes as $lc)
+                                                    <option value="{{$lc}}">{{$lc}}</option>
+                                                @endforeach
+                                            </select>
+
+                                            <input
+                                                x-model="phoneNumber"
+                                                class="flex-1 px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                type="tel"
+                                                placeholder="69273456"
+                                                pattern="[0-9]{8}"
+                                                maxlength="8"
+                                                required>
+                                        </div>
+
+                                        <input type="hidden" name="contact_phone" :value="fullPhone">
+
+                                        <small class="text-gray-600 block mt-1">
+                                            Full number: <span class="font-semibold" x-text="fullPhone"></span>
+                                        </small>
                                     </div>
+
 
                                     <x-inputs.input
                                         :isTextarea="true"
@@ -197,7 +234,7 @@
 
 
                     <li>
-                        <x-currency-converter :job="$job"/>
+                        <x-currency-exchange :job="$job" :currencies="$currencies"/>
                     </li>
 
                     @if($job->address)
@@ -205,7 +242,7 @@
                             <x-map :job="$job" :coordinates="$coordinates"/>
                             <p>
                                 <i class="fa-solid fa-location-dot text-blue-500"></i>
-                                {{($address}}
+                                {{$job->address}}
                             </p>
                         </li>
                     @endif

@@ -17,7 +17,7 @@
         <span x-show="isConverted">{{number_format($job->salary/10.12)}}</span>
         <button title="Change currency" class="hover:cursor-pointer p-1 rounded "
                 x-html="`${isConverted ? '{{$toCurrency}}' : '{{$fromCurrency}}'} <i class='fa-solid fa-right-left'></i> ${isConverted ? '{{$fromCurrency}}' : '{{$toCurrency}}'}`"
-                x-on:click="
+                @click="
                     isConverted = !isConverted;
                     showAlert = true;
                     setTimeout(() => showAlert = false, 3000)

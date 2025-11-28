@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\Job;
 use App\Models\Applicant;
@@ -31,8 +32,15 @@ class JobController extends Controller
 
     // show one single job
     // GET jobs/{$id}
-    public function show(Job $job): View
+    public function show(Job $job, GeocodeController $geocodeController, CurrencyController $currencyController): View
     {
+
+        $currencies = ['USD', 'EUR', 'NOK'];
+        $landcodes = [];
+        for ($i = 0; $i < 100; $i++) {
+            $newLandcode = "+$i";
+            array_push($landcodes, $newLandcode);
+        }
         $hasApplied = false;
         if (auth()->check()) {
             $hasApplied = Applicant::where('job_id', $job->id)
@@ -40,7 +48,9 @@ class JobController extends Controller
                 ->exists();
         }
 
-        return view('jobs.show', compact('job', 'hasApplied'));
+        $coordinates = $geocodeController->getCoordinates($job->city, $job->country);
+
+        return view('jobs.show', compact('job', 'hasApplied', 'coordinates', 'landcodes', 'currencies'));
     }
 
     //edit single

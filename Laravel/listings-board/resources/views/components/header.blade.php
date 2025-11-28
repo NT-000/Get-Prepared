@@ -36,8 +36,9 @@
 
                 <div class="flex items-center space-x-3">
                     <p>Logged in, {{$user->name}}</p>
-                    <img class="rounded-full border border-white w-14"
-                         src="{{$user->avatar ? asset($user->avatar) : 'avatars/def_avatar.jpg'}}"/>
+                    <a href="/dashboard"><img class="rounded-full border border-white w-14"
+                                              src="{{$user->avatar ? asset($user->avatar) : 'avatars/def_avatar.jpg'}}"/>
+                    </a>
                 </div>
 
             @else

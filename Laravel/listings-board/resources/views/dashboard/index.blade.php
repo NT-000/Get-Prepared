@@ -3,6 +3,8 @@
         listings </h1>
     <section class="flex" x-data="{
     open: false,
+    preview: null,
+    defaultAvatar: '{{ auth()->user()->avatar }}',
     previewImage(event){
     const file = event.target.files?.[0];
     if(!file) return;
@@ -33,17 +35,17 @@
 
                 <div class="flex flex-col items-center mb-4">
                     <img class="rounded-full border-4 border-gray-200 w-32 h-32 object-cover mb-2"
-                         alt="avatar preview"
-                         :src="preview"/>
+                         :src="preview ?? defaultAvatar"/>
                     <p class="text-sm text-gray-600">Image Preview</p>
                 </div>
 
+
                 <x-input type="text" name="name" label="Name" value="{{$user->name}}"/>
                 <x-input type="text" name="email" label="Email" value="{{$user->email}}"/>
-                Upload Avatar
+                <label class="italic">Upload Avatar</label>
                 <input
                     type="file"
-                    class="block w-full text-sm text-gray-700 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+                    class="block w-full text-sm m-2 text-gray-700 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer"
                     accept="image/*"
                     @change="previewImage($event)"
                     name="avatar"
