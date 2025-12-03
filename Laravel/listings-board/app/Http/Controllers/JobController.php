@@ -32,10 +32,10 @@ class JobController extends Controller
 
     // show one single job
     // GET jobs/{$id}
-    public function show(Job $job, GeocodeController $geocodeController, CurrencyController $currencyController): View
+    public function show(Job $job, GeocodeController $geocodeController): View
     {
 
-        $currencies = ['USD', 'EUR', 'NOK'];
+        $currencies = ['American Dollars' => 'USD', 'Euro' => 'EUR', 'British Pound' => 'GBP', 'Canadian Dollar' => 'CAD', 'Swedish Krona' => 'SEK', 'Danish Krone' => 'DKK'];
         $landcodes = [];
         for ($i = 0; $i < 100; $i++) {
             $newLandcode = "+$i";
