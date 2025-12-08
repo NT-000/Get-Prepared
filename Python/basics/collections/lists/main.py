@@ -23,3 +23,31 @@ print(city_list)
 
 city_list.insert(0,'Kristansund') # insert value at index
 print(city_list)
+
+for city_index in range(len(city_list)):
+	print('Index:', city_index ,'| City:',city_list[city_index])
+
+
+bills = [33.67, 55.68, 21, 23.12, 22, 33.78]
+sum = 0.0
+for bill in bills:
+	sum += bill
+	print('New bill:', '+' ,bill)
+print('All your bills in total:',sum)
+
+#swap places of elements
+
+print('City list before swapping:', city_list)
+
+city_list[0], city_list[1], city_list[2] = city_list[2], city_list[0], city_list[1]
+
+print('City list after swapping:',city_list)
+
+city_list.sort() #method that change the original list
+print('City list after sorting:', city_list)
+
+city_list.sort(reverse=True)
+print('City list after reversing:', city_list)
+
+print('City list sorted copy:', sorted(city_list)) #function that copies the original without changing the original list
+print('Original city list:', city_list)
