@@ -51,3 +51,12 @@ print('City list after reversing:', city_list)
 
 print('City list sorted copy:', sorted(city_list)) #function that copies the original without changing the original list
 print('Original city list:', city_list)
+
+orig_list = [1, 2, 3]
+new_list = orig_list # references/points to same list
+print('Original list:', orig_list)
+print('New list:', new_list)
+del new_list[1:2]
+print('New list:', new_list)
+print('Original city list:', orig_list)
+
